@@ -74,11 +74,9 @@ jobs:
       uses: actions/cache@v2
       with:
         path: target
-        key: ${{ runner.os }}-${{ matrix.rust }}-cargo-${{ hashFiles('**/Cargo.lock') }}-build-artifacts
+        key: ${{ runner.os }}-${{ matrix.rust }}-cargo-${{ hashFiles('**/Cargo.lock') }}-build-artifacts-target-wasm32-unknown-unknown
     - name: Build
       run: cargo +${{matrix.rust}} build --verbose --no-default-features ${{ matrix.features }} --target wasm32-unknown-unknown
-    - name: Run tests
-      run: cargo +${{ matrix.rust}} test --verbose --no-default-features ${{ matrix.features }} --target wasm32-unknown-unknown
-    # TODO: build/test with wasm-pack
+    # TODO: test with wasm-pack
 
   
