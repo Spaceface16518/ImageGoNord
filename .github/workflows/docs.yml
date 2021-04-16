@@ -1,0 +1,29 @@
+name: Docs
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  documentation:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Generate Documentation
+      run: cargo doc --verbose
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@4.1.1
+    - name: Cache Generated Files
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          target/docs
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-docs
+
