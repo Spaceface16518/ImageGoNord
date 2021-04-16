@@ -14,6 +14,20 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Get Manifest Lock
+      run: cargo update
+    - name: Cache Cargo Registry
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+    - name: Cache Generated Files
+      uses: actions/cache@v2
+      with:
+        path: target/docs
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-docs
     - name: Generate Documentation
       run: cargo doc --verbose --all-features
     - name: Inject Index Meta-Link
@@ -23,12 +37,5 @@ jobs:
       with:
         branch: gh-pages
         folder: target/doc
-    - name: Cache Generated Files
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/.cargo/registry
-          ~/.cargo/git
-          target/docs
-        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-docs
+  
 
