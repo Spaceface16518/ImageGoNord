@@ -1,7 +1,7 @@
 use image::{GenericImageView, Pixel};
 use num_traits::{CheckedSub, Unsigned, Zero};
-use smallvec::SmallVec;
-pub fn avg_color<I: GenericImageView>(pixels: I) -> I::Pixel
+
+pub fn avg_color<I: GenericImageView>(_pixels: I) -> I::Pixel
 where
     <I::Pixel as Pixel>::Subpixel: Zero + Clone,
 {
@@ -12,6 +12,6 @@ where
 }
 
 /// euclidian distance between colors
-pub fn delta<T: CheckedSub + Unsigned + Clone, P: Pixel<Subpixel = T>>(a: &P, b: &P) -> T {
+pub fn delta<T: CheckedSub + Unsigned + Clone, P: Pixel<Subpixel = T>>(_a: &P, _b: &P) -> T {
     todo!()
 }
