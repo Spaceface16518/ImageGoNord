@@ -16,6 +16,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Generate Documentation
       run: cargo doc --verbose --all-features
+    - name: Inject Index Meta-Link
+      run: echo '<meta http-equiv=refresh content=0;url=image_go_nord/index.html>' > target/doc/index.html
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@4.1.1
       with:
