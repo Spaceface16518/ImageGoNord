@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["palettes",""]],"struct":[["DynamicPalette","Palette that can be constructed at runtime. Used to load custom or filtered palettes that can be changed between subsequent conversions."],["StaticPalette","Palette that can be constructed at compile time. Used to embed built-in palettes in the library."]]});
