@@ -16,13 +16,15 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        features: ["", "rayon"]
+        features: ["", "--features rayon"]
         rust: [stable, beta, nightly]
         os: [ubuntu-latest, macos-latest, windows-latest]
         # TODO: test on other windows toolchains?
     
     steps:
     - uses: actions/checkout@v2
+    - name: Get Manifest Lock
+      run: cargo update
     - name: Set up a Rust toolchain
       uses: hecrj/setup-rust-action@v1.3.4
       with:
@@ -40,20 +42,22 @@ jobs:
         path: target
         key: ${{ runner.os }}-${{ matrix.rust }}-cargo-${{ hashFiles('**/Cargo.lock') }}-build-artifacts
     - name: Build
-      run: cargo +${{matrix.rust}} build --verbose --no-default-features --features "${{ matrix.features }}"
+      run: cargo +${{matrix.rust}} build --verbose --no-default-features ${{ matrix.features }}
     - name: Run tests
-      run: cargo +${{ matrix.rust}} test --verbose --no-default-features --features "${{ matrix.features }}"
+      run: cargo +${{ matrix.rust}} test --verbose --no-default-features ${{ matrix.features }}
   wasm:
   
     runs-on: ubuntu-latest
     strategy: 
       fail-fast: true
       matrix:
-        features: ["", "serde,serde_json", "wee_alloc"]
+        features: ["--features wasm-bindgen", "--features wasm-bindgen,serde,serde_json", "--features wasm-bindgen,wee_alloc", "--features wasm-bindgen,wee_alloc,serde,serde_json"]
         rust: [stable, beta, nightly]
     
     steps:
     - uses: actions/checkout@v2
+    - name: Get Manifest Lock
+      run: cargo update
     - name: Set up a Rust toolchain
       uses: hecrj/setup-rust-action@v1.3.4
       with:
@@ -72,9 +76,9 @@ jobs:
         path: target
         key: ${{ runner.os }}-${{ matrix.rust }}-cargo-${{ hashFiles('**/Cargo.lock') }}-build-artifacts
     - name: Build
-      run: cargo +${{matrix.rust}} build --verbose --no-default-features --features "wasm_bindgen,${{ matrix.features }}" --target wasm32-unkown-unknown
+      run: cargo +${{matrix.rust}} build --verbose --no-default-features ${{ matrix.features }} --target wasm32-unknown-unknown
     - name: Run tests
-      run: cargo +${{ matrix.rust}} test --verbose --no-default-features --features "wasm_bindgen,${{ matrix.features }}" --target wasm32-unkown-unknown
+      run: cargo +${{ matrix.rust}} test --verbose --no-default-features ${{ matrix.features }} --target wasm32-unknown-unknown
     # TODO: build/test with wasm-pack
 
   
