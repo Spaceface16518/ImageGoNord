@@ -15,9 +15,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Generate Documentation
-      run: cargo doc --verbose
+      run: cargo doc --verbose --all-features
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@4.1.1
+      with:
+        branch: gh-pages
+        folder: target/doc
     - name: Cache Generated Files
       uses: actions/cache@v2
       with:
