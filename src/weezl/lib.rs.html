@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/weezl-0.1.4/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/weezl-0.1.5/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
 <link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../weezl/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
@@ -129,6 +129,24 @@
 <span id="126">126</span>
 <span id="127">127</span>
 <span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # LZW decoder and encoder</span>
 <span class="doccomment">//!</span>
@@ -136,6 +154,36 @@
 <span class="doccomment">//! are written from and to bit byte slices (or streams) where it is possible to write either the</span>
 <span class="doccomment">//! most or least significant bits first. The maximum possible code size is 12 bits, the smallest</span>
 <span class="doccomment">//! available code size is 2 bits.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Example</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! These two code blocks show the compression and corresponding decompression. Note that you must</span>
+<span class="doccomment">//! use the same arguments to `Encoder` and `Decoder`, otherwise the decoding might fail or produce</span>
+<span class="doccomment">//! bad results.</span>
+<span class="doccomment">//!</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;```&quot;</span>)]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;```ignore&quot;</span>)]</span>
+<span class="doccomment">//! use weezl::{BitOrder, encode::Encoder};</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let data = b&quot;Hello, world&quot;;</span>
+<span class="doccomment">//! let compressed = Encoder::new(BitOrder::Msb, 9)</span>
+<span class="doccomment">//!     .encode(data)</span>
+<span class="doccomment">//!     .unwrap();</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;```&quot;</span>)]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;```ignore&quot;</span>)]</span>
+<span class="doccomment">//! use weezl::{BitOrder, decode::Decoder};</span>
+<span class="doccomment">//! # let compressed = b&quot;\x80\x04\x81\x94l\x1b\x06\xf0\xb0 \x1d\xc6\xf1\xc8l\x19 \x10&quot;.to_vec();</span>
+<span class="doccomment">//! # let data = b&quot;Hello, world&quot;;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let decompressed = Decoder::new(BitOrder::Msb, 9)</span>
+<span class="doccomment">//!     .decode(&amp;compressed)</span>
+<span class="doccomment">//!     .unwrap();</span>
+<span class="doccomment">//! assert_eq!(decompressed, data);</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## LZW Details</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! The de- and encoder expect the LZW stream to start with a clear code and end with an</span>
 <span class="doccomment">//! end code which are defined as follows:</span>
@@ -149,19 +197,7 @@
 <span class="doccomment">//! precise). Since there are no ways to handle allocation errors it is not recommended to operate</span>
 <span class="doccomment">//! it on 16-bit targets.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! Exemplary use of the encoder:</span>
-<span class="doccomment">//!</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;```&quot;</span>)]</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;```ignore&quot;</span>)]</span>
-<span class="doccomment">//! use weezl::{BitOrder, encode::Encoder};</span>
-<span class="doccomment">//! let size = 8;</span>
-<span class="doccomment">//! let data = b&quot;TOBEORNOTTOBEORTOBEORNOT&quot;;</span>
-<span class="doccomment">//! let mut compressed = vec![];</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! let mut enc = Encoder::new(BitOrder::Msb, size);</span>
-<span class="doccomment">//! let result = enc.into_stream(&amp;mut compressed).encode(&amp;data[..]);</span>
-<span class="doccomment">//! result.status.unwrap();</span>
-<span class="doccomment">//! ```</span>
+<span class="doccomment">//! ## Allocations and standard library</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! The main algorithm can be used in `no_std` as well, although it requires an allocator. This</span>
 <span class="doccomment">//! restriction might be lifted at a later stage. For this you should deactivate the `std` feature.</span>
