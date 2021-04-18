@@ -37,11 +37,12 @@ jobs:
           ~/.cargo/registry
           ~/.cargo/git
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-    - name: Cache Build Artifacts
-      uses: actions/cache@v2
-      with:
-        path: target
-        key: ${{ runner.os }}-${{ matrix.rust }}-cargo-${{ hashFiles('**/Cargo.lock') }}-build-artifacts
+#       https://github.com/rust-lang/rust/issues/84252
+#     - name: Cache Build Artifacts
+#       uses: actions/cache@v2
+#       with:
+#         path: target
+#         key: ${{ runner.os }}-${{ matrix.rust }}-cargo-${{ hashFiles('**/Cargo.lock') }}-build-artifacts
     - name: Build
       run: cargo +${{matrix.rust}} build --verbose --no-default-features ${{ matrix.features }}
     - name: Run tests
@@ -71,11 +72,12 @@ jobs:
           ~/.cargo/registry
           ~/.cargo/git
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-    - name: Cache Build Artifacts
-      uses: actions/cache@v2
-      with:
-        path: target
-        key: ${{ runner.os }}-${{ matrix.rust }}-cargo-${{ hashFiles('**/Cargo.lock') }}-build-artifacts-target-wasm32-unknown-unknown
+#       https://github.com/rust-lang/rust/issues/84252
+#     - name: Cache Build Artifacts
+#       uses: actions/cache@v2
+#       with:
+#         path: target
+#         key: ${{ runner.os }}-${{ matrix.rust }}-cargo-${{ hashFiles('**/Cargo.lock') }}-build-artifacts-target-wasm32-unknown-unknown
     - name: Build
       run: cargo +${{matrix.rust}} build --verbose --no-default-features ${{ matrix.features }} --target wasm32-unknown-unknown
     # TODO: test with wasm-pack
@@ -95,11 +97,12 @@ jobs:
           ~/.cargo/registry
           ~/.cargo/git
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-    - name: Cache Generated Files
-      uses: actions/cache@v2
-      with:
-        path: target
-        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-build-artifacts-docs
+#       https://github.com/rust-lang/rust/issues/84252
+#     - name: Cache Generated Files
+#       uses: actions/cache@v2
+#       with:
+#         path: target
+#         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}-build-artifacts-docs
     - name: Generate Documentation
       run: cargo doc --verbose --all-features
     - name: Inject Index Meta-Link
