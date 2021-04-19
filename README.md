@@ -37,7 +37,11 @@ or manually add it to your `Cargo.toml`.
 image-go-nord = "0.1"
 ```
 
-#### Webassembly/Javascript
+##### Status
+
+A lot of the Rust port is in progress but there are a lot of key components missing.
+
+#### Webassembly/Javascript (WIP)
 
 Enabling the `wasm-bindgen` feature exposes a WASM-friendly interface to the rust library. This library is compatible with [`wasm-pack`](https://rustwasm.github.io/wasm-pack/), so you can use `wasm-pack` to generate an npm package, complete with Typescript types and JS glue code.
 
@@ -49,7 +53,11 @@ You can also enable to `wee_alloc` feature to use a smaller, but slower, global 
 
 You can also enable the `serde` and `serde_json` features to allow serializing conversion options and palettes from JSON. This could be helpful when designing a web API in node.js by removing the need to deserialize user input before passing it to the library, for example.
 
-#### C/C++/Cython bindings
+##### Status
+
+All features are currently in working order, but there is no dedicated interface yet. Look to the `wasm` branch and `src/wasm` directory for progress.
+
+#### C/C++/Cython bindings (WIP)
 
 Enabling the `ffi` feature exports `C`-compatible functions in the crate root. You can build the library as a `cdylib` or `staticlib` to create a shared library for use from other language and environments. While there are ways to pass this option from the command line, it's easier to just put a `crate-type` entry in the `Cargo.toml`.
 
@@ -66,8 +74,16 @@ You can use [`cbindgen`](https://github.com/eqrion/cbindgen) to generate binding
 $ cbindgen --lang c --crate image-go-nord --output ImageGoNord.h
 ```
 
+##### Status
+
+Still working out the kinks of generating bindings with conditional compilation.
+
+No work on the ffi module yet.
+
 #### Python (WIP)
 
 Enable the `pyo3` feature to generate a native Python 3 module. You must build the library as a `cdylib` and use [maturin](https://github.com/PyO3/maturin) or [setuptools-rust](https://github.com/PyO3/setuptools-rust) to build the Python module. Read more on the [`pyo3` documentation](https://pyo3.rs/v0.13.2/).
 
-This feature is currently unimplemented.
+#####
+
+This feature is planned but currently unimplemented.
