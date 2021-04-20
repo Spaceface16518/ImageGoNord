@@ -73,7 +73,7 @@ impl Default for Options {
 }
 
 // TODO: make generic over different image types
-pub fn convert<P: ColorMap>(img: RgbaImage, opt: Options, palette: &P) -> RgbaImage {
+pub fn convert<P: ColorMap + Sync>(img: RgbaImage, opt: Options, palette: &P) -> RgbaImage {
     let img = if opt.resize != [0, 0] {
         // resize with nearest neigbor filtering
         resize(
