@@ -2,6 +2,12 @@
 
 This library is a Rust port of [Schrodinger-Hat/ImageGoNord](https://github.com/Schrodinger-Hat/ImageGoNord) designed to be more efficient and portable. It is built on many popular Rust libraries, namely `image`. A majority of the functionality listed in this document is still a work in progress, but this project plans to expose a native Rust library and CLI application, as well as bindings for WASM/JS, Python, and C/C++, with hopes of allowing access from more platforms through the JNI and integrating back into the original ImageGoNord python library using Python bindings.
 
+[![CI](https://github.com/Spaceface16518/ImageGoNord/actions/workflows/rust-ci.yml/badge.svg)](https://github.com/Spaceface16518/ImageGoNord/actions/workflows/rust-ci.yml)
+![docs.rs](https://img.shields.io/docsrs/image-go-nord)
+![Crates.io](https://img.shields.io/crates/d/image-go-nord)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/Spaceface16518/ImageGoNord?sort=semver)
+[Documentation](https://spaceface16518.github.io/ImageGoNord)
+
 This library is a perfect fit for fast native applications via multithreading, in-browser conversion via Webassembly, and self-hosted, cloud-native/serverless, or containerized conversion web API's.
 
 *If the license of this project has issues, please open an issue or submit a PR. I am not the best with managing open source licenses, so there may be problems. Thank you for understanding.*
