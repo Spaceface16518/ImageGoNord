@@ -76,12 +76,7 @@ impl Default for Options {
 pub fn convert<P: ColorMap + Sync>(img: RgbaImage, opt: Options, palette: &P) -> RgbaImage {
     let img = if opt.resize != [0, 0] {
         // resize with nearest neigbor filtering
-        resize(
-            &img,
-            opt.resize[0],
-            opt.resize[1],
-            image::imageops::FilterType::Nearest,
-        )
+        resize_img(&img, opt.resize)
     } else {
         img // NOTE: will need to cast this to rgba when img is generic
     };
@@ -112,6 +107,10 @@ pub fn convert<P: ColorMap + Sync>(img: RgbaImage, opt: Options, palette: &P) ->
     img
 }
 
+fn resize_img(img: &RgbaImage, [w, h]: [u32; 2]) -> RgbaImage {
+    resize(img, w, h, image::imageops::FilterType::Nearest)
+}
+
 // TODO: need to change the signatures to take the image as a parameter rather
 // than capturing it
 
@@ -131,4 +130,18 @@ fn replace_pixels<P: ColorMap + Sync>(
     palette: &P,
 ) -> RgbaImage {
     todo!()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{resize_img};
+    use image::RgbaImage;
+
+    #[test]
+    fn test_resize_img() {
+        let img = RgbaImage::from_pixel(64, 64, [255; 4].into());
+        let img = resize_img(&img, [32, 32]);
+
+        assert_eq!(img.dimensions(), (32, 32))
+    }
 }
