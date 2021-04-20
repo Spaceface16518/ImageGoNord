@@ -129,6 +129,6 @@ fn replace_pixels<P: ColorMap + Sync>(
     get_pixel_fn: impl Fn(u32, u32) -> Rgba<u8>,
     transparency_tolerance: u8,
     palette: &P,
-) -> RbgaImage {
+) -> RgbaImage {
     todo!()
 }
