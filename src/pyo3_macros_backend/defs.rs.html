@@ -1,7 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/pyo3-macros-backend-0.13.2/src/defs.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>defs.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/pyo3-macros-backend-0.13.2/src/defs.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>defs.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../pyo3_macros_backend/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../pyo3_macros_backend/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -609,10 +608,10 @@
 <span id="606">606</span>
 <span id="607">607</span>
 <span id="608">608</span>
-</pre><div class="example-wrap"><pre class="rust ">
+</pre><pre class="rust">
 <span class="comment">// Copyright (c) 2017-present PyO3 Project and Contributors</span>
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">proto_method</span>::<span class="ident">MethodProto</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashSet</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::proto_method::MethodProto</span>;
+<span class="kw">use</span> <span class="ident">std::collections::HashSet</span>;
 
 <span class="doccomment">/// Predicates for `#[pyproto]`.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Proto</span> {
@@ -649,8 +648,8 @@
 
     <span class="comment">// Returns the hard-coded module as a path</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="ident">Path</span> {
-        <span class="ident">syn</span>::<span class="ident">parse_str</span>(<span class="self">self</span>.<span class="ident">module</span>).<span class="ident">expect</span>(<span class="string">&quot;module def not valid path&quot;</span>)
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">module</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn::Path</span> {
+        <span class="ident">syn::parse_str</span>(<span class="self">self</span>.<span class="ident">module</span>).<span class="ident">expect</span>(<span class="string">&quot;module def not valid path&quot;</span>)
     }
 
     <span class="comment">// Since the order matters, we expose only the iterator instead of the slice.</span>
@@ -735,46 +734,46 @@
     <span class="ident">slots_trait</span>: <span class="string">&quot;PyObjectProtocolSlots&quot;</span>,
     <span class="ident">slots_trait_slots</span>: <span class="string">&quot;object_protocol_slots&quot;</span>,
     <span class="ident">methods</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__getattr__&quot;</span>, <span class="string">&quot;PyObjectGetAttrProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__getattr__&quot;</span>, <span class="string">&quot;PyObjectGetAttrProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Name&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__setattr__&quot;</span>, <span class="string">&quot;PyObjectSetAttrProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__setattr__&quot;</span>, <span class="string">&quot;PyObjectSetAttrProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Name&quot;</span>, <span class="string">&quot;Value&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__delattr__&quot;</span>, <span class="string">&quot;PyObjectDelAttrProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__delattr__&quot;</span>, <span class="string">&quot;PyObjectDelAttrProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Name&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__str__&quot;</span>, <span class="string">&quot;PyObjectStrProtocol&quot;</span>).<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__repr__&quot;</span>, <span class="string">&quot;PyObjectReprProtocol&quot;</span>).<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__format__&quot;</span>, <span class="string">&quot;PyObjectFormatProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__str__&quot;</span>, <span class="string">&quot;PyObjectStrProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__repr__&quot;</span>, <span class="string">&quot;PyObjectReprProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__format__&quot;</span>, <span class="string">&quot;PyObjectFormatProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Format&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__hash__&quot;</span>, <span class="string">&quot;PyObjectHashProtocol&quot;</span>).<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__bytes__&quot;</span>, <span class="string">&quot;PyObjectBytesProtocol&quot;</span>).<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__richcmp__&quot;</span>, <span class="string">&quot;PyObjectRichcmpProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__hash__&quot;</span>, <span class="string">&quot;PyObjectHashProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__bytes__&quot;</span>, <span class="string">&quot;PyObjectBytesProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__richcmp__&quot;</span>, <span class="string">&quot;PyObjectRichcmpProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__bool__&quot;</span>, <span class="string">&quot;PyObjectBoolProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__bool__&quot;</span>, <span class="string">&quot;PyObjectBoolProtocol&quot;</span>).<span class="ident">has_self</span>(),
     ],
     <span class="ident">py_methods</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">PyMethod</span>::<span class="ident">new</span>(<span class="string">&quot;__format__&quot;</span>, <span class="string">&quot;FormatProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">new</span>(<span class="string">&quot;__bytes__&quot;</span>, <span class="string">&quot;BytesProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">new</span>(<span class="string">&quot;__unicode__&quot;</span>, <span class="string">&quot;UnicodeProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::new</span>(<span class="string">&quot;__format__&quot;</span>, <span class="string">&quot;FormatProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::new</span>(<span class="string">&quot;__bytes__&quot;</span>, <span class="string">&quot;BytesProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::new</span>(<span class="string">&quot;__unicode__&quot;</span>, <span class="string">&quot;UnicodeProtocolImpl&quot;</span>),
     ],
     <span class="ident">slot_defs</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__str__&quot;</span>], <span class="string">&quot;Py_tp_str&quot;</span>, <span class="string">&quot;str&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__repr__&quot;</span>], <span class="string">&quot;Py_tp_repr&quot;</span>, <span class="string">&quot;repr&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__hash__&quot;</span>], <span class="string">&quot;Py_tp_hash&quot;</span>, <span class="string">&quot;hash&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__getattr__&quot;</span>], <span class="string">&quot;Py_tp_getattro&quot;</span>, <span class="string">&quot;getattr&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__richcmp__&quot;</span>], <span class="string">&quot;Py_tp_richcompare&quot;</span>, <span class="string">&quot;richcmp&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__str__&quot;</span>], <span class="string">&quot;Py_tp_str&quot;</span>, <span class="string">&quot;str&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__repr__&quot;</span>], <span class="string">&quot;Py_tp_repr&quot;</span>, <span class="string">&quot;repr&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__hash__&quot;</span>], <span class="string">&quot;Py_tp_hash&quot;</span>, <span class="string">&quot;hash&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__getattr__&quot;</span>], <span class="string">&quot;Py_tp_getattro&quot;</span>, <span class="string">&quot;getattr&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__richcmp__&quot;</span>], <span class="string">&quot;Py_tp_richcompare&quot;</span>, <span class="string">&quot;richcmp&quot;</span>),
+        <span class="ident">SlotDef::new</span>(
             <span class="kw-2">&amp;</span>[<span class="string">&quot;__setattr__&quot;</span>, <span class="string">&quot;__delattr__&quot;</span>],
             <span class="string">&quot;Py_tp_setattro&quot;</span>,
             <span class="string">&quot;setdelattr&quot;</span>,
         ),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__setattr__&quot;</span>], <span class="string">&quot;Py_tp_setattro&quot;</span>, <span class="string">&quot;setattr&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__delattr__&quot;</span>], <span class="string">&quot;Py_tp_setattro&quot;</span>, <span class="string">&quot;delattr&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__bool__&quot;</span>], <span class="string">&quot;Py_nb_bool&quot;</span>, <span class="string">&quot;bool&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__setattr__&quot;</span>], <span class="string">&quot;Py_tp_setattro&quot;</span>, <span class="string">&quot;setattr&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__delattr__&quot;</span>], <span class="string">&quot;Py_tp_setattro&quot;</span>, <span class="string">&quot;delattr&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__bool__&quot;</span>], <span class="string">&quot;Py_nb_bool&quot;</span>, <span class="string">&quot;bool&quot;</span>),
     ],
 };
 
@@ -784,22 +783,22 @@
     <span class="ident">slots_trait</span>: <span class="string">&quot;PyAsyncProtocolSlots&quot;</span>,
     <span class="ident">slots_trait_slots</span>: <span class="string">&quot;async_protocol_slots&quot;</span>,
     <span class="ident">methods</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__await__&quot;</span>, <span class="string">&quot;PyAsyncAwaitProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Receiver&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__aiter__&quot;</span>, <span class="string">&quot;PyAsyncAiterProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Receiver&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__anext__&quot;</span>, <span class="string">&quot;PyAsyncAnextProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Receiver&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__aenter__&quot;</span>, <span class="string">&quot;PyAsyncAenterProtocol&quot;</span>).<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__aexit__&quot;</span>, <span class="string">&quot;PyAsyncAexitProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__await__&quot;</span>, <span class="string">&quot;PyAsyncAwaitProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Receiver&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__aiter__&quot;</span>, <span class="string">&quot;PyAsyncAiterProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Receiver&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__anext__&quot;</span>, <span class="string">&quot;PyAsyncAnextProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Receiver&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__aenter__&quot;</span>, <span class="string">&quot;PyAsyncAenterProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__aexit__&quot;</span>, <span class="string">&quot;PyAsyncAexitProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;ExcType&quot;</span>, <span class="string">&quot;ExcValue&quot;</span>, <span class="string">&quot;Traceback&quot;</span>])
             .<span class="ident">has_self</span>(),
     ],
     <span class="ident">py_methods</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">PyMethod</span>::<span class="ident">new</span>(<span class="string">&quot;__aenter__&quot;</span>, <span class="string">&quot;PyAsyncAenterProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">new</span>(<span class="string">&quot;__aexit__&quot;</span>, <span class="string">&quot;PyAsyncAexitProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::new</span>(<span class="string">&quot;__aenter__&quot;</span>, <span class="string">&quot;PyAsyncAenterProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::new</span>(<span class="string">&quot;__aexit__&quot;</span>, <span class="string">&quot;PyAsyncAexitProtocolImpl&quot;</span>),
     ],
     <span class="ident">slot_defs</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__await__&quot;</span>], <span class="string">&quot;Py_am_await&quot;</span>, <span class="string">&quot;await_&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__aiter__&quot;</span>], <span class="string">&quot;Py_am_aiter&quot;</span>, <span class="string">&quot;aiter&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__anext__&quot;</span>], <span class="string">&quot;Py_am_anext&quot;</span>, <span class="string">&quot;anext&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__await__&quot;</span>], <span class="string">&quot;Py_am_await&quot;</span>, <span class="string">&quot;await_&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__aiter__&quot;</span>], <span class="string">&quot;Py_am_aiter&quot;</span>, <span class="string">&quot;aiter&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__anext__&quot;</span>], <span class="string">&quot;Py_am_anext&quot;</span>, <span class="string">&quot;anext&quot;</span>),
     ],
 };
 
@@ -809,13 +808,13 @@
     <span class="ident">slots_trait</span>: <span class="string">&quot;PyBufferProtocolSlots&quot;</span>,
     <span class="ident">slots_trait_slots</span>: <span class="string">&quot;buffer_protocol_slots&quot;</span>,
     <span class="ident">methods</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;bf_getbuffer&quot;</span>, <span class="string">&quot;PyBufferGetBufferProtocol&quot;</span>).<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;bf_releasebuffer&quot;</span>, <span class="string">&quot;PyBufferReleaseBufferProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;bf_getbuffer&quot;</span>, <span class="string">&quot;PyBufferGetBufferProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;bf_releasebuffer&quot;</span>, <span class="string">&quot;PyBufferReleaseBufferProtocol&quot;</span>).<span class="ident">has_self</span>(),
     ],
     <span class="ident">py_methods</span>: <span class="kw-2">&amp;</span>[],
     <span class="ident">slot_defs</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;bf_getbuffer&quot;</span>], <span class="string">&quot;Py_bf_getbuffer&quot;</span>, <span class="string">&quot;getbuffer&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;bf_getbuffer&quot;</span>], <span class="string">&quot;Py_bf_getbuffer&quot;</span>, <span class="string">&quot;getbuffer&quot;</span>),
+        <span class="ident">SlotDef::new</span>(
             <span class="kw-2">&amp;</span>[<span class="string">&quot;bf_releasebuffer&quot;</span>],
             <span class="string">&quot;Py_bf_releasebuffer&quot;</span>,
             <span class="string">&quot;releasebuffer&quot;</span>,
@@ -829,14 +828,14 @@
     <span class="ident">slots_trait</span>: <span class="string">&quot;&quot;</span>,
     <span class="ident">slots_trait_slots</span>: <span class="string">&quot;&quot;</span>,
     <span class="ident">methods</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__enter__&quot;</span>, <span class="string">&quot;PyContextEnterProtocol&quot;</span>).<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__exit__&quot;</span>, <span class="string">&quot;PyContextExitProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__enter__&quot;</span>, <span class="string">&quot;PyContextEnterProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__exit__&quot;</span>, <span class="string">&quot;PyContextExitProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;ExcType&quot;</span>, <span class="string">&quot;ExcValue&quot;</span>, <span class="string">&quot;Traceback&quot;</span>])
             .<span class="ident">has_self</span>(),
     ],
     <span class="ident">py_methods</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">PyMethod</span>::<span class="ident">new</span>(<span class="string">&quot;__enter__&quot;</span>, <span class="string">&quot;PyContextEnterProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">new</span>(<span class="string">&quot;__exit__&quot;</span>, <span class="string">&quot;PyContextExitProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::new</span>(<span class="string">&quot;__enter__&quot;</span>, <span class="string">&quot;PyContextEnterProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::new</span>(<span class="string">&quot;__exit__&quot;</span>, <span class="string">&quot;PyContextExitProtocolImpl&quot;</span>),
     ],
     <span class="ident">slot_defs</span>: <span class="kw-2">&amp;</span>[],
 };
@@ -847,17 +846,17 @@
     <span class="ident">slots_trait</span>: <span class="string">&quot;PyGCProtocolSlots&quot;</span>,
     <span class="ident">slots_trait_slots</span>: <span class="string">&quot;gc_protocol_slots&quot;</span>,
     <span class="ident">methods</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__traverse__&quot;</span>, <span class="string">&quot;PyGCTraverseProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__traverse__&quot;</span>, <span class="string">&quot;PyGCTraverseProtocol&quot;</span>)
             .<span class="ident">has_self</span>()
             .<span class="ident">no_result</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__clear__&quot;</span>, <span class="string">&quot;PyGCClearProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__clear__&quot;</span>, <span class="string">&quot;PyGCClearProtocol&quot;</span>)
             .<span class="ident">has_self</span>()
             .<span class="ident">no_result</span>(),
     ],
     <span class="ident">py_methods</span>: <span class="kw-2">&amp;</span>[],
     <span class="ident">slot_defs</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__traverse__&quot;</span>], <span class="string">&quot;Py_tp_traverse&quot;</span>, <span class="string">&quot;traverse&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__clear__&quot;</span>], <span class="string">&quot;Py_tp_clear&quot;</span>, <span class="string">&quot;clear&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__traverse__&quot;</span>], <span class="string">&quot;Py_tp_traverse&quot;</span>, <span class="string">&quot;traverse&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__clear__&quot;</span>], <span class="string">&quot;Py_tp_clear&quot;</span>, <span class="string">&quot;clear&quot;</span>),
     ],
 };
 
@@ -867,22 +866,22 @@
     <span class="ident">slots_trait</span>: <span class="string">&quot;PyDescrProtocolSlots&quot;</span>,
     <span class="ident">slots_trait_slots</span>: <span class="string">&quot;descr_protocol_slots&quot;</span>,
     <span class="ident">methods</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__get__&quot;</span>, <span class="string">&quot;PyDescrGetProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Receiver&quot;</span>, <span class="string">&quot;Inst&quot;</span>, <span class="string">&quot;Owner&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__set__&quot;</span>, <span class="string">&quot;PyDescrSetProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Receiver&quot;</span>, <span class="string">&quot;Inst&quot;</span>, <span class="string">&quot;Value&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__det__&quot;</span>, <span class="string">&quot;PyDescrDelProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__get__&quot;</span>, <span class="string">&quot;PyDescrGetProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Receiver&quot;</span>, <span class="string">&quot;Inst&quot;</span>, <span class="string">&quot;Owner&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__set__&quot;</span>, <span class="string">&quot;PyDescrSetProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Receiver&quot;</span>, <span class="string">&quot;Inst&quot;</span>, <span class="string">&quot;Value&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__det__&quot;</span>, <span class="string">&quot;PyDescrDelProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Inst&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__set_name__&quot;</span>, <span class="string">&quot;PyDescrSetNameProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__set_name__&quot;</span>, <span class="string">&quot;PyDescrSetNameProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Inst&quot;</span>])
             .<span class="ident">has_self</span>(),
     ],
     <span class="ident">py_methods</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">PyMethod</span>::<span class="ident">new</span>(<span class="string">&quot;__del__&quot;</span>, <span class="string">&quot;PyDescrDelProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">new</span>(<span class="string">&quot;__set_name__&quot;</span>, <span class="string">&quot;PyDescrNameProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::new</span>(<span class="string">&quot;__del__&quot;</span>, <span class="string">&quot;PyDescrDelProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::new</span>(<span class="string">&quot;__set_name__&quot;</span>, <span class="string">&quot;PyDescrNameProtocolImpl&quot;</span>),
     ],
     <span class="ident">slot_defs</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__get__&quot;</span>], <span class="string">&quot;Py_tp_descr_get&quot;</span>, <span class="string">&quot;descr_get&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__set__&quot;</span>], <span class="string">&quot;Py_tp_descr_set&quot;</span>, <span class="string">&quot;descr_set&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__get__&quot;</span>], <span class="string">&quot;Py_tp_descr_get&quot;</span>, <span class="string">&quot;descr_get&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__set__&quot;</span>], <span class="string">&quot;Py_tp_descr_set&quot;</span>, <span class="string">&quot;descr_set&quot;</span>),
     ],
 };
 
@@ -893,12 +892,12 @@
     <span class="ident">slots_trait_slots</span>: <span class="string">&quot;iter_protocol_slots&quot;</span>,
     <span class="ident">py_methods</span>: <span class="kw-2">&amp;</span>[],
     <span class="ident">methods</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__iter__&quot;</span>, <span class="string">&quot;PyIterIterProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Receiver&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__next__&quot;</span>, <span class="string">&quot;PyIterNextProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Receiver&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__iter__&quot;</span>, <span class="string">&quot;PyIterIterProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Receiver&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__next__&quot;</span>, <span class="string">&quot;PyIterNextProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Receiver&quot;</span>]),
     ],
     <span class="ident">slot_defs</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__iter__&quot;</span>], <span class="string">&quot;Py_tp_iter&quot;</span>, <span class="string">&quot;iter&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__next__&quot;</span>], <span class="string">&quot;Py_tp_iternext&quot;</span>, <span class="string">&quot;iternext&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__iter__&quot;</span>], <span class="string">&quot;Py_tp_iter&quot;</span>, <span class="string">&quot;iter&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__next__&quot;</span>], <span class="string">&quot;Py_tp_iternext&quot;</span>, <span class="string">&quot;iternext&quot;</span>),
     ],
 };
 
@@ -908,32 +907,32 @@
     <span class="ident">slots_trait</span>: <span class="string">&quot;PyMappingProtocolSlots&quot;</span>,
     <span class="ident">slots_trait_slots</span>: <span class="string">&quot;mapping_protocol_slots&quot;</span>,
     <span class="ident">methods</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__len__&quot;</span>, <span class="string">&quot;PyMappingLenProtocol&quot;</span>).<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__getitem__&quot;</span>, <span class="string">&quot;PyMappingGetItemProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__len__&quot;</span>, <span class="string">&quot;PyMappingLenProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__getitem__&quot;</span>, <span class="string">&quot;PyMappingGetItemProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Key&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__setitem__&quot;</span>, <span class="string">&quot;PyMappingSetItemProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__setitem__&quot;</span>, <span class="string">&quot;PyMappingSetItemProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Key&quot;</span>, <span class="string">&quot;Value&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__delitem__&quot;</span>, <span class="string">&quot;PyMappingDelItemProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__delitem__&quot;</span>, <span class="string">&quot;PyMappingDelItemProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Key&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__reversed__&quot;</span>, <span class="string">&quot;PyMappingReversedProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__reversed__&quot;</span>, <span class="string">&quot;PyMappingReversedProtocol&quot;</span>).<span class="ident">has_self</span>(),
     ],
-    <span class="ident">py_methods</span>: <span class="kw-2">&amp;</span>[<span class="ident">PyMethod</span>::<span class="ident">new</span>(
+    <span class="ident">py_methods</span>: <span class="kw-2">&amp;</span>[<span class="ident">PyMethod::new</span>(
         <span class="string">&quot;__reversed__&quot;</span>,
         <span class="string">&quot;PyMappingReversedProtocolImpl&quot;</span>,
     )],
     <span class="ident">slot_defs</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__len__&quot;</span>], <span class="string">&quot;Py_mp_length&quot;</span>, <span class="string">&quot;len&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__getitem__&quot;</span>], <span class="string">&quot;Py_mp_subscript&quot;</span>, <span class="string">&quot;getitem&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__len__&quot;</span>], <span class="string">&quot;Py_mp_length&quot;</span>, <span class="string">&quot;len&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__getitem__&quot;</span>], <span class="string">&quot;Py_mp_subscript&quot;</span>, <span class="string">&quot;getitem&quot;</span>),
+        <span class="ident">SlotDef::new</span>(
             <span class="kw-2">&amp;</span>[<span class="string">&quot;__setitem__&quot;</span>, <span class="string">&quot;__delitem__&quot;</span>],
             <span class="string">&quot;Py_mp_ass_subscript&quot;</span>,
             <span class="string">&quot;setdelitem&quot;</span>,
         ),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__setitem__&quot;</span>], <span class="string">&quot;Py_mp_ass_subscript&quot;</span>, <span class="string">&quot;setitem&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__delitem__&quot;</span>], <span class="string">&quot;Py_mp_ass_subscript&quot;</span>, <span class="string">&quot;delitem&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__setitem__&quot;</span>], <span class="string">&quot;Py_mp_ass_subscript&quot;</span>, <span class="string">&quot;setitem&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__delitem__&quot;</span>], <span class="string">&quot;Py_mp_ass_subscript&quot;</span>, <span class="string">&quot;delitem&quot;</span>),
     ],
 };
 
@@ -943,52 +942,52 @@
     <span class="ident">slots_trait</span>: <span class="string">&quot;PySequenceProtocolSlots&quot;</span>,
     <span class="ident">slots_trait_slots</span>: <span class="string">&quot;sequence_protocol_slots&quot;</span>,
     <span class="ident">methods</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__len__&quot;</span>, <span class="string">&quot;PySequenceLenProtocol&quot;</span>).<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__getitem__&quot;</span>, <span class="string">&quot;PySequenceGetItemProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__len__&quot;</span>, <span class="string">&quot;PySequenceLenProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__getitem__&quot;</span>, <span class="string">&quot;PySequenceGetItemProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Index&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__setitem__&quot;</span>, <span class="string">&quot;PySequenceSetItemProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__setitem__&quot;</span>, <span class="string">&quot;PySequenceSetItemProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Index&quot;</span>, <span class="string">&quot;Value&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__delitem__&quot;</span>, <span class="string">&quot;PySequenceDelItemProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__delitem__&quot;</span>, <span class="string">&quot;PySequenceDelItemProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Index&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__contains__&quot;</span>, <span class="string">&quot;PySequenceContainsProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__contains__&quot;</span>, <span class="string">&quot;PySequenceContainsProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Item&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__concat__&quot;</span>, <span class="string">&quot;PySequenceConcatProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__concat__&quot;</span>, <span class="string">&quot;PySequenceConcatProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__repeat__&quot;</span>, <span class="string">&quot;PySequenceRepeatProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__repeat__&quot;</span>, <span class="string">&quot;PySequenceRepeatProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Index&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__inplace_concat__&quot;</span>, <span class="string">&quot;PySequenceInplaceConcatProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__inplace_concat__&quot;</span>, <span class="string">&quot;PySequenceInplaceConcatProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__inplace_repeat__&quot;</span>, <span class="string">&quot;PySequenceInplaceRepeatProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__inplace_repeat__&quot;</span>, <span class="string">&quot;PySequenceInplaceRepeatProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Index&quot;</span>])
             .<span class="ident">has_self</span>(),
     ],
     <span class="ident">py_methods</span>: <span class="kw-2">&amp;</span>[],
     <span class="ident">slot_defs</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__len__&quot;</span>], <span class="string">&quot;Py_sq_length&quot;</span>, <span class="string">&quot;len&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__concat__&quot;</span>], <span class="string">&quot;Py_sq_concat&quot;</span>, <span class="string">&quot;concat&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__repeat__&quot;</span>], <span class="string">&quot;Py_sq_repeat&quot;</span>, <span class="string">&quot;repeat&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__getitem__&quot;</span>], <span class="string">&quot;Py_sq_item&quot;</span>, <span class="string">&quot;getitem&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__len__&quot;</span>], <span class="string">&quot;Py_sq_length&quot;</span>, <span class="string">&quot;len&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__concat__&quot;</span>], <span class="string">&quot;Py_sq_concat&quot;</span>, <span class="string">&quot;concat&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__repeat__&quot;</span>], <span class="string">&quot;Py_sq_repeat&quot;</span>, <span class="string">&quot;repeat&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__getitem__&quot;</span>], <span class="string">&quot;Py_sq_item&quot;</span>, <span class="string">&quot;getitem&quot;</span>),
+        <span class="ident">SlotDef::new</span>(
             <span class="kw-2">&amp;</span>[<span class="string">&quot;__setitem__&quot;</span>, <span class="string">&quot;__delitem__&quot;</span>],
             <span class="string">&quot;Py_sq_ass_item&quot;</span>,
             <span class="string">&quot;setdelitem&quot;</span>,
         ),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__setitem__&quot;</span>], <span class="string">&quot;Py_sq_ass_item&quot;</span>, <span class="string">&quot;setitem&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__delitem__&quot;</span>], <span class="string">&quot;Py_sq_ass_item&quot;</span>, <span class="string">&quot;delitem&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__contains__&quot;</span>], <span class="string">&quot;Py_sq_contains&quot;</span>, <span class="string">&quot;contains&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__setitem__&quot;</span>], <span class="string">&quot;Py_sq_ass_item&quot;</span>, <span class="string">&quot;setitem&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__delitem__&quot;</span>], <span class="string">&quot;Py_sq_ass_item&quot;</span>, <span class="string">&quot;delitem&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__contains__&quot;</span>], <span class="string">&quot;Py_sq_contains&quot;</span>, <span class="string">&quot;contains&quot;</span>),
+        <span class="ident">SlotDef::new</span>(
             <span class="kw-2">&amp;</span>[<span class="string">&quot;__inplace_concat__&quot;</span>],
             <span class="string">&quot;Py_sq_inplace_concat&quot;</span>,
             <span class="string">&quot;inplace_concat&quot;</span>,
         ),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(
+        <span class="ident">SlotDef::new</span>(
             <span class="kw-2">&amp;</span>[<span class="string">&quot;__inplace_repeat__&quot;</span>],
             <span class="string">&quot;Py_sq_inplace_repeat&quot;</span>,
             <span class="string">&quot;inplace_repeat&quot;</span>,
@@ -1002,222 +1001,221 @@
     <span class="ident">slots_trait</span>: <span class="string">&quot;PyNumberProtocolSlots&quot;</span>,
     <span class="ident">slots_trait_slots</span>: <span class="string">&quot;number_protocol_slots&quot;</span>,
     <span class="ident">methods</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__add__&quot;</span>, <span class="string">&quot;PyNumberAddProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__sub__&quot;</span>, <span class="string">&quot;PyNumberSubProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__mul__&quot;</span>, <span class="string">&quot;PyNumberMulProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__matmul__&quot;</span>, <span class="string">&quot;PyNumberMatmulProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__truediv__&quot;</span>, <span class="string">&quot;PyNumberTruedivProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__floordiv__&quot;</span>, <span class="string">&quot;PyNumberFloordivProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__mod__&quot;</span>, <span class="string">&quot;PyNumberModProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__divmod__&quot;</span>, <span class="string">&quot;PyNumberDivmodProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__pow__&quot;</span>, <span class="string">&quot;PyNumberPowProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>, <span class="string">&quot;Modulo&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__lshift__&quot;</span>, <span class="string">&quot;PyNumberLShiftProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__rshift__&quot;</span>, <span class="string">&quot;PyNumberRShiftProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__and__&quot;</span>, <span class="string">&quot;PyNumberAndProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__xor__&quot;</span>, <span class="string">&quot;PyNumberXorProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__or__&quot;</span>, <span class="string">&quot;PyNumberOrProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__radd__&quot;</span>, <span class="string">&quot;PyNumberRAddProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__add__&quot;</span>, <span class="string">&quot;PyNumberAddProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__sub__&quot;</span>, <span class="string">&quot;PyNumberSubProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__mul__&quot;</span>, <span class="string">&quot;PyNumberMulProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__matmul__&quot;</span>, <span class="string">&quot;PyNumberMatmulProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__truediv__&quot;</span>, <span class="string">&quot;PyNumberTruedivProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__floordiv__&quot;</span>, <span class="string">&quot;PyNumberFloordivProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__mod__&quot;</span>, <span class="string">&quot;PyNumberModProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__divmod__&quot;</span>, <span class="string">&quot;PyNumberDivmodProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__pow__&quot;</span>, <span class="string">&quot;PyNumberPowProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>, <span class="string">&quot;Modulo&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__lshift__&quot;</span>, <span class="string">&quot;PyNumberLShiftProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__rshift__&quot;</span>, <span class="string">&quot;PyNumberRShiftProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__and__&quot;</span>, <span class="string">&quot;PyNumberAndProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__xor__&quot;</span>, <span class="string">&quot;PyNumberXorProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__or__&quot;</span>, <span class="string">&quot;PyNumberOrProtocol&quot;</span>).<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Left&quot;</span>, <span class="string">&quot;Right&quot;</span>]),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__radd__&quot;</span>, <span class="string">&quot;PyNumberRAddProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__rsub__&quot;</span>, <span class="string">&quot;PyNumberRSubProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__rsub__&quot;</span>, <span class="string">&quot;PyNumberRSubProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__rmul__&quot;</span>, <span class="string">&quot;PyNumberRMulProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__rmul__&quot;</span>, <span class="string">&quot;PyNumberRMulProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__rmatmul__&quot;</span>, <span class="string">&quot;PyNumberRMatmulProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__rmatmul__&quot;</span>, <span class="string">&quot;PyNumberRMatmulProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__rtruediv__&quot;</span>, <span class="string">&quot;PyNumberRTruedivProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__rtruediv__&quot;</span>, <span class="string">&quot;PyNumberRTruedivProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__rfloordiv__&quot;</span>, <span class="string">&quot;PyNumberRFloordivProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__rfloordiv__&quot;</span>, <span class="string">&quot;PyNumberRFloordivProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__rmod__&quot;</span>, <span class="string">&quot;PyNumberRModProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__rmod__&quot;</span>, <span class="string">&quot;PyNumberRModProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__rdivmod__&quot;</span>, <span class="string">&quot;PyNumberRDivmodProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__rdivmod__&quot;</span>, <span class="string">&quot;PyNumberRDivmodProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__rpow__&quot;</span>, <span class="string">&quot;PyNumberRPowProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__rpow__&quot;</span>, <span class="string">&quot;PyNumberRPowProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>, <span class="string">&quot;Modulo&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__rlshift__&quot;</span>, <span class="string">&quot;PyNumberRLShiftProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__rlshift__&quot;</span>, <span class="string">&quot;PyNumberRLShiftProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__rrshift__&quot;</span>, <span class="string">&quot;PyNumberRRShiftProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__rrshift__&quot;</span>, <span class="string">&quot;PyNumberRRShiftProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__rand__&quot;</span>, <span class="string">&quot;PyNumberRAndProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__rand__&quot;</span>, <span class="string">&quot;PyNumberRAndProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__rxor__&quot;</span>, <span class="string">&quot;PyNumberRXorProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__rxor__&quot;</span>, <span class="string">&quot;PyNumberRXorProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__ror__&quot;</span>, <span class="string">&quot;PyNumberROrProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__ror__&quot;</span>, <span class="string">&quot;PyNumberROrProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__iadd__&quot;</span>, <span class="string">&quot;PyNumberIAddProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__iadd__&quot;</span>, <span class="string">&quot;PyNumberIAddProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__isub__&quot;</span>, <span class="string">&quot;PyNumberISubProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__isub__&quot;</span>, <span class="string">&quot;PyNumberISubProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__imul__&quot;</span>, <span class="string">&quot;PyNumberIMulProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__imul__&quot;</span>, <span class="string">&quot;PyNumberIMulProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__imatmul__&quot;</span>, <span class="string">&quot;PyNumberIMatmulProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__imatmul__&quot;</span>, <span class="string">&quot;PyNumberIMatmulProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__itruediv__&quot;</span>, <span class="string">&quot;PyNumberITruedivProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__itruediv__&quot;</span>, <span class="string">&quot;PyNumberITruedivProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__ifloordiv__&quot;</span>, <span class="string">&quot;PyNumberIFloordivProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__ifloordiv__&quot;</span>, <span class="string">&quot;PyNumberIFloordivProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__imod__&quot;</span>, <span class="string">&quot;PyNumberIModProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__imod__&quot;</span>, <span class="string">&quot;PyNumberIModProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__ipow__&quot;</span>, <span class="string">&quot;PyNumberIPowProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__ipow__&quot;</span>, <span class="string">&quot;PyNumberIPowProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__ilshift__&quot;</span>, <span class="string">&quot;PyNumberILShiftProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__ilshift__&quot;</span>, <span class="string">&quot;PyNumberILShiftProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__irshift__&quot;</span>, <span class="string">&quot;PyNumberIRShiftProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__irshift__&quot;</span>, <span class="string">&quot;PyNumberIRShiftProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__iand__&quot;</span>, <span class="string">&quot;PyNumberIAndProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__iand__&quot;</span>, <span class="string">&quot;PyNumberIAndProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__ixor__&quot;</span>, <span class="string">&quot;PyNumberIXorProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__ixor__&quot;</span>, <span class="string">&quot;PyNumberIXorProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__ior__&quot;</span>, <span class="string">&quot;PyNumberIOrProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__ior__&quot;</span>, <span class="string">&quot;PyNumberIOrProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;Other&quot;</span>])
             .<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__neg__&quot;</span>, <span class="string">&quot;PyNumberNegProtocol&quot;</span>).<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__pos__&quot;</span>, <span class="string">&quot;PyNumberPosProtocol&quot;</span>).<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__abs__&quot;</span>, <span class="string">&quot;PyNumberAbsProtocol&quot;</span>).<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__invert__&quot;</span>, <span class="string">&quot;PyNumberInvertProtocol&quot;</span>).<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__complex__&quot;</span>, <span class="string">&quot;PyNumberComplexProtocol&quot;</span>).<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__int__&quot;</span>, <span class="string">&quot;PyNumberIntProtocol&quot;</span>).<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__float__&quot;</span>, <span class="string">&quot;PyNumberFloatProtocol&quot;</span>).<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__index__&quot;</span>, <span class="string">&quot;PyNumberIndexProtocol&quot;</span>).<span class="ident">has_self</span>(),
-        <span class="ident">MethodProto</span>::<span class="ident">new</span>(<span class="string">&quot;__round__&quot;</span>, <span class="string">&quot;PyNumberRoundProtocol&quot;</span>)
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__neg__&quot;</span>, <span class="string">&quot;PyNumberNegProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__pos__&quot;</span>, <span class="string">&quot;PyNumberPosProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__abs__&quot;</span>, <span class="string">&quot;PyNumberAbsProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__invert__&quot;</span>, <span class="string">&quot;PyNumberInvertProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__complex__&quot;</span>, <span class="string">&quot;PyNumberComplexProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__int__&quot;</span>, <span class="string">&quot;PyNumberIntProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__float__&quot;</span>, <span class="string">&quot;PyNumberFloatProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__index__&quot;</span>, <span class="string">&quot;PyNumberIndexProtocol&quot;</span>).<span class="ident">has_self</span>(),
+        <span class="ident">MethodProto::new</span>(<span class="string">&quot;__round__&quot;</span>, <span class="string">&quot;PyNumberRoundProtocol&quot;</span>)
             .<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;NDigits&quot;</span>])
             .<span class="ident">has_self</span>(),
     ],
     <span class="ident">py_methods</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">PyMethod</span>::<span class="ident">coexist</span>(<span class="string">&quot;__radd__&quot;</span>, <span class="string">&quot;PyNumberRAddProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">coexist</span>(<span class="string">&quot;__rsub__&quot;</span>, <span class="string">&quot;PyNumberRSubProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">coexist</span>(<span class="string">&quot;__rmul__&quot;</span>, <span class="string">&quot;PyNumberRMulProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">coexist</span>(<span class="string">&quot;__rmatmul__&quot;</span>, <span class="string">&quot;PyNumberRMatmulProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">coexist</span>(<span class="string">&quot;__rtruediv__&quot;</span>, <span class="string">&quot;PyNumberRTruedivProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">coexist</span>(<span class="string">&quot;__rfloordiv__&quot;</span>, <span class="string">&quot;PyNumberRFloordivProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">coexist</span>(<span class="string">&quot;__rmod__&quot;</span>, <span class="string">&quot;PyNumberRModProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">coexist</span>(<span class="string">&quot;__rdivmod__&quot;</span>, <span class="string">&quot;PyNumberRDivmodProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">coexist</span>(<span class="string">&quot;__rpow__&quot;</span>, <span class="string">&quot;PyNumberRPowProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">coexist</span>(<span class="string">&quot;__rlshift__&quot;</span>, <span class="string">&quot;PyNumberRLShiftProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">coexist</span>(<span class="string">&quot;__rrshift__&quot;</span>, <span class="string">&quot;PyNumberRRShiftProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">coexist</span>(<span class="string">&quot;__rand__&quot;</span>, <span class="string">&quot;PyNumberRAndProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">coexist</span>(<span class="string">&quot;__rxor__&quot;</span>, <span class="string">&quot;PyNumberRXorProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">coexist</span>(<span class="string">&quot;__ror__&quot;</span>, <span class="string">&quot;PyNumberROrProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">new</span>(<span class="string">&quot;__complex__&quot;</span>, <span class="string">&quot;PyNumberComplexProtocolImpl&quot;</span>),
-        <span class="ident">PyMethod</span>::<span class="ident">new</span>(<span class="string">&quot;__round__&quot;</span>, <span class="string">&quot;PyNumberRoundProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::coexist</span>(<span class="string">&quot;__radd__&quot;</span>, <span class="string">&quot;PyNumberRAddProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::coexist</span>(<span class="string">&quot;__rsub__&quot;</span>, <span class="string">&quot;PyNumberRSubProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::coexist</span>(<span class="string">&quot;__rmul__&quot;</span>, <span class="string">&quot;PyNumberRMulProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::coexist</span>(<span class="string">&quot;__rmatmul__&quot;</span>, <span class="string">&quot;PyNumberRMatmulProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::coexist</span>(<span class="string">&quot;__rtruediv__&quot;</span>, <span class="string">&quot;PyNumberRTruedivProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::coexist</span>(<span class="string">&quot;__rfloordiv__&quot;</span>, <span class="string">&quot;PyNumberRFloordivProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::coexist</span>(<span class="string">&quot;__rmod__&quot;</span>, <span class="string">&quot;PyNumberRModProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::coexist</span>(<span class="string">&quot;__rdivmod__&quot;</span>, <span class="string">&quot;PyNumberRDivmodProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::coexist</span>(<span class="string">&quot;__rpow__&quot;</span>, <span class="string">&quot;PyNumberRPowProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::coexist</span>(<span class="string">&quot;__rlshift__&quot;</span>, <span class="string">&quot;PyNumberRLShiftProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::coexist</span>(<span class="string">&quot;__rrshift__&quot;</span>, <span class="string">&quot;PyNumberRRShiftProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::coexist</span>(<span class="string">&quot;__rand__&quot;</span>, <span class="string">&quot;PyNumberRAndProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::coexist</span>(<span class="string">&quot;__rxor__&quot;</span>, <span class="string">&quot;PyNumberRXorProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::coexist</span>(<span class="string">&quot;__ror__&quot;</span>, <span class="string">&quot;PyNumberROrProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::new</span>(<span class="string">&quot;__complex__&quot;</span>, <span class="string">&quot;PyNumberComplexProtocolImpl&quot;</span>),
+        <span class="ident">PyMethod::new</span>(<span class="string">&quot;__round__&quot;</span>, <span class="string">&quot;PyNumberRoundProtocolImpl&quot;</span>),
     ],
     <span class="ident">slot_defs</span>: <span class="kw-2">&amp;</span>[
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__add__&quot;</span>, <span class="string">&quot;__radd__&quot;</span>], <span class="string">&quot;Py_nb_add&quot;</span>, <span class="string">&quot;add_radd&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__add__&quot;</span>], <span class="string">&quot;Py_nb_add&quot;</span>, <span class="string">&quot;add&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__radd__&quot;</span>], <span class="string">&quot;Py_nb_add&quot;</span>, <span class="string">&quot;radd&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__sub__&quot;</span>, <span class="string">&quot;__rsub__&quot;</span>], <span class="string">&quot;Py_nb_subtract&quot;</span>, <span class="string">&quot;sub_rsub&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__sub__&quot;</span>], <span class="string">&quot;Py_nb_subtract&quot;</span>, <span class="string">&quot;sub&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rsub__&quot;</span>], <span class="string">&quot;Py_nb_subtract&quot;</span>, <span class="string">&quot;rsub&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__mul__&quot;</span>, <span class="string">&quot;__rmul__&quot;</span>], <span class="string">&quot;Py_nb_multiply&quot;</span>, <span class="string">&quot;mul_rmul&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__mul__&quot;</span>], <span class="string">&quot;Py_nb_multiply&quot;</span>, <span class="string">&quot;mul&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rmul__&quot;</span>], <span class="string">&quot;Py_nb_multiply&quot;</span>, <span class="string">&quot;rmul&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__mod__&quot;</span>], <span class="string">&quot;Py_nb_remainder&quot;</span>, <span class="string">&quot;mod_&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__add__&quot;</span>, <span class="string">&quot;__radd__&quot;</span>], <span class="string">&quot;Py_nb_add&quot;</span>, <span class="string">&quot;add_radd&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__add__&quot;</span>], <span class="string">&quot;Py_nb_add&quot;</span>, <span class="string">&quot;add&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__radd__&quot;</span>], <span class="string">&quot;Py_nb_add&quot;</span>, <span class="string">&quot;radd&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__sub__&quot;</span>, <span class="string">&quot;__rsub__&quot;</span>], <span class="string">&quot;Py_nb_subtract&quot;</span>, <span class="string">&quot;sub_rsub&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__sub__&quot;</span>], <span class="string">&quot;Py_nb_subtract&quot;</span>, <span class="string">&quot;sub&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rsub__&quot;</span>], <span class="string">&quot;Py_nb_subtract&quot;</span>, <span class="string">&quot;rsub&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__mul__&quot;</span>, <span class="string">&quot;__rmul__&quot;</span>], <span class="string">&quot;Py_nb_multiply&quot;</span>, <span class="string">&quot;mul_rmul&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__mul__&quot;</span>], <span class="string">&quot;Py_nb_multiply&quot;</span>, <span class="string">&quot;mul&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rmul__&quot;</span>], <span class="string">&quot;Py_nb_multiply&quot;</span>, <span class="string">&quot;rmul&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__mod__&quot;</span>], <span class="string">&quot;Py_nb_remainder&quot;</span>, <span class="string">&quot;mod_&quot;</span>),
+        <span class="ident">SlotDef::new</span>(
             <span class="kw-2">&amp;</span>[<span class="string">&quot;__divmod__&quot;</span>, <span class="string">&quot;__rdivmod__&quot;</span>],
             <span class="string">&quot;Py_nb_divmod&quot;</span>,
             <span class="string">&quot;divmod_rdivmod&quot;</span>,
         ),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__divmod__&quot;</span>], <span class="string">&quot;Py_nb_divmod&quot;</span>, <span class="string">&quot;divmod&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rdivmod__&quot;</span>], <span class="string">&quot;Py_nb_divmod&quot;</span>, <span class="string">&quot;rdivmod&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__pow__&quot;</span>, <span class="string">&quot;__rpow__&quot;</span>], <span class="string">&quot;Py_nb_power&quot;</span>, <span class="string">&quot;pow_rpow&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__pow__&quot;</span>], <span class="string">&quot;Py_nb_power&quot;</span>, <span class="string">&quot;pow&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rpow__&quot;</span>], <span class="string">&quot;Py_nb_power&quot;</span>, <span class="string">&quot;rpow&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__neg__&quot;</span>], <span class="string">&quot;Py_nb_negative&quot;</span>, <span class="string">&quot;neg&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__pos__&quot;</span>], <span class="string">&quot;Py_nb_positive&quot;</span>, <span class="string">&quot;pos&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__abs__&quot;</span>], <span class="string">&quot;Py_nb_absolute&quot;</span>, <span class="string">&quot;abs&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__invert__&quot;</span>], <span class="string">&quot;Py_nb_invert&quot;</span>, <span class="string">&quot;invert&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__divmod__&quot;</span>], <span class="string">&quot;Py_nb_divmod&quot;</span>, <span class="string">&quot;divmod&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rdivmod__&quot;</span>], <span class="string">&quot;Py_nb_divmod&quot;</span>, <span class="string">&quot;rdivmod&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__pow__&quot;</span>, <span class="string">&quot;__rpow__&quot;</span>], <span class="string">&quot;Py_nb_power&quot;</span>, <span class="string">&quot;pow_rpow&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__pow__&quot;</span>], <span class="string">&quot;Py_nb_power&quot;</span>, <span class="string">&quot;pow&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rpow__&quot;</span>], <span class="string">&quot;Py_nb_power&quot;</span>, <span class="string">&quot;rpow&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__neg__&quot;</span>], <span class="string">&quot;Py_nb_negative&quot;</span>, <span class="string">&quot;neg&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__pos__&quot;</span>], <span class="string">&quot;Py_nb_positive&quot;</span>, <span class="string">&quot;pos&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__abs__&quot;</span>], <span class="string">&quot;Py_nb_absolute&quot;</span>, <span class="string">&quot;abs&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__invert__&quot;</span>], <span class="string">&quot;Py_nb_invert&quot;</span>, <span class="string">&quot;invert&quot;</span>),
+        <span class="ident">SlotDef::new</span>(
             <span class="kw-2">&amp;</span>[<span class="string">&quot;__lshift__&quot;</span>, <span class="string">&quot;__rlshift__&quot;</span>],
             <span class="string">&quot;Py_nb_lshift&quot;</span>,
             <span class="string">&quot;lshift_rlshift&quot;</span>,
         ),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__lshift__&quot;</span>], <span class="string">&quot;Py_nb_lshift&quot;</span>, <span class="string">&quot;lshift&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rlshift__&quot;</span>], <span class="string">&quot;Py_nb_lshift&quot;</span>, <span class="string">&quot;rlshift&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__lshift__&quot;</span>], <span class="string">&quot;Py_nb_lshift&quot;</span>, <span class="string">&quot;lshift&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rlshift__&quot;</span>], <span class="string">&quot;Py_nb_lshift&quot;</span>, <span class="string">&quot;rlshift&quot;</span>),
+        <span class="ident">SlotDef::new</span>(
             <span class="kw-2">&amp;</span>[<span class="string">&quot;__rshift__&quot;</span>, <span class="string">&quot;__rrshift__&quot;</span>],
             <span class="string">&quot;Py_nb_rshift&quot;</span>,
             <span class="string">&quot;rshift_rrshift&quot;</span>,
         ),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rshift__&quot;</span>], <span class="string">&quot;Py_nb_rshift&quot;</span>, <span class="string">&quot;rshift&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rrshift__&quot;</span>], <span class="string">&quot;Py_nb_rshift&quot;</span>, <span class="string">&quot;rrshift&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__and__&quot;</span>, <span class="string">&quot;__rand__&quot;</span>], <span class="string">&quot;Py_nb_and&quot;</span>, <span class="string">&quot;and_rand&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__and__&quot;</span>], <span class="string">&quot;Py_nb_and&quot;</span>, <span class="string">&quot;and&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rand__&quot;</span>], <span class="string">&quot;Py_nb_and&quot;</span>, <span class="string">&quot;rand&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__xor__&quot;</span>, <span class="string">&quot;__rxor__&quot;</span>], <span class="string">&quot;Py_nb_xor&quot;</span>, <span class="string">&quot;xor_rxor&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__xor__&quot;</span>], <span class="string">&quot;Py_nb_xor&quot;</span>, <span class="string">&quot;xor&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rxor__&quot;</span>], <span class="string">&quot;Py_nb_xor&quot;</span>, <span class="string">&quot;rxor&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__or__&quot;</span>, <span class="string">&quot;__ror__&quot;</span>], <span class="string">&quot;Py_nb_or&quot;</span>, <span class="string">&quot;or_ror&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__or__&quot;</span>], <span class="string">&quot;Py_nb_or&quot;</span>, <span class="string">&quot;or&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__ror__&quot;</span>], <span class="string">&quot;Py_nb_or&quot;</span>, <span class="string">&quot;ror&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__int__&quot;</span>], <span class="string">&quot;Py_nb_int&quot;</span>, <span class="string">&quot;int&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__float__&quot;</span>], <span class="string">&quot;Py_nb_float&quot;</span>, <span class="string">&quot;float&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__iadd__&quot;</span>], <span class="string">&quot;Py_nb_inplace_add&quot;</span>, <span class="string">&quot;iadd&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__isub__&quot;</span>], <span class="string">&quot;Py_nb_inplace_subtract&quot;</span>, <span class="string">&quot;isub&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__imul__&quot;</span>], <span class="string">&quot;Py_nb_inplace_multiply&quot;</span>, <span class="string">&quot;imul&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__imod__&quot;</span>], <span class="string">&quot;Py_nb_inplace_remainder&quot;</span>, <span class="string">&quot;imod&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__ipow__&quot;</span>], <span class="string">&quot;Py_nb_inplace_power&quot;</span>, <span class="string">&quot;ipow&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__ilshift__&quot;</span>], <span class="string">&quot;Py_nb_inplace_lshift&quot;</span>, <span class="string">&quot;ilshift&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__irshift__&quot;</span>], <span class="string">&quot;Py_nb_inplace_rshift&quot;</span>, <span class="string">&quot;irshift&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__iand__&quot;</span>], <span class="string">&quot;Py_nb_inplace_and&quot;</span>, <span class="string">&quot;iand&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__ixor__&quot;</span>], <span class="string">&quot;Py_nb_inplace_xor&quot;</span>, <span class="string">&quot;ixor&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__ior__&quot;</span>], <span class="string">&quot;Py_nb_inplace_or&quot;</span>, <span class="string">&quot;ior&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rshift__&quot;</span>], <span class="string">&quot;Py_nb_rshift&quot;</span>, <span class="string">&quot;rshift&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rrshift__&quot;</span>], <span class="string">&quot;Py_nb_rshift&quot;</span>, <span class="string">&quot;rrshift&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__and__&quot;</span>, <span class="string">&quot;__rand__&quot;</span>], <span class="string">&quot;Py_nb_and&quot;</span>, <span class="string">&quot;and_rand&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__and__&quot;</span>], <span class="string">&quot;Py_nb_and&quot;</span>, <span class="string">&quot;and&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rand__&quot;</span>], <span class="string">&quot;Py_nb_and&quot;</span>, <span class="string">&quot;rand&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__xor__&quot;</span>, <span class="string">&quot;__rxor__&quot;</span>], <span class="string">&quot;Py_nb_xor&quot;</span>, <span class="string">&quot;xor_rxor&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__xor__&quot;</span>], <span class="string">&quot;Py_nb_xor&quot;</span>, <span class="string">&quot;xor&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rxor__&quot;</span>], <span class="string">&quot;Py_nb_xor&quot;</span>, <span class="string">&quot;rxor&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__or__&quot;</span>, <span class="string">&quot;__ror__&quot;</span>], <span class="string">&quot;Py_nb_or&quot;</span>, <span class="string">&quot;or_ror&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__or__&quot;</span>], <span class="string">&quot;Py_nb_or&quot;</span>, <span class="string">&quot;or&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__ror__&quot;</span>], <span class="string">&quot;Py_nb_or&quot;</span>, <span class="string">&quot;ror&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__int__&quot;</span>], <span class="string">&quot;Py_nb_int&quot;</span>, <span class="string">&quot;int&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__float__&quot;</span>], <span class="string">&quot;Py_nb_float&quot;</span>, <span class="string">&quot;float&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__iadd__&quot;</span>], <span class="string">&quot;Py_nb_inplace_add&quot;</span>, <span class="string">&quot;iadd&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__isub__&quot;</span>], <span class="string">&quot;Py_nb_inplace_subtract&quot;</span>, <span class="string">&quot;isub&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__imul__&quot;</span>], <span class="string">&quot;Py_nb_inplace_multiply&quot;</span>, <span class="string">&quot;imul&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__imod__&quot;</span>], <span class="string">&quot;Py_nb_inplace_remainder&quot;</span>, <span class="string">&quot;imod&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__ipow__&quot;</span>], <span class="string">&quot;Py_nb_inplace_power&quot;</span>, <span class="string">&quot;ipow&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__ilshift__&quot;</span>], <span class="string">&quot;Py_nb_inplace_lshift&quot;</span>, <span class="string">&quot;ilshift&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__irshift__&quot;</span>], <span class="string">&quot;Py_nb_inplace_rshift&quot;</span>, <span class="string">&quot;irshift&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__iand__&quot;</span>], <span class="string">&quot;Py_nb_inplace_and&quot;</span>, <span class="string">&quot;iand&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__ixor__&quot;</span>], <span class="string">&quot;Py_nb_inplace_xor&quot;</span>, <span class="string">&quot;ixor&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__ior__&quot;</span>], <span class="string">&quot;Py_nb_inplace_or&quot;</span>, <span class="string">&quot;ior&quot;</span>),
+        <span class="ident">SlotDef::new</span>(
             <span class="kw-2">&amp;</span>[<span class="string">&quot;__floordiv__&quot;</span>, <span class="string">&quot;__rfloordiv__&quot;</span>],
             <span class="string">&quot;Py_nb_floor_divide&quot;</span>,
             <span class="string">&quot;floordiv_rfloordiv&quot;</span>,
         ),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__floordiv__&quot;</span>], <span class="string">&quot;Py_nb_floor_divide&quot;</span>, <span class="string">&quot;floordiv&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rfloordiv__&quot;</span>], <span class="string">&quot;Py_nb_floor_divide&quot;</span>, <span class="string">&quot;rfloordiv&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__floordiv__&quot;</span>], <span class="string">&quot;Py_nb_floor_divide&quot;</span>, <span class="string">&quot;floordiv&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rfloordiv__&quot;</span>], <span class="string">&quot;Py_nb_floor_divide&quot;</span>, <span class="string">&quot;rfloordiv&quot;</span>),
+        <span class="ident">SlotDef::new</span>(
             <span class="kw-2">&amp;</span>[<span class="string">&quot;__truediv__&quot;</span>, <span class="string">&quot;__rtruediv__&quot;</span>],
             <span class="string">&quot;Py_nb_true_divide&quot;</span>,
             <span class="string">&quot;truediv_rtruediv&quot;</span>,
         ),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__truediv__&quot;</span>], <span class="string">&quot;Py_nb_true_divide&quot;</span>, <span class="string">&quot;truediv&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rtruediv__&quot;</span>], <span class="string">&quot;Py_nb_true_divide&quot;</span>, <span class="string">&quot;rtruediv&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__truediv__&quot;</span>], <span class="string">&quot;Py_nb_true_divide&quot;</span>, <span class="string">&quot;truediv&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rtruediv__&quot;</span>], <span class="string">&quot;Py_nb_true_divide&quot;</span>, <span class="string">&quot;rtruediv&quot;</span>),
+        <span class="ident">SlotDef::new</span>(
             <span class="kw-2">&amp;</span>[<span class="string">&quot;__ifloordiv__&quot;</span>],
             <span class="string">&quot;Py_nb_inplace_floor_divide&quot;</span>,
             <span class="string">&quot;ifloordiv&quot;</span>,
         ),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__itruediv__&quot;</span>], <span class="string">&quot;Py_nb_inplace_true_divide&quot;</span>, <span class="string">&quot;itruediv&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__index__&quot;</span>], <span class="string">&quot;Py_nb_index&quot;</span>, <span class="string">&quot;index&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__itruediv__&quot;</span>], <span class="string">&quot;Py_nb_inplace_true_divide&quot;</span>, <span class="string">&quot;itruediv&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__index__&quot;</span>], <span class="string">&quot;Py_nb_index&quot;</span>, <span class="string">&quot;index&quot;</span>),
+        <span class="ident">SlotDef::new</span>(
             <span class="kw-2">&amp;</span>[<span class="string">&quot;__matmul__&quot;</span>, <span class="string">&quot;__rmatmul__&quot;</span>],
             <span class="string">&quot;Py_nb_matrix_multiply&quot;</span>,
             <span class="string">&quot;matmul_rmatmul&quot;</span>,
         ),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__matmul__&quot;</span>], <span class="string">&quot;Py_nb_matrix_multiply&quot;</span>, <span class="string">&quot;matmul&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rmatmul__&quot;</span>], <span class="string">&quot;Py_nb_matrix_multiply&quot;</span>, <span class="string">&quot;rmatmul&quot;</span>),
-        <span class="ident">SlotDef</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__imatmul__&quot;</span>], <span class="string">&quot;Py_nb_inplace_matrix_multiply&quot;</span>, <span class="string">&quot;imatmul&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__matmul__&quot;</span>], <span class="string">&quot;Py_nb_matrix_multiply&quot;</span>, <span class="string">&quot;matmul&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__rmatmul__&quot;</span>], <span class="string">&quot;Py_nb_matrix_multiply&quot;</span>, <span class="string">&quot;rmatmul&quot;</span>),
+        <span class="ident">SlotDef::new</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;__imatmul__&quot;</span>], <span class="string">&quot;Py_nb_inplace_matrix_multiply&quot;</span>, <span class="string">&quot;imatmul&quot;</span>),
     ],
 };
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pyo3_macros_backend"></div>
-    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pyo3_macros_backend" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

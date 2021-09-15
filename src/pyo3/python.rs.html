@@ -1,7 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/pyo3-0.13.2/src/python.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>python.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/pyo3-0.13.2/src/python.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>python.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../pyo3/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../pyo3/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -822,19 +821,19 @@
 <span id="819">819</span>
 <span id="820">820</span>
 <span id="821">821</span>
-</pre><div class="example-wrap"><pre class="rust ">
+</pre><pre class="rust">
 <span class="comment">// Copyright (c) 2017-present PyO3 Project and Contributors</span>
 <span class="comment">//</span>
 <span class="comment">// based on Daniel Grunwald&#39;s https://github.com/dgrunwald/rust-cpython</span>
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">err</span>::{<span class="ident">PyDowncastError</span>, <span class="ident">PyErr</span>, <span class="ident">PyResult</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">gil</span>::{<span class="self">self</span>, <span class="ident">GILGuard</span>, <span class="ident">GILPool</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">type_object</span>::{<span class="ident">PyTypeInfo</span>, <span class="ident">PyTypeObject</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="ident">PyAny</span>, <span class="ident">PyDict</span>, <span class="ident">PyModule</span>, <span class="ident">PyType</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::err</span>::{<span class="ident">PyDowncastError</span>, <span class="ident">PyErr</span>, <span class="ident">PyResult</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::gil</span>::{<span class="self">self</span>, <span class="ident">GILGuard</span>, <span class="ident">GILPool</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::type_object</span>::{<span class="ident">PyTypeInfo</span>, <span class="ident">PyTypeObject</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::types</span>::{<span class="ident">PyAny</span>, <span class="ident">PyDict</span>, <span class="ident">PyModule</span>, <span class="ident">PyType</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ffi</span>, <span class="ident">AsPyPointer</span>, <span class="ident">FromPyPointer</span>, <span class="ident">IntoPyPointer</span>, <span class="ident">PyNativeType</span>, <span class="ident">PyObject</span>, <span class="ident">PyTryFrom</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::{<span class="ident">CStr</span>, <span class="ident">CString</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::{<span class="ident">c_char</span>, <span class="ident">c_int</span>};
+<span class="kw">use</span> <span class="ident">std::ffi</span>::{<span class="ident">CStr</span>, <span class="ident">CString</span>};
+<span class="kw">use</span> <span class="ident">std::marker::PhantomData</span>;
+<span class="kw">use</span> <span class="ident">std::os::raw</span>::{<span class="ident">c_char</span>, <span class="ident">c_int</span>};
 
 <span class="doccomment">/// Represents the major, minor, and patch (if any) versions of this interpreter.</span>
 <span class="doccomment">///</span>
@@ -867,7 +866,7 @@
         <span class="kw">let</span> <span class="ident">major_str</span> <span class="op">=</span> <span class="ident">parts</span>.<span class="ident">next</span>().<span class="ident">expect</span>(<span class="string">&quot;Python major version missing&quot;</span>);
         <span class="kw">let</span> <span class="ident">minor_str</span> <span class="op">=</span> <span class="ident">parts</span>.<span class="ident">next</span>().<span class="ident">expect</span>(<span class="string">&quot;Python minor version missing&quot;</span>);
         <span class="kw">let</span> <span class="ident">patch_str</span> <span class="op">=</span> <span class="ident">parts</span>.<span class="ident">next</span>();
-        <span class="macro">assert</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(
             <span class="ident">parts</span>.<span class="ident">next</span>().<span class="ident">is_none</span>(),
             <span class="string">&quot;Python version string has too many parts&quot;</span>
         );
@@ -877,7 +876,7 @@
             .<span class="ident">expect</span>(<span class="string">&quot;Python major version not an integer&quot;</span>);
         <span class="kw">let</span> (<span class="ident">minor</span>, <span class="ident">suffix</span>) <span class="op">=</span> <span class="ident">split_and_parse_number</span>(<span class="ident">minor_str</span>);
         <span class="kw">if</span> <span class="ident">suffix</span>.<span class="ident">is_some</span>() {
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">patch_str</span>.<span class="ident">is_none</span>());
+            <span class="macro">assert!</span>(<span class="ident">patch_str</span>.<span class="ident">is_none</span>());
             <span class="kw">return</span> <span class="ident">PythonVersionInfo</span> {
                 <span class="ident">major</span>,
                 <span class="ident">minor</span>,
@@ -909,13 +908,13 @@
 }
 
 <span class="kw">impl</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">u8</span>)<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PythonVersionInfo</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>(<span class="ident">u8</span>, <span class="ident">u8</span>)) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>(<span class="ident">u8</span>, <span class="ident">u8</span>)) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">std::cmp::Ordering</span><span class="op">&gt;</span> {
         (<span class="self">self</span>.<span class="ident">major</span>, <span class="self">self</span>.<span class="ident">minor</span>).<span class="ident">partial_cmp</span>(<span class="ident">other</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">u8</span>, <span class="ident">u8</span>)<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PythonVersionInfo</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>(<span class="ident">u8</span>, <span class="ident">u8</span>, <span class="ident">u8</span>)) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>(<span class="ident">u8</span>, <span class="ident">u8</span>, <span class="ident">u8</span>)) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">std::cmp::Ordering</span><span class="op">&gt;</span> {
         (<span class="self">self</span>.<span class="ident">major</span>, <span class="self">self</span>.<span class="ident">minor</span>, <span class="self">self</span>.<span class="ident">patch</span>).<span class="ident">partial_cmp</span>(<span class="ident">other</span>)
     }
 }
@@ -979,7 +978,7 @@
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span> <span class="ident">FnOnce</span>(<span class="ident">Python</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>,
     {
-        <span class="ident">f</span>(<span class="kw">unsafe</span> { <span class="ident">gil</span>::<span class="ident">ensure_gil</span>().<span class="ident">python</span>() })
+        <span class="ident">f</span>(<span class="kw">unsafe</span> { <span class="ident">gil::ensure_gil</span>().<span class="ident">python</span>() })
     }
 }
 
@@ -1007,7 +1006,7 @@
     <span class="doccomment">///   initialized.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">acquire_gil</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">GILGuard</span> {
-        <span class="ident">GILGuard</span>::<span class="ident">acquire</span>()
+        <span class="ident">GILGuard::acquire</span>()
     }
 
     <span class="doccomment">/// Temporarily releases the `GIL`, thus allowing other Python threads to run.</span>
@@ -1077,24 +1076,24 @@
     {
         <span class="comment">// The `Send` bound on the closure prevents the user from</span>
         <span class="comment">// transferring the `Python` token into the closure.</span>
-        <span class="kw">let</span> <span class="ident">count</span> <span class="op">=</span> <span class="ident">gil</span>::<span class="ident">GIL_COUNT</span>.<span class="ident">with</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">replace</span>(<span class="number">0</span>));
-        <span class="kw">let</span> <span class="ident">tstate</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">PyEval_SaveThread</span>() };
+        <span class="kw">let</span> <span class="ident">count</span> <span class="op">=</span> <span class="ident">gil::GIL_COUNT</span>.<span class="ident">with</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">replace</span>(<span class="number">0</span>));
+        <span class="kw">let</span> <span class="ident">tstate</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi::PyEval_SaveThread</span>() };
         <span class="comment">// Unwinding right here corrupts the Python interpreter state and leads to weird</span>
         <span class="comment">// crashes such as stack overflows. We will catch the unwind and resume as soon as</span>
         <span class="comment">// we&#39;ve restored the GIL state.</span>
         <span class="comment">//</span>
         <span class="comment">// Because we will resume unwinding as soon as the GIL state is fixed, we can assert</span>
         <span class="comment">// that the closure is unwind safe.</span>
-        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">panic</span>::<span class="ident">catch_unwind</span>(<span class="ident">std</span>::<span class="ident">panic</span>::<span class="ident">AssertUnwindSafe</span>(<span class="ident">f</span>));
+        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">std::panic::catch_unwind</span>(<span class="ident">std::panic::AssertUnwindSafe</span>(<span class="ident">f</span>));
 
         <span class="comment">// Restore GIL state</span>
-        <span class="ident">gil</span>::<span class="ident">GIL_COUNT</span>.<span class="ident">with</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">set</span>(<span class="ident">count</span>));
+        <span class="ident">gil::GIL_COUNT</span>.<span class="ident">with</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">set</span>(<span class="ident">count</span>));
         <span class="kw">unsafe</span> {
-            <span class="ident">ffi</span>::<span class="ident">PyEval_RestoreThread</span>(<span class="ident">tstate</span>);
+            <span class="ident">ffi::PyEval_RestoreThread</span>(<span class="ident">tstate</span>);
         }
 
         <span class="comment">// Now that the GIL state has been safely reset, we can unwind if a panic was caught.</span>
-        <span class="ident">result</span>.<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="ident">payload</span><span class="op">|</span> <span class="ident">std</span>::<span class="ident">panic</span>::<span class="ident">resume_unwind</span>(<span class="ident">payload</span>))
+        <span class="ident">result</span>.<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="ident">payload</span><span class="op">|</span> <span class="ident">std::panic::resume_unwind</span>(<span class="ident">payload</span>))
     }
 
     <span class="doccomment">/// Evaluates a Python expression in the given context and returns the result.</span>
@@ -1117,7 +1116,7 @@
         <span class="ident">globals</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">PyDict</span><span class="op">&gt;</span>,
         <span class="ident">locals</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">PyDict</span><span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">PyAny</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">run_code</span>(<span class="ident">code</span>, <span class="ident">ffi</span>::<span class="ident">Py_eval_input</span>, <span class="ident">globals</span>, <span class="ident">locals</span>)
+        <span class="self">self</span>.<span class="ident">run_code</span>(<span class="ident">code</span>, <span class="ident">ffi::Py_eval_input</span>, <span class="ident">globals</span>, <span class="ident">locals</span>)
     }
 
     <span class="doccomment">/// Executes one or more Python statements in the given context.</span>
@@ -1150,9 +1149,9 @@
         <span class="ident">globals</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">PyDict</span><span class="op">&gt;</span>,
         <span class="ident">locals</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">PyDict</span><span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">run_code</span>(<span class="ident">code</span>, <span class="ident">ffi</span>::<span class="ident">Py_file_input</span>, <span class="ident">globals</span>, <span class="ident">locals</span>);
+        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">run_code</span>(<span class="ident">code</span>, <span class="ident">ffi::Py_file_input</span>, <span class="ident">globals</span>, <span class="ident">locals</span>);
         <span class="ident">res</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">obj</span><span class="op">|</span> {
-            <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">obj</span>.<span class="ident">is_none</span>());
+            <span class="macro">debug_assert!</span>(<span class="ident">obj</span>.<span class="ident">is_none</span>());
         })
     }
 
@@ -1170,23 +1169,23 @@
         <span class="ident">globals</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">PyDict</span><span class="op">&gt;</span>,
         <span class="ident">locals</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">PyDict</span><span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">PyAny</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">code</span> <span class="op">=</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">code</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">code</span> <span class="op">=</span> <span class="ident">CString::new</span>(<span class="ident">code</span>)<span class="question-mark">?</span>;
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">mptr</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">PyImport_AddModule</span>(<span class="string">&quot;__main__\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span>);
+            <span class="kw">let</span> <span class="ident">mptr</span> <span class="op">=</span> <span class="ident">ffi::PyImport_AddModule</span>(<span class="string">&quot;__main__\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span>);
             <span class="kw">if</span> <span class="ident">mptr</span>.<span class="ident">is_null</span>() {
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">PyErr</span>::<span class="ident">fetch</span>(<span class="self">self</span>));
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">PyErr::fetch</span>(<span class="self">self</span>));
             }
 
             <span class="kw">let</span> <span class="ident">globals</span> <span class="op">=</span> <span class="ident">globals</span>
-                .<span class="ident">map</span>(<span class="ident">AsPyPointer</span>::<span class="ident">as_ptr</span>)
-                .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">ffi</span>::<span class="ident">PyModule_GetDict</span>(<span class="ident">mptr</span>));
-            <span class="kw">let</span> <span class="ident">locals</span> <span class="op">=</span> <span class="ident">locals</span>.<span class="ident">map</span>(<span class="ident">AsPyPointer</span>::<span class="ident">as_ptr</span>).<span class="ident">unwrap_or</span>(<span class="ident">globals</span>);
+                .<span class="ident">map</span>(<span class="ident">AsPyPointer::as_ptr</span>)
+                .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">ffi::PyModule_GetDict</span>(<span class="ident">mptr</span>));
+            <span class="kw">let</span> <span class="ident">locals</span> <span class="op">=</span> <span class="ident">locals</span>.<span class="ident">map</span>(<span class="ident">AsPyPointer::as_ptr</span>).<span class="ident">unwrap_or</span>(<span class="ident">globals</span>);
 
-            <span class="kw">let</span> <span class="ident">code_obj</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">Py_CompileString</span>(<span class="ident">code</span>.<span class="ident">as_ptr</span>(), <span class="string">&quot;&lt;string&gt;\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw">_</span>, <span class="ident">start</span>);
+            <span class="kw">let</span> <span class="ident">code_obj</span> <span class="op">=</span> <span class="ident">ffi::Py_CompileString</span>(<span class="ident">code</span>.<span class="ident">as_ptr</span>(), <span class="string">&quot;&lt;string&gt;\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw">_</span>, <span class="ident">start</span>);
             <span class="kw">if</span> <span class="ident">code_obj</span>.<span class="ident">is_null</span>() {
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">PyErr</span>::<span class="ident">fetch</span>(<span class="self">self</span>));
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">PyErr::fetch</span>(<span class="self">self</span>));
             }
-            <span class="kw">let</span> <span class="ident">res_ptr</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">PyEval_EvalCode</span>(<span class="ident">code_obj</span>, <span class="ident">globals</span>, <span class="ident">locals</span>);
+            <span class="kw">let</span> <span class="ident">res_ptr</span> <span class="op">=</span> <span class="ident">ffi::PyEval_EvalCode</span>(<span class="ident">code_obj</span>, <span class="ident">globals</span>, <span class="ident">locals</span>);
 
             <span class="self">self</span>.<span class="ident">from_owned_ptr_or_err</span>(<span class="ident">res_ptr</span>)
         }
@@ -1197,26 +1196,26 @@
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">PyTypeObject</span>,
     {
-        <span class="ident">T</span>::<span class="ident">type_object</span>(<span class="self">self</span>)
+        <span class="ident">T::type_object</span>(<span class="self">self</span>)
     }
 
     <span class="doccomment">/// Imports the Python module with the specified name.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">import</span>(<span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">PyModule</span><span class="op">&gt;</span> {
-        <span class="ident">PyModule</span>::<span class="ident">import</span>(<span class="self">self</span>, <span class="ident">name</span>)
+        <span class="ident">PyModule::import</span>(<span class="self">self</span>, <span class="ident">name</span>)
     }
 
     <span class="doccomment">/// Gets the Python builtin value `None`.</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_snake_case</span>)]</span> <span class="comment">// the Python keyword starts with uppercase</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="prelude-val">None</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyObject</span> {
-        <span class="kw">unsafe</span> { <span class="ident">PyObject</span>::<span class="ident">from_borrowed_ptr</span>(<span class="self">self</span>, <span class="ident">ffi</span>::<span class="ident">Py_None</span>()) }
+        <span class="kw">unsafe</span> { <span class="ident">PyObject::from_borrowed_ptr</span>(<span class="self">self</span>, <span class="ident">ffi::Py_None</span>()) }
     }
 
     <span class="doccomment">/// Gets the Python builtin value `NotImplemented`.</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_snake_case</span>)]</span> <span class="comment">// the Python keyword starts with uppercase</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">NotImplemented</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyObject</span> {
-        <span class="kw">unsafe</span> { <span class="ident">PyObject</span>::<span class="ident">from_borrowed_ptr</span>(<span class="self">self</span>, <span class="ident">ffi</span>::<span class="ident">Py_NotImplemented</span>()) }
+        <span class="kw">unsafe</span> { <span class="ident">PyObject::from_borrowed_ptr</span>(<span class="self">self</span>, <span class="ident">ffi::Py_NotImplemented</span>()) }
     }
 
     <span class="doccomment">/// Gets the running Python interpreter version as a string.</span>
@@ -1234,7 +1233,7 @@
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">str</span> {
         <span class="kw">unsafe</span> {
-            <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">ffi</span>::<span class="ident">Py_GetVersion</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>)
+            <span class="ident">CStr::from_ptr</span>(<span class="ident">ffi::Py_GetVersion</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>)
                 .<span class="ident">to_str</span>()
                 .<span class="ident">expect</span>(<span class="string">&quot;Python version string not UTF-8&quot;</span>)
         }
@@ -1259,7 +1258,7 @@
         <span class="comment">// version number.</span>
         <span class="kw">let</span> <span class="ident">version_number_str</span> <span class="op">=</span> <span class="ident">version_str</span>.<span class="ident">split</span>(<span class="string">&#39; &#39;</span>).<span class="ident">next</span>().<span class="ident">unwrap_or</span>(<span class="ident">version_str</span>);
 
-        <span class="ident">PythonVersionInfo</span>::<span class="ident">from_str</span>(<span class="ident">version_number_str</span>)
+        <span class="ident">PythonVersionInfo::from_str</span>(<span class="ident">version_number_str</span>)
     }
 
     <span class="doccomment">/// Registers the object in the release pool, and tries to downcast to specific type.</span>
@@ -1268,7 +1267,7 @@
         <span class="ident">T</span>: <span class="ident">PyTryFrom</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>,
     {
         <span class="kw">let</span> <span class="ident">any</span>: <span class="kw-2">&amp;</span><span class="ident">PyAny</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">from_owned_ptr</span>(<span class="ident">obj</span>.<span class="ident">into_ptr</span>()) };
-        <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">PyTryFrom</span><span class="op">&gt;</span>::<span class="ident">try_from</span>(<span class="ident">any</span>)
+        <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">PyTryFrom</span><span class="op">&gt;</span><span class="ident">::try_from</span>(<span class="ident">any</span>)
     }
 
     <span class="doccomment">/// Registers the object in the release pool, and does an unchecked downcast</span>
@@ -1282,7 +1281,7 @@
         <span class="ident">T</span>: <span class="ident">PyNativeType</span> <span class="op">+</span> <span class="ident">PyTypeInfo</span>,
     {
         <span class="kw">let</span> <span class="ident">any</span>: <span class="kw-2">&amp;</span><span class="ident">PyAny</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">from_owned_ptr</span>(<span class="ident">obj</span>.<span class="ident">into_ptr</span>());
-        <span class="ident">T</span>::<span class="ident">unchecked_downcast</span>(<span class="ident">any</span>)
+        <span class="ident">T::unchecked_downcast</span>(<span class="ident">any</span>)
     }
 
     <span class="doccomment">/// Registers the object pointer in the release pool,</span>
@@ -1291,12 +1290,12 @@
     <span class="doccomment">/// # Safety</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Callers must ensure that ensure that the cast is valid.</span>
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">wrong_self_convention</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_owned_ptr</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">PyObject</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">T</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::wrong_self_convention</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_owned_ptr</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::PyObject</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">T</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">FromPyPointer</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>,
     {
-        <span class="ident">FromPyPointer</span>::<span class="ident">from_owned_ptr</span>(<span class="self">self</span>, <span class="ident">ptr</span>)
+        <span class="ident">FromPyPointer::from_owned_ptr</span>(<span class="self">self</span>, <span class="ident">ptr</span>)
     }
 
     <span class="doccomment">/// Registers the owned object pointer in the release pool.</span>
@@ -1307,12 +1306,12 @@
     <span class="doccomment">/// # Safety</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Callers must ensure that ensure that the cast is valid.</span>
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">wrong_self_convention</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_owned_ptr_or_err</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">PyObject</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">T</span><span class="op">&gt;</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::wrong_self_convention</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_owned_ptr_or_err</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::PyObject</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">T</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">FromPyPointer</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>,
     {
-        <span class="ident">FromPyPointer</span>::<span class="ident">from_owned_ptr_or_err</span>(<span class="self">self</span>, <span class="ident">ptr</span>)
+        <span class="ident">FromPyPointer::from_owned_ptr_or_err</span>(<span class="self">self</span>, <span class="ident">ptr</span>)
     }
 
     <span class="doccomment">/// Registers the owned object pointer in release pool.</span>
@@ -1323,12 +1322,12 @@
     <span class="doccomment">/// # Safety</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Callers must ensure that ensure that the cast is valid.</span>
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">wrong_self_convention</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_owned_ptr_or_opt</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">PyObject</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">T</span><span class="op">&gt;</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::wrong_self_convention</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_owned_ptr_or_opt</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::PyObject</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">T</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">FromPyPointer</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>,
     {
-        <span class="ident">FromPyPointer</span>::<span class="ident">from_owned_ptr_or_opt</span>(<span class="self">self</span>, <span class="ident">ptr</span>)
+        <span class="ident">FromPyPointer::from_owned_ptr_or_opt</span>(<span class="self">self</span>, <span class="ident">ptr</span>)
     }
 
     <span class="doccomment">/// Does an unchecked downcast to the specific type.</span>
@@ -1338,12 +1337,12 @@
     <span class="doccomment">/// # Safety</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Callers must ensure that ensure that the cast is valid.</span>
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">wrong_self_convention</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_borrowed_ptr</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">PyObject</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">T</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::wrong_self_convention</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_borrowed_ptr</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::PyObject</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">T</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">FromPyPointer</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>,
     {
-        <span class="ident">FromPyPointer</span>::<span class="ident">from_borrowed_ptr</span>(<span class="self">self</span>, <span class="ident">ptr</span>)
+        <span class="ident">FromPyPointer::from_borrowed_ptr</span>(<span class="self">self</span>, <span class="ident">ptr</span>)
     }
 
     <span class="doccomment">/// Does an unchecked downcast to the specific type.</span>
@@ -1353,12 +1352,12 @@
     <span class="doccomment">/// # Safety</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Callers must ensure that ensure that the cast is valid.</span>
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">wrong_self_convention</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_borrowed_ptr_or_err</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">PyObject</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">T</span><span class="op">&gt;</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::wrong_self_convention</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_borrowed_ptr_or_err</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::PyObject</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">T</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">FromPyPointer</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>,
     {
-        <span class="ident">FromPyPointer</span>::<span class="ident">from_borrowed_ptr_or_err</span>(<span class="self">self</span>, <span class="ident">ptr</span>)
+        <span class="ident">FromPyPointer::from_borrowed_ptr_or_err</span>(<span class="self">self</span>, <span class="ident">ptr</span>)
     }
 
     <span class="doccomment">/// Does an unchecked downcast to the specific type.</span>
@@ -1368,12 +1367,12 @@
     <span class="doccomment">/// # Safety</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Callers must ensure that ensure that the cast is valid.</span>
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">wrong_self_convention</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_borrowed_ptr_or_opt</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">PyObject</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">T</span><span class="op">&gt;</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::wrong_self_convention</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_borrowed_ptr_or_opt</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::PyObject</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">T</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">FromPyPointer</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>,
     {
-        <span class="ident">FromPyPointer</span>::<span class="ident">from_borrowed_ptr_or_opt</span>(<span class="self">self</span>, <span class="ident">ptr</span>)
+        <span class="ident">FromPyPointer::from_borrowed_ptr_or_opt</span>(<span class="self">self</span>, <span class="ident">ptr</span>)
     }
 
     <span class="doccomment">/// Checks whether `obj` is an instance of type `T`.</span>
@@ -1381,7 +1380,7 @@
     <span class="doccomment">/// This is equivalent to the Python `isinstance` function.</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.13.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;Please use obj.is_instance::&lt;T&gt;() instead&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_instance</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyTypeObject</span>, <span class="ident">V</span>: <span class="ident">AsPyPointer</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">obj</span>: <span class="kw-2">&amp;</span><span class="ident">V</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
-        <span class="ident">T</span>::<span class="ident">type_object</span>(<span class="self">self</span>).<span class="ident">is_instance</span>(<span class="ident">obj</span>)
+        <span class="ident">T::type_object</span>(<span class="self">self</span>).<span class="ident">is_instance</span>(<span class="ident">obj</span>)
     }
 
     <span class="doccomment">/// Checks whether type `T` is subclass of type `U`.</span>
@@ -1396,7 +1395,7 @@
         <span class="ident">T</span>: <span class="ident">PyTypeObject</span>,
         <span class="ident">U</span>: <span class="ident">PyTypeObject</span>,
     {
-        <span class="ident">T</span>::<span class="ident">type_object</span>(<span class="self">self</span>).<span class="ident">is_subclass</span>::<span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>()
+        <span class="ident">T::type_object</span>(<span class="self">self</span>).<span class="ident">is_subclass</span>::<span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>()
     }
 
     <span class="doccomment">/// Releases a PyObject reference.</span>
@@ -1409,7 +1408,7 @@
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">ob</span>.<span class="ident">into_ptr</span>();
             <span class="kw">if</span> <span class="op">!</span><span class="ident">ptr</span>.<span class="ident">is_null</span>() {
-                <span class="ident">ffi</span>::<span class="ident">Py_DECREF</span>(<span class="ident">ptr</span>);
+                <span class="ident">ffi::Py_DECREF</span>(<span class="ident">ptr</span>);
             }
         }
     }
@@ -1418,7 +1417,7 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.13.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;Please just drop obj instead&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">xdecref</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">IntoPyPointer</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">ptr</span>: <span class="ident">T</span>) {
-        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">Py_XDECREF</span>(<span class="ident">ptr</span>.<span class="ident">into_ptr</span>()) };
+        <span class="kw">unsafe</span> { <span class="ident">ffi::Py_XDECREF</span>(<span class="ident">ptr</span>.<span class="ident">into_ptr</span>()) };
     }
 
     <span class="doccomment">/// Lets the Python interpreter check for pending signals and invoke the</span>
@@ -1433,9 +1432,9 @@
     <span class="doccomment">/// SIGINT and other signals handled by Python code are left pending for its</span>
     <span class="doccomment">/// entire duration.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_signals</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">PyErr_CheckSignals</span>() };
+        <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi::PyErr_CheckSignals</span>() };
         <span class="kw">if</span> <span class="ident">v</span> <span class="op">=</span><span class="op">=</span> <span class="op">-</span><span class="number">1</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">PyErr</span>::<span class="ident">fetch</span>(<span class="self">self</span>))
+            <span class="prelude-val">Err</span>(<span class="ident">PyErr::fetch</span>(<span class="self">self</span>))
         } <span class="kw">else</span> {
             <span class="prelude-val">Ok</span>(())
         }
@@ -1509,18 +1508,18 @@
     <span class="doccomment">///   is dropped.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">new_pool</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">GILPool</span> {
-        <span class="ident">GILPool</span>::<span class="ident">new</span>()
+        <span class="ident">GILPool::new</span>()
     }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
-    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="ident">IntoPyDict</span>, <span class="ident">PyAny</span>, <span class="ident">PyBool</span>, <span class="ident">PyInt</span>, <span class="ident">PyList</span>};
+    <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::types</span>::{<span class="ident">IntoPyDict</span>, <span class="ident">PyAny</span>, <span class="ident">PyBool</span>, <span class="ident">PyInt</span>, <span class="ident">PyList</span>};
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_eval</span>() {
-        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python</span>::<span class="ident">acquire_gil</span>();
+        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python::acquire_gil</span>();
         <span class="kw">let</span> <span class="ident">py</span> <span class="op">=</span> <span class="ident">gil</span>.<span class="ident">python</span>();
 
         <span class="comment">// Make sure builtin names are accessible</span>
@@ -1530,7 +1529,7 @@
             .<span class="ident">unwrap</span>()
             .<span class="ident">extract</span>()
             .<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">v</span>, <span class="number">1</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">v</span>, <span class="number">1</span>);
 
         <span class="kw">let</span> <span class="ident">d</span> <span class="op">=</span> [(<span class="string">&quot;foo&quot;</span>, <span class="number">13</span>)].<span class="ident">into_py_dict</span>(<span class="ident">py</span>);
 
@@ -1540,7 +1539,7 @@
             .<span class="ident">unwrap</span>()
             .<span class="ident">extract</span>()
             .<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">v</span>, <span class="number">42</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">v</span>, <span class="number">42</span>);
 
         <span class="comment">// Inject our own local namespace</span>
         <span class="kw">let</span> <span class="ident">v</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">py</span>
@@ -1548,7 +1547,7 @@
             .<span class="ident">unwrap</span>()
             .<span class="ident">extract</span>()
             .<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">v</span>, <span class="number">42</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">v</span>, <span class="number">42</span>);
 
         <span class="comment">// Make sure builtin names are still accessible when using a local namespace</span>
         <span class="kw">let</span> <span class="ident">v</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">py</span>
@@ -1556,94 +1555,93 @@
             .<span class="ident">unwrap</span>()
             .<span class="ident">extract</span>()
             .<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">v</span>, <span class="number">2</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">v</span>, <span class="number">2</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
     <span class="kw">fn</span> <span class="ident">test_is_instance</span>() {
-        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python</span>::<span class="ident">acquire_gil</span>();
+        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python::acquire_gil</span>();
         <span class="kw">let</span> <span class="ident">py</span> <span class="op">=</span> <span class="ident">gil</span>.<span class="ident">python</span>();
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">py</span>
-            .<span class="ident">is_instance</span>::<span class="op">&lt;</span><span class="ident">PyBool</span>, <span class="ident">PyAny</span><span class="op">&gt;</span>(<span class="ident">PyBool</span>::<span class="ident">new</span>(<span class="ident">py</span>, <span class="bool-val">true</span>).<span class="ident">into</span>())
+        <span class="macro">assert!</span>(<span class="ident">py</span>
+            .<span class="ident">is_instance</span>::<span class="op">&lt;</span><span class="ident">PyBool</span>, <span class="ident">PyAny</span><span class="op">&gt;</span>(<span class="ident">PyBool::new</span>(<span class="ident">py</span>, <span class="bool-val">true</span>).<span class="ident">into</span>())
             .<span class="ident">unwrap</span>());
-        <span class="kw">let</span> <span class="ident">list</span> <span class="op">=</span> <span class="ident">PyList</span>::<span class="ident">new</span>(<span class="ident">py</span>, <span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">py</span>.<span class="ident">is_instance</span>::<span class="op">&lt;</span><span class="ident">PyBool</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">list</span>.<span class="ident">as_ref</span>()).<span class="ident">unwrap</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">py</span>.<span class="ident">is_instance</span>::<span class="op">&lt;</span><span class="ident">PyList</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">list</span>.<span class="ident">as_ref</span>()).<span class="ident">unwrap</span>());
+        <span class="kw">let</span> <span class="ident">list</span> <span class="op">=</span> <span class="ident">PyList::new</span>(<span class="ident">py</span>, <span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]);
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">py</span>.<span class="ident">is_instance</span>::<span class="op">&lt;</span><span class="ident">PyBool</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">list</span>.<span class="ident">as_ref</span>()).<span class="ident">unwrap</span>());
+        <span class="macro">assert!</span>(<span class="ident">py</span>.<span class="ident">is_instance</span>::<span class="op">&lt;</span><span class="ident">PyList</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">list</span>.<span class="ident">as_ref</span>()).<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
     <span class="kw">fn</span> <span class="ident">test_is_subclass</span>() {
-        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python</span>::<span class="ident">acquire_gil</span>();
+        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python::acquire_gil</span>();
         <span class="kw">let</span> <span class="ident">py</span> <span class="op">=</span> <span class="ident">gil</span>.<span class="ident">python</span>();
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">py</span>.<span class="ident">is_subclass</span>::<span class="op">&lt;</span><span class="ident">PyBool</span>, <span class="ident">PyInt</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">py</span>.<span class="ident">is_subclass</span>::<span class="op">&lt;</span><span class="ident">PyBool</span>, <span class="ident">PyList</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>());
+        <span class="macro">assert!</span>(<span class="ident">py</span>.<span class="ident">is_subclass</span>::<span class="op">&lt;</span><span class="ident">PyBool</span>, <span class="ident">PyInt</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>());
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">py</span>.<span class="ident">is_subclass</span>::<span class="op">&lt;</span><span class="ident">PyBool</span>, <span class="ident">PyList</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_allow_threads_panics_safely</span>() {
         <span class="comment">// TODO replace with #[cfg(panic = &quot;unwind&quot;)] once stable</span>
-        <span class="kw">if</span> <span class="op">!</span><span class="kw">crate</span>::<span class="ident">cfg_panic_unwind</span>() {
+        <span class="kw">if</span> <span class="op">!</span><span class="kw">crate</span><span class="ident">::cfg_panic_unwind</span>() {
             <span class="kw">return</span>;
         }
 
-        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python</span>::<span class="ident">acquire_gil</span>();
+        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python::acquire_gil</span>();
         <span class="kw">let</span> <span class="ident">py</span> <span class="op">=</span> <span class="ident">gil</span>.<span class="ident">python</span>();
 
-        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">panic</span>::<span class="ident">catch_unwind</span>(<span class="op">|</span><span class="op">|</span> <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">py</span> <span class="op">=</span> <span class="ident">Python</span>::<span class="ident">assume_gil_acquired</span>();
+        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">std::panic::catch_unwind</span>(<span class="op">|</span><span class="op">|</span> <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">py</span> <span class="op">=</span> <span class="ident">Python::assume_gil_acquired</span>();
             <span class="ident">py</span>.<span class="ident">allow_threads</span>(<span class="op">|</span><span class="op">|</span> {
-                <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;There was a panic!&quot;</span>);
+                <span class="macro">panic!</span>(<span class="string">&quot;There was a panic!&quot;</span>);
             });
         });
 
         <span class="comment">// Check panic was caught</span>
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">result</span>.<span class="ident">is_err</span>());
+        <span class="macro">assert!</span>(<span class="ident">result</span>.<span class="ident">is_err</span>());
 
         <span class="comment">// If allow_threads is implemented correctly, this thread still owns the GIL here</span>
         <span class="comment">// so the following Python calls should not cause crashes.</span>
-        <span class="kw">let</span> <span class="ident">list</span> <span class="op">=</span> <span class="ident">PyList</span>::<span class="ident">new</span>(<span class="ident">py</span>, <span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">list</span>.<span class="ident">extract</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>(), <span class="macro">vec</span><span class="macro">!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]);
+        <span class="kw">let</span> <span class="ident">list</span> <span class="op">=</span> <span class="ident">PyList::new</span>(<span class="ident">py</span>, <span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]);
+        <span class="macro">assert_eq!</span>(<span class="ident">list</span>.<span class="ident">extract</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>(), <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_python_version_info</span>() {
-        <span class="ident">Python</span>::<span class="ident">with_gil</span>(<span class="op">|</span><span class="ident">py</span><span class="op">|</span> {
+        <span class="ident">Python::with_gil</span>(<span class="op">|</span><span class="ident">py</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="ident">version</span> <span class="op">=</span> <span class="ident">py</span>.<span class="ident">version_info</span>();
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">Py_3_6</span>)]</span>
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">version</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">6</span>));
+            <span class="macro">assert!</span>(<span class="ident">version</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">6</span>));
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">Py_3_6</span>)]</span>
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">version</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">6</span>, <span class="number">0</span>));
+            <span class="macro">assert!</span>(<span class="ident">version</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">6</span>, <span class="number">0</span>));
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">Py_3_7</span>)]</span>
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">version</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">7</span>));
+            <span class="macro">assert!</span>(<span class="ident">version</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">7</span>));
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">Py_3_7</span>)]</span>
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">version</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">7</span>, <span class="number">0</span>));
+            <span class="macro">assert!</span>(<span class="ident">version</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">7</span>, <span class="number">0</span>));
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">Py_3_8</span>)]</span>
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">version</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">8</span>));
+            <span class="macro">assert!</span>(<span class="ident">version</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">8</span>));
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">Py_3_8</span>)]</span>
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">version</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">8</span>, <span class="number">0</span>));
+            <span class="macro">assert!</span>(<span class="ident">version</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">8</span>, <span class="number">0</span>));
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">Py_3_9</span>)]</span>
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">version</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">9</span>));
+            <span class="macro">assert!</span>(<span class="ident">version</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">9</span>));
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">Py_3_9</span>)]</span>
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">version</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">9</span>, <span class="number">0</span>));
+            <span class="macro">assert!</span>(<span class="ident">version</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">9</span>, <span class="number">0</span>));
         });
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_python_version_info_parse</span>() {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">PythonVersionInfo</span>::<span class="ident">from_str</span>(<span class="string">&quot;3.5.0a1&quot;</span>) <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">5</span>, <span class="number">0</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">PythonVersionInfo</span>::<span class="ident">from_str</span>(<span class="string">&quot;3.5+&quot;</span>) <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">5</span>, <span class="number">0</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">PythonVersionInfo</span>::<span class="ident">from_str</span>(<span class="string">&quot;3.5+&quot;</span>) <span class="op">=</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">5</span>, <span class="number">0</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">PythonVersionInfo</span>::<span class="ident">from_str</span>(<span class="string">&quot;3.5+&quot;</span>) <span class="op">!</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">5</span>, <span class="number">1</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">PythonVersionInfo</span>::<span class="ident">from_str</span>(<span class="string">&quot;3.5.2a1+&quot;</span>) <span class="op">&lt;</span> (<span class="number">3</span>, <span class="number">5</span>, <span class="number">3</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">PythonVersionInfo</span>::<span class="ident">from_str</span>(<span class="string">&quot;3.5.2a1+&quot;</span>) <span class="op">=</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">5</span>, <span class="number">2</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">PythonVersionInfo</span>::<span class="ident">from_str</span>(<span class="string">&quot;3.5.2a1+&quot;</span>) <span class="op">=</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">5</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">PythonVersionInfo</span>::<span class="ident">from_str</span>(<span class="string">&quot;3.5+&quot;</span>) <span class="op">=</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">5</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">PythonVersionInfo</span>::<span class="ident">from_str</span>(<span class="string">&quot;3.5.2a1+&quot;</span>) <span class="op">&lt;</span> (<span class="number">3</span>, <span class="number">6</span>));
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">PythonVersionInfo</span>::<span class="ident">from_str</span>(<span class="string">&quot;3.5.2a1+&quot;</span>) <span class="op">&gt;</span> (<span class="number">3</span>, <span class="number">4</span>));
+        <span class="macro">assert!</span>(<span class="ident">PythonVersionInfo::from_str</span>(<span class="string">&quot;3.5.0a1&quot;</span>) <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">5</span>, <span class="number">0</span>));
+        <span class="macro">assert!</span>(<span class="ident">PythonVersionInfo::from_str</span>(<span class="string">&quot;3.5+&quot;</span>) <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">5</span>, <span class="number">0</span>));
+        <span class="macro">assert!</span>(<span class="ident">PythonVersionInfo::from_str</span>(<span class="string">&quot;3.5+&quot;</span>) <span class="op">=</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">5</span>, <span class="number">0</span>));
+        <span class="macro">assert!</span>(<span class="ident">PythonVersionInfo::from_str</span>(<span class="string">&quot;3.5+&quot;</span>) <span class="op">!</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">5</span>, <span class="number">1</span>));
+        <span class="macro">assert!</span>(<span class="ident">PythonVersionInfo::from_str</span>(<span class="string">&quot;3.5.2a1+&quot;</span>) <span class="op">&lt;</span> (<span class="number">3</span>, <span class="number">5</span>, <span class="number">3</span>));
+        <span class="macro">assert!</span>(<span class="ident">PythonVersionInfo::from_str</span>(<span class="string">&quot;3.5.2a1+&quot;</span>) <span class="op">=</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">5</span>, <span class="number">2</span>));
+        <span class="macro">assert!</span>(<span class="ident">PythonVersionInfo::from_str</span>(<span class="string">&quot;3.5.2a1+&quot;</span>) <span class="op">=</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">5</span>));
+        <span class="macro">assert!</span>(<span class="ident">PythonVersionInfo::from_str</span>(<span class="string">&quot;3.5+&quot;</span>) <span class="op">=</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">5</span>));
+        <span class="macro">assert!</span>(<span class="ident">PythonVersionInfo::from_str</span>(<span class="string">&quot;3.5.2a1+&quot;</span>) <span class="op">&lt;</span> (<span class="number">3</span>, <span class="number">6</span>));
+        <span class="macro">assert!</span>(<span class="ident">PythonVersionInfo::from_str</span>(<span class="string">&quot;3.5.2a1+&quot;</span>) <span class="op">&gt;</span> (<span class="number">3</span>, <span class="number">4</span>));
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pyo3"></div>
-    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pyo3" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

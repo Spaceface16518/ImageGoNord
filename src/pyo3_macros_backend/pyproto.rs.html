@@ -1,7 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/pyo3-macros-backend-0.13.2/src/pyproto.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>pyproto.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/pyo3-macros-backend-0.13.2/src/pyproto.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>pyproto.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../pyo3_macros_backend/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../pyo3_macros_backend/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -186,37 +185,37 @@
 <span id="183">183</span>
 <span id="184">184</span>
 <span id="185">185</span>
-</pre><div class="example-wrap"><pre class="rust ">
+</pre><pre class="rust">
 <span class="comment">// Copyright (c) 2017-present PyO3 Project and Contributors</span>
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">defs</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">method</span>::{<span class="ident">FnSpec</span>, <span class="ident">FnType</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">proto_method</span>::<span class="ident">impl_method_proto</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">pymethod</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::defs</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::method</span>::{<span class="ident">FnSpec</span>, <span class="ident">FnType</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::proto_method::impl_method_proto</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::pymethod</span>;
 <span class="kw">use</span> <span class="ident">proc_macro2</span>::{<span class="ident">Span</span>, <span class="ident">TokenStream</span>};
-<span class="kw">use</span> <span class="ident">quote</span>::<span class="ident">quote</span>;
-<span class="kw">use</span> <span class="ident">quote</span>::<span class="ident">ToTokens</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashSet</span>;
-<span class="kw">use</span> <span class="ident">syn</span>::<span class="ident">spanned</span>::<span class="ident">Spanned</span>;
+<span class="kw">use</span> <span class="ident">quote::quote</span>;
+<span class="kw">use</span> <span class="ident">quote::ToTokens</span>;
+<span class="kw">use</span> <span class="ident">std::collections::HashSet</span>;
+<span class="kw">use</span> <span class="ident">syn::spanned::Spanned</span>;
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build_py_proto</span>(<span class="ident">ast</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">syn</span>::<span class="ident">ItemImpl</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TokenStream</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build_py_proto</span>(<span class="ident">ast</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">syn::ItemImpl</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn::Result</span><span class="op">&lt;</span><span class="ident">TokenStream</span><span class="op">&gt;</span> {
     <span class="kw">let</span> (<span class="ident">path</span>, <span class="ident">proto</span>) <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="kw">_</span>, <span class="ident">path</span>, <span class="kw">_</span>)) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ast</span>.<span class="ident">trait_</span> {
         <span class="kw">let</span> <span class="ident">proto</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">path</span>.<span class="ident">segments</span>.<span class="ident">last</span>() {
-            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyObjectProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs</span>::<span class="ident">OBJECT</span>,
-            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyAsyncProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs</span>::<span class="ident">ASYNC</span>,
-            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyMappingProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs</span>::<span class="ident">MAPPING</span>,
-            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyIterProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs</span>::<span class="ident">ITER</span>,
-            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyContextProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs</span>::<span class="ident">CONTEXT</span>,
-            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PySequenceProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs</span>::<span class="ident">SEQ</span>,
-            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyNumberProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs</span>::<span class="ident">NUM</span>,
-            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyDescrProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs</span>::<span class="ident">DESCR</span>,
-            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyBufferProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs</span>::<span class="ident">BUFFER</span>,
-            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyGCProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs</span>::<span class="ident">GC</span>,
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">bail_spanned</span><span class="macro">!</span>(<span class="ident">path</span>.<span class="ident">span</span>() <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;unrecognised trait for #[pyproto]&quot;</span>),
+            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyObjectProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs::OBJECT</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyAsyncProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs::ASYNC</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyMappingProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs::MAPPING</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyIterProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs::ITER</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyContextProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs::CONTEXT</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PySequenceProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs::SEQ</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyNumberProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs::NUM</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyDescrProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs::DESCR</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyBufferProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs::BUFFER</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">segment</span>) <span class="kw">if</span> <span class="ident">segment</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;PyGCProtocol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">defs::GC</span>,
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">bail_spanned!</span>(<span class="ident">path</span>.<span class="ident">span</span>() <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;unrecognised trait for #[pyproto]&quot;</span>),
         };
         (<span class="ident">path</span>, <span class="ident">proto</span>)
     } <span class="kw">else</span> {
-        <span class="macro">bail_spanned</span><span class="macro">!</span>(
+        <span class="macro">bail_spanned!</span>(
             <span class="ident">ast</span>.<span class="ident">span</span>() <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;#[pyproto] can only be used with protocol trait implementations&quot;</span>
         );
     };
@@ -225,24 +224,24 @@
 
     <span class="comment">// attach lifetime</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">seg</span> <span class="op">=</span> <span class="ident">path</span>.<span class="ident">segments</span>.<span class="ident">pop</span>().<span class="ident">unwrap</span>().<span class="ident">into_value</span>();
-    <span class="ident">seg</span>.<span class="ident">arguments</span> <span class="op">=</span> <span class="ident">syn</span>::<span class="ident">PathArguments</span>::<span class="ident">AngleBracketed</span>(<span class="ident">syn</span>::<span class="macro">parse_quote</span><span class="macro">!</span> {<span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>});
+    <span class="ident">seg</span>.<span class="ident">arguments</span> <span class="op">=</span> <span class="ident">syn::PathArguments::AngleBracketed</span>(<span class="macro">syn::parse_quote!</span> {<span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>});
     <span class="ident">path</span>.<span class="ident">segments</span>.<span class="ident">push</span>(<span class="ident">seg</span>);
-    <span class="ident">ast</span>.<span class="ident">generics</span>.<span class="ident">params</span> <span class="op">=</span> <span class="ident">syn</span>::<span class="macro">parse_quote</span><span class="macro">!</span> {<span class="lifetime">&#39;p</span>};
+    <span class="ident">ast</span>.<span class="ident">generics</span>.<span class="ident">params</span> <span class="op">=</span> <span class="macro">syn::parse_quote!</span> {<span class="lifetime">&#39;p</span>};
     <span class="prelude-val">Ok</span>(<span class="ident">tokens</span>)
 }
 
 <span class="kw">fn</span> <span class="ident">impl_proto_impl</span>(
-    <span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Type</span>,
-    <span class="ident">impls</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">syn</span>::<span class="ident">ImplItem</span><span class="op">&gt;</span>,
-    <span class="ident">proto</span>: <span class="kw-2">&amp;</span><span class="ident">defs</span>::<span class="ident">Proto</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TokenStream</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">trait_impls</span> <span class="op">=</span> <span class="ident">TokenStream</span>::<span class="ident">new</span>();
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">py_methods</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">method_names</span> <span class="op">=</span> <span class="ident">HashSet</span>::<span class="ident">new</span>();
+    <span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Type</span>,
+    <span class="ident">impls</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">syn::ImplItem</span><span class="op">&gt;</span>,
+    <span class="ident">proto</span>: <span class="kw-2">&amp;</span><span class="ident">defs::Proto</span>,
+) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn::Result</span><span class="op">&lt;</span><span class="ident">TokenStream</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">trait_impls</span> <span class="op">=</span> <span class="ident">TokenStream::new</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">py_methods</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">method_names</span> <span class="op">=</span> <span class="ident">HashSet::new</span>();
     <span class="kw">let</span> <span class="ident">module</span> <span class="op">=</span> <span class="ident">proto</span>.<span class="ident">module</span>();
 
     <span class="kw">for</span> <span class="ident">iimpl</span> <span class="kw">in</span> <span class="ident">impls</span>.<span class="ident">iter_mut</span>() {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">syn</span>::<span class="ident">ImplItem</span>::<span class="ident">Method</span>(<span class="ident">met</span>) <span class="op">=</span> <span class="ident">iimpl</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">syn::ImplItem::Method</span>(<span class="ident">met</span>) <span class="op">=</span> <span class="ident">iimpl</span> {
             <span class="comment">// impl Py~Protocol&lt;&#39;p&gt; { type = ... }</span>
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">m</span>) <span class="op">=</span> <span class="ident">proto</span>.<span class="ident">get_proto</span>(<span class="kw-2">&amp;</span><span class="ident">met</span>.<span class="ident">sig</span>.<span class="ident">ident</span>) {
                 <span class="ident">impl_method_proto</span>(<span class="ident">ty</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">met</span>.<span class="ident">sig</span>, <span class="kw-2">&amp;</span><span class="ident">module</span>, <span class="ident">m</span>)<span class="question-mark">?</span>.<span class="ident">to_tokens</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">trait_impls</span>);
@@ -252,28 +251,28 @@
             <span class="comment">// Add non-slot methods to inventory like `#[pymethods]`</span>
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">m</span>) <span class="op">=</span> <span class="ident">proto</span>.<span class="ident">get_method</span>(<span class="kw-2">&amp;</span><span class="ident">met</span>.<span class="ident">sig</span>.<span class="ident">ident</span>) {
                 <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">met</span>.<span class="ident">sig</span>.<span class="ident">ident</span>;
-                <span class="kw">let</span> <span class="ident">fn_spec</span> <span class="op">=</span> <span class="ident">FnSpec</span>::<span class="ident">parse</span>(<span class="kw-2">&amp;</span><span class="ident">met</span>.<span class="ident">sig</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">met</span>.<span class="ident">attrs</span>, <span class="bool-val">false</span>)<span class="question-mark">?</span>;
+                <span class="kw">let</span> <span class="ident">fn_spec</span> <span class="op">=</span> <span class="ident">FnSpec::parse</span>(<span class="kw-2">&amp;</span><span class="ident">met</span>.<span class="ident">sig</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">met</span>.<span class="ident">attrs</span>, <span class="bool-val">false</span>)<span class="question-mark">?</span>;
 
-                <span class="kw">let</span> <span class="ident">method</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="ident">FnType</span>::<span class="ident">Fn</span>(<span class="ident">self_ty</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">fn_spec</span>.<span class="ident">tp</span> {
-                    <span class="ident">pymethod</span>::<span class="ident">impl_proto_wrap</span>(<span class="ident">ty</span>, <span class="kw-2">&amp;</span><span class="ident">fn_spec</span>, <span class="kw-2">&amp;</span><span class="ident">self_ty</span>)
+                <span class="kw">let</span> <span class="ident">method</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="ident">FnType::Fn</span>(<span class="ident">self_ty</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">fn_spec</span>.<span class="ident">tp</span> {
+                    <span class="ident">pymethod::impl_proto_wrap</span>(<span class="ident">ty</span>, <span class="kw-2">&amp;</span><span class="ident">fn_spec</span>, <span class="kw-2">&amp;</span><span class="ident">self_ty</span>)
                 } <span class="kw">else</span> {
-                    <span class="macro">bail_spanned</span><span class="macro">!</span>(
+                    <span class="macro">bail_spanned!</span>(
                         <span class="ident">met</span>.<span class="ident">sig</span>.<span class="ident">span</span>() <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;expected method with receiver for #[pyproto] method&quot;</span>
                     );
                 };
 
                 <span class="kw">let</span> <span class="ident">coexist</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">m</span>.<span class="ident">can_coexist</span> {
                     <span class="comment">// We need METH_COEXIST here to prevent __add__  from overriding __radd__</span>
-                    <span class="macro">quote</span><span class="macro">!</span>(<span class="ident">pyo3</span>::<span class="ident">ffi</span>::<span class="ident">METH_COEXIST</span>)
+                    <span class="macro">quote!</span>(<span class="ident">pyo3::ffi::METH_COEXIST</span>)
                 } <span class="kw">else</span> {
-                    <span class="macro">quote</span><span class="macro">!</span>(<span class="number">0</span>)
+                    <span class="macro">quote!</span>(<span class="number">0</span>)
                 };
                 <span class="comment">// TODO(kngwyu): Set ml_doc</span>
-                <span class="ident">py_methods</span>.<span class="ident">push</span>(<span class="macro">quote</span><span class="macro">!</span> {
-                    <span class="ident">pyo3</span>::<span class="ident">class</span>::<span class="ident">PyMethodDefType</span>::<span class="ident">Method</span>({
+                <span class="ident">py_methods</span>.<span class="ident">push</span>(<span class="macro">quote!</span> {
+                    <span class="ident">pyo3::class::PyMethodDefType::Method</span>({
                         #<span class="ident">method</span>
-                        <span class="ident">pyo3</span>::<span class="ident">class</span>::<span class="ident">PyMethodDef</span>::<span class="ident">cfunction_with_keywords</span>(
-                            <span class="macro">concat</span><span class="macro">!</span>(<span class="macro">stringify</span><span class="macro">!</span>(#<span class="ident">name</span>), <span class="string">&quot;\0&quot;</span>),
+                        <span class="ident">pyo3::class::PyMethodDef::cfunction_with_keywords</span>(
+                            <span class="macro">concat!</span>(<span class="macro">stringify!</span>(#<span class="ident">name</span>), <span class="string">&quot;\0&quot;</span>),
                             <span class="ident">__wrap</span>,
                             #<span class="ident">coexist</span>,
                             <span class="string">&quot;\0&quot;</span>
@@ -285,22 +284,22 @@
     }
     <span class="kw">let</span> <span class="ident">normal_methods</span> <span class="op">=</span> <span class="ident">submit_normal_methods</span>(<span class="ident">py_methods</span>, <span class="ident">ty</span>);
     <span class="kw">let</span> <span class="ident">protocol_methods</span> <span class="op">=</span> <span class="ident">impl_proto_methods</span>(<span class="ident">method_names</span>, <span class="ident">ty</span>, <span class="ident">proto</span>);
-    <span class="prelude-val">Ok</span>(<span class="macro">quote</span><span class="macro">!</span> {
+    <span class="prelude-val">Ok</span>(<span class="macro">quote!</span> {
         #<span class="ident">trait_impls</span>
         #<span class="ident">normal_methods</span>
         #<span class="ident">protocol_methods</span>
     })
 }
 
-<span class="kw">fn</span> <span class="ident">submit_normal_methods</span>(<span class="ident">py_methods</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TokenStream</span><span class="op">&gt;</span>, <span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Type</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenStream</span> {
+<span class="kw">fn</span> <span class="ident">submit_normal_methods</span>(<span class="ident">py_methods</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TokenStream</span><span class="op">&gt;</span>, <span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Type</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenStream</span> {
     <span class="kw">if</span> <span class="ident">py_methods</span>.<span class="ident">is_empty</span>() {
-        <span class="kw">return</span> <span class="macro">quote</span><span class="macro">!</span> {};
+        <span class="kw">return</span> <span class="macro">quote!</span> {};
     }
-    <span class="macro">quote</span><span class="macro">!</span> {
-        <span class="ident">pyo3</span>::<span class="ident">inventory</span>::<span class="macro">submit</span><span class="macro">!</span> {
+    <span class="macro">quote!</span> {
+        <span class="macro">pyo3::inventory::submit!</span> {
             <span class="attribute">#![<span class="kw">crate</span> <span class="op">=</span> <span class="ident">pyo3</span>]</span> {
-                <span class="kw">type</span> <span class="ident">Inventory</span> <span class="op">=</span> <span class="op">&lt;</span>#<span class="ident">ty</span> <span class="kw">as</span> <span class="ident">pyo3</span>::<span class="ident">class</span>::<span class="ident">methods</span>::<span class="ident">HasMethodsInventory</span><span class="op">&gt;</span>::<span class="ident">Methods</span>;
-                <span class="op">&lt;</span><span class="ident">Inventory</span> <span class="kw">as</span> <span class="ident">pyo3</span>::<span class="ident">class</span>::<span class="ident">methods</span>::<span class="ident">PyMethodsInventory</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[#(#<span class="ident">py_methods</span>),<span class="kw-2">*</span>])
+                <span class="kw">type</span> <span class="ident">Inventory</span> <span class="op">=</span> <span class="op">&lt;</span>#<span class="ident">ty</span> <span class="kw">as</span> <span class="ident">pyo3::class::methods::HasMethodsInventory</span><span class="op">&gt;</span><span class="ident">::Methods</span>;
+                <span class="op">&lt;</span><span class="ident">Inventory</span> <span class="kw">as</span> <span class="ident">pyo3::class::methods::PyMethodsInventory</span><span class="op">&gt;</span><span class="ident">::new</span>(<span class="macro">vec!</span>[#(#<span class="ident">py_methods</span>),<span class="kw-2">*</span>])
             }
         }
     }
@@ -308,33 +307,33 @@
 
 <span class="kw">fn</span> <span class="ident">impl_proto_methods</span>(
     <span class="ident">method_names</span>: <span class="ident">HashSet</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Type</span>,
-    <span class="ident">proto</span>: <span class="kw-2">&amp;</span><span class="ident">defs</span>::<span class="ident">Proto</span>,
+    <span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Type</span>,
+    <span class="ident">proto</span>: <span class="kw-2">&amp;</span><span class="ident">defs::Proto</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenStream</span> {
     <span class="kw">if</span> <span class="ident">proto</span>.<span class="ident">slots_trait</span>.<span class="ident">is_empty</span>() {
-        <span class="kw">return</span> <span class="ident">TokenStream</span>::<span class="ident">default</span>();
+        <span class="kw">return</span> <span class="ident">TokenStream::default</span>();
     }
 
     <span class="kw">let</span> <span class="ident">module</span> <span class="op">=</span> <span class="ident">proto</span>.<span class="ident">module</span>();
-    <span class="kw">let</span> <span class="ident">slots_trait</span> <span class="op">=</span> <span class="ident">syn</span>::<span class="ident">Ident</span>::<span class="ident">new</span>(<span class="ident">proto</span>.<span class="ident">slots_trait</span>, <span class="ident">Span</span>::<span class="ident">call_site</span>());
-    <span class="kw">let</span> <span class="ident">slots_trait_slots</span> <span class="op">=</span> <span class="ident">syn</span>::<span class="ident">Ident</span>::<span class="ident">new</span>(<span class="ident">proto</span>.<span class="ident">slots_trait_slots</span>, <span class="ident">Span</span>::<span class="ident">call_site</span>());
+    <span class="kw">let</span> <span class="ident">slots_trait</span> <span class="op">=</span> <span class="ident">syn::Ident::new</span>(<span class="ident">proto</span>.<span class="ident">slots_trait</span>, <span class="ident">Span::call_site</span>());
+    <span class="kw">let</span> <span class="ident">slots_trait_slots</span> <span class="op">=</span> <span class="ident">syn::Ident::new</span>(<span class="ident">proto</span>.<span class="ident">slots_trait_slots</span>, <span class="ident">Span::call_site</span>());
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">maybe_buffer_methods</span> <span class="op">=</span> <span class="prelude-val">None</span>;
     <span class="kw">if</span> <span class="ident">proto</span>.<span class="ident">name</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;Buffer&quot;</span> {
         <span class="comment">// On Python 3.9 we have to use PyBufferProcs to set buffer slots.</span>
         <span class="comment">// For now we emit this always for buffer methods, even on 3.9+.</span>
         <span class="comment">// Maybe in the future we can access Py_3_9 here and define it.</span>
-        <span class="ident">maybe_buffer_methods</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="macro">quote</span><span class="macro">!</span> {
-            <span class="kw">impl</span> <span class="ident">pyo3</span>::<span class="ident">class</span>::<span class="ident">proto_methods</span>::<span class="ident">PyBufferProtocolProcs</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>
-                <span class="kw">for</span> <span class="ident">pyo3</span>::<span class="ident">class</span>::<span class="ident">proto_methods</span>::<span class="ident">PyClassProtocols</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>
+        <span class="ident">maybe_buffer_methods</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="macro">quote!</span> {
+            <span class="kw">impl</span> <span class="ident">pyo3::class::proto_methods::PyBufferProtocolProcs</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>
+                <span class="kw">for</span> <span class="ident">pyo3::class::proto_methods::PyClassProtocols</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>
             {
                 <span class="kw">fn</span> <span class="ident">buffer_procs</span>(
                     <span class="self">self</span>
-                ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">pyo3</span>::<span class="ident">class</span>::<span class="ident">proto_methods</span>::<span class="ident">PyBufferProcs</span><span class="op">&gt;</span> {
-                    <span class="kw">static</span> <span class="ident">PROCS</span>: <span class="ident">pyo3</span>::<span class="ident">class</span>::<span class="ident">proto_methods</span>::<span class="ident">PyBufferProcs</span>
-                        <span class="op">=</span> <span class="ident">pyo3</span>::<span class="ident">class</span>::<span class="ident">proto_methods</span>::<span class="ident">PyBufferProcs</span> {
-                            <span class="ident">bf_getbuffer</span>: <span class="prelude-val">Some</span>(<span class="ident">pyo3</span>::<span class="ident">class</span>::<span class="ident">buffer</span>::<span class="ident">getbuffer</span>::<span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>),
-                            <span class="ident">bf_releasebuffer</span>: <span class="prelude-val">Some</span>(<span class="ident">pyo3</span>::<span class="ident">class</span>::<span class="ident">buffer</span>::<span class="ident">releasebuffer</span>::<span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>),
+                ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">pyo3::class::proto_methods::PyBufferProcs</span><span class="op">&gt;</span> {
+                    <span class="kw">static</span> <span class="ident">PROCS</span>: <span class="ident">pyo3::class::proto_methods::PyBufferProcs</span>
+                        <span class="op">=</span> <span class="ident">pyo3::class::proto_methods::PyBufferProcs</span> {
+                            <span class="ident">bf_getbuffer</span>: <span class="prelude-val">Some</span>(<span class="ident">pyo3::class::buffer::getbuffer</span>::<span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>),
+                            <span class="ident">bf_releasebuffer</span>: <span class="prelude-val">Some</span>(<span class="ident">pyo3::class::buffer::releasebuffer</span>::<span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>),
                         };
                     <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">PROCS</span>)
                 }
@@ -345,11 +344,11 @@
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tokens</span> <span class="op">=</span> <span class="ident">proto</span>
         .<span class="ident">slot_defs</span>(<span class="ident">method_names</span>)
         .<span class="ident">map</span>(<span class="op">|</span><span class="ident">def</span><span class="op">|</span> {
-            <span class="kw">let</span> <span class="ident">slot</span> <span class="op">=</span> <span class="ident">syn</span>::<span class="ident">Ident</span>::<span class="ident">new</span>(<span class="ident">def</span>.<span class="ident">slot</span>, <span class="ident">Span</span>::<span class="ident">call_site</span>());
-            <span class="kw">let</span> <span class="ident">slot_impl</span> <span class="op">=</span> <span class="ident">syn</span>::<span class="ident">Ident</span>::<span class="ident">new</span>(<span class="ident">def</span>.<span class="ident">slot_impl</span>, <span class="ident">Span</span>::<span class="ident">call_site</span>());
-            <span class="macro">quote</span><span class="macro">!</span> {{
-                <span class="ident">pyo3</span>::<span class="ident">ffi</span>::<span class="ident">PyType_Slot</span> {
-                    <span class="ident">slot</span>: <span class="ident">pyo3</span>::<span class="ident">ffi</span>::#<span class="ident">slot</span>,
+            <span class="kw">let</span> <span class="ident">slot</span> <span class="op">=</span> <span class="ident">syn::Ident::new</span>(<span class="ident">def</span>.<span class="ident">slot</span>, <span class="ident">Span::call_site</span>());
+            <span class="kw">let</span> <span class="ident">slot_impl</span> <span class="op">=</span> <span class="ident">syn::Ident::new</span>(<span class="ident">def</span>.<span class="ident">slot_impl</span>, <span class="ident">Span::call_site</span>());
+            <span class="macro">quote!</span> {{
+                <span class="ident">pyo3::ffi::PyType_Slot</span> {
+                    <span class="ident">slot</span>: <span class="ident">pyo3::ffi</span>::#<span class="ident">slot</span>,
                     <span class="ident">pfunc</span>: #<span class="ident">module</span>::#<span class="ident">slot_impl</span>::<span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw">_</span>
                 }
             }}
@@ -357,21 +356,20 @@
         .<span class="ident">peekable</span>();
 
     <span class="kw">if</span> <span class="ident">tokens</span>.<span class="ident">peek</span>().<span class="ident">is_none</span>() {
-        <span class="kw">return</span> <span class="ident">TokenStream</span>::<span class="ident">default</span>();
+        <span class="kw">return</span> <span class="ident">TokenStream::default</span>();
     }
 
-    <span class="macro">quote</span><span class="macro">!</span> {
+    <span class="macro">quote!</span> {
         #<span class="ident">maybe_buffer_methods</span>
 
-        <span class="kw">impl</span> <span class="ident">pyo3</span>::<span class="ident">class</span>::<span class="ident">proto_methods</span>::#<span class="ident">slots_trait</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>
-            <span class="kw">for</span> <span class="ident">pyo3</span>::<span class="ident">class</span>::<span class="ident">proto_methods</span>::<span class="ident">PyClassProtocols</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>
+        <span class="kw">impl</span> <span class="ident">pyo3::class::proto_methods</span>::#<span class="ident">slots_trait</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>
+            <span class="kw">for</span> <span class="ident">pyo3::class::proto_methods::PyClassProtocols</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>
         {
-            <span class="kw">fn</span> #<span class="ident">slots_trait_slots</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">pyo3</span>::<span class="ident">ffi</span>::<span class="ident">PyType_Slot</span>] {
+            <span class="kw">fn</span> #<span class="ident">slots_trait_slots</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">pyo3::ffi::PyType_Slot</span>] {
                 <span class="kw-2">&amp;</span>[#(#<span class="ident">tokens</span>),<span class="kw-2">*</span>]
             }
         }
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pyo3_macros_backend"></div>
-    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pyo3_macros_backend" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

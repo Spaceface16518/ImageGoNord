@@ -1,7 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/pyo3-0.13.2/src/exceptions.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>exceptions.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/pyo3-0.13.2/src/exceptions.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>exceptions.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../pyo3/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../pyo3/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -605,43 +604,43 @@
 <span id="602">602</span>
 <span id="603">603</span>
 <span id="604">604</span>
-</pre><div class="example-wrap"><pre class="rust ">
+</pre><pre class="rust">
 <span class="comment">// Copyright (c) 2017-present PyO3 Project and Contributors</span>
 
 <span class="doccomment">//! Exception types defined by Python.</span>
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">type_object</span>::<span class="ident">PySizedLayout</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::type_object::PySizedLayout</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ffi</span>, <span class="ident">PyResult</span>, <span class="ident">Python</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">CStr</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>;
+<span class="kw">use</span> <span class="ident">std::ffi::CStr</span>;
+<span class="kw">use</span> <span class="ident">std::ops</span>;
+<span class="kw">use</span> <span class="ident">std::os::raw::c_char</span>;
 
 <span class="doccomment">/// The boilerplate to convert between a Rust type and a Python exception.</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_exception_boilerplate</span> {
+<span class="macro">macro_rules!</span> <span class="ident">impl_exception_boilerplate</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>: <span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">PyErr</span> {
-            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">PyErr</span> {
-                <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">PyErr</span>::<span class="ident">from_instance</span>(<span class="ident">err</span>)
+        <span class="kw">impl</span> <span class="ident">std::convert::From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::PyErr</span> {
+            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::PyErr</span> {
+                <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::PyErr::from_instance</span>(<span class="ident">err</span>)
             }
         }
 
         <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_err</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="ident">args</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">PyErr</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_err</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="ident">args</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::PyErr</span>
             <span class="kw">where</span>
-                <span class="ident">A</span>: <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">PyErrArguments</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
+                <span class="ident">A</span>: <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::PyErrArguments</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
             {
-                <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">PyErr</span>::<span class="ident">new</span>::<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>, <span class="ident">A</span><span class="op">&gt;</span>(<span class="ident">args</span>)
+                <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::PyErr::new</span>::<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>, <span class="ident">A</span><span class="op">&gt;</span>(<span class="ident">args</span>)
             }
         }
 
-        <span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
-            <span class="kw">fn</span> <span class="ident">source</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>(<span class="kw">dyn</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>)<span class="op">&gt;</span> {
+        <span class="kw">impl</span> <span class="ident">std::error::Error</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
+            <span class="kw">fn</span> <span class="ident">source</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>(<span class="kw">dyn</span> <span class="ident">std::error::Error</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>)<span class="op">&gt;</span> {
                 <span class="kw">unsafe</span> {
                     <span class="kw">use</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::{<span class="macro-nonterminal">AsPyPointer</span>, <span class="ident">PyNativeType</span>};
-                    <span class="kw">let</span> <span class="ident">cause</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">exceptions</span>::<span class="ident">PyBaseException</span> <span class="op">=</span> <span class="self">self</span>
+                    <span class="kw">let</span> <span class="ident">cause</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::exceptions::PyBaseException</span> <span class="op">=</span> <span class="self">self</span>
                         .<span class="ident">py</span>()
-                        .<span class="ident">from_owned_ptr_or_opt</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">ffi</span>::<span class="ident">PyException_GetCause</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>()))<span class="question-mark">?</span>;
+                        .<span class="ident">from_owned_ptr_or_opt</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::ffi::PyException_GetCause</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>()))<span class="question-mark">?</span>;
 
                     <span class="prelude-val">Some</span>(<span class="ident">cause</span>)
                 }
@@ -682,38 +681,38 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">import_exception</span> {
+<span class="macro">macro_rules!</span> <span class="ident">import_exception</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>: <span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>: <span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">transparent</span>)]</span>
         <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_camel_case_types</span>)]</span> <span class="comment">// E.g. `socket.herror`</span>
-        <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">PyAny</span>);
+        <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::PyAny</span>);
 
-        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro">impl_exception_boilerplate</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>);
+        <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro">::impl_exception_boilerplate!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>);
 
-        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro">pyobject_native_type_core</span><span class="macro">!</span>(
+        <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro">::pyobject_native_type_core!</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>,
-            <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">ffi</span>::<span class="ident">PyBaseExceptionObject</span>,
-            <span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>::<span class="ident">type_object_raw</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">Python</span>::<span class="ident">assume_gil_acquired</span>()),
-            <span class="prelude-val">Some</span>(<span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>))
+            <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::ffi::PyBaseExceptionObject</span>,
+            <span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name::type_object_raw</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::Python::assume_gil_acquired</span>()),
+            <span class="prelude-val">Some</span>(<span class="macro">stringify!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>))
         );
 
         <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
-            <span class="kw">fn</span> <span class="ident">type_object_raw</span>(<span class="ident">py</span>: <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">Python</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">ffi</span>::<span class="ident">PyTypeObject</span> {
-                <span class="kw">use</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">once_cell</span>::<span class="ident">GILOnceCell</span>;
-                <span class="kw">use</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">AsPyPointer</span>;
-                <span class="kw">static</span> <span class="ident">TYPE_OBJECT</span>: <span class="ident">GILOnceCell</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">Py</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">types</span>::<span class="ident">PyType</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span>
-                    <span class="ident">GILOnceCell</span>::<span class="ident">new</span>();
+            <span class="kw">fn</span> <span class="ident">type_object_raw</span>(<span class="ident">py</span>: <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::Python</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::ffi::PyTypeObject</span> {
+                <span class="kw">use</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::once_cell::GILOnceCell</span>;
+                <span class="kw">use</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::AsPyPointer</span>;
+                <span class="kw">static</span> <span class="ident">TYPE_OBJECT</span>: <span class="ident">GILOnceCell</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::Py</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::types::PyType</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span>
+                    <span class="ident">GILOnceCell::new</span>();
 
                 <span class="ident">TYPE_OBJECT</span>
                     .<span class="ident">get_or_init</span>(<span class="ident">py</span>, <span class="op">|</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="ident">imp</span> <span class="op">=</span> <span class="ident">py</span>
-                            .<span class="ident">import</span>(<span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>))
-                            .<span class="ident">expect</span>(<span class="macro">concat</span><span class="macro">!</span>(<span class="string">&quot;Can not import module: &quot;</span>, <span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>)));
-                        <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">imp</span>.<span class="ident">get</span>(<span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>)).<span class="ident">expect</span>(<span class="macro">concat</span><span class="macro">!</span>(
+                            .<span class="ident">import</span>(<span class="macro">stringify!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>))
+                            .<span class="ident">expect</span>(<span class="macro">concat!</span>(<span class="string">&quot;Can not import module: &quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>)));
+                        <span class="kw">let</span> <span class="ident">cls</span> <span class="op">=</span> <span class="ident">imp</span>.<span class="ident">get</span>(<span class="macro">stringify!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>)).<span class="ident">expect</span>(<span class="macro">concat!</span>(
                             <span class="string">&quot;Can not load exception class: {}.{}&quot;</span>,
-                            <span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>),
+                            <span class="macro">stringify!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>),
                             <span class="string">&quot;.&quot;</span>,
-                            <span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>)
+                            <span class="macro">stringify!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>)
                         ));
 
                         <span class="ident">cls</span>.<span class="ident">extract</span>()
@@ -764,48 +763,48 @@
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">create_exception</span> {
+<span class="macro">macro_rules!</span> <span class="ident">create_exception</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">base</span>: <span class="ident">ty</span>) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">transparent</span>)]</span>
         <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_camel_case_types</span>)]</span> <span class="comment">// E.g. `socket.herror`</span>
-        <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">PyAny</span>);
+        <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::PyAny</span>);
 
-        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro">impl_exception_boilerplate</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>);
+        <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro">::impl_exception_boilerplate!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>);
 
-        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro">create_exception_type_object</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">base</span>);
+        <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro">::create_exception_type_object!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">base</span>);
     };
 }
 
 <span class="doccomment">/// `impl $crate::type_object::PyTypeObject for $name` where `$name` is an</span>
 <span class="doccomment">/// exception newly defined in Rust code.</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">create_exception_type_object</span> {
+<span class="macro">macro_rules!</span> <span class="ident">create_exception_type_object</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">base</span>: <span class="ident">ty</span>) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro">pyobject_native_type_core</span><span class="macro">!</span>(
+        <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro">::pyobject_native_type_core!</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>,
-            <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">ffi</span>::<span class="ident">PyBaseExceptionObject</span>,
-            <span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>::<span class="ident">type_object_raw</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">Python</span>::<span class="ident">assume_gil_acquired</span>()),
-            <span class="prelude-val">Some</span>(<span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>))
+            <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::ffi::PyBaseExceptionObject</span>,
+            <span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name::type_object_raw</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::Python::assume_gil_acquired</span>()),
+            <span class="prelude-val">Some</span>(<span class="macro">stringify!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>))
         );
 
         <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
-            <span class="kw">fn</span> <span class="ident">type_object_raw</span>(<span class="ident">py</span>: <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">Python</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">ffi</span>::<span class="ident">PyTypeObject</span> {
-                <span class="kw">use</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">once_cell</span>::<span class="ident">GILOnceCell</span>;
-                <span class="kw">use</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">AsPyPointer</span>;
-                <span class="kw">static</span> <span class="ident">TYPE_OBJECT</span>: <span class="ident">GILOnceCell</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">Py</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">types</span>::<span class="ident">PyType</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span>
-                    <span class="ident">GILOnceCell</span>::<span class="ident">new</span>();
+            <span class="kw">fn</span> <span class="ident">type_object_raw</span>(<span class="ident">py</span>: <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::Python</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::ffi::PyTypeObject</span> {
+                <span class="kw">use</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::once_cell::GILOnceCell</span>;
+                <span class="kw">use</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::AsPyPointer</span>;
+                <span class="kw">static</span> <span class="ident">TYPE_OBJECT</span>: <span class="ident">GILOnceCell</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::Py</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::types::PyType</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span>
+                    <span class="ident">GILOnceCell::new</span>();
 
                 <span class="ident">TYPE_OBJECT</span>
                     .<span class="ident">get_or_init</span>(<span class="ident">py</span>, <span class="op">|</span><span class="op">|</span> <span class="kw">unsafe</span> {
-                        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">Py</span>::<span class="ident">from_owned_ptr</span>(
+                        <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::Py::from_owned_ptr</span>(
                             <span class="ident">py</span>,
-                            <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">PyErr</span>::<span class="ident">new_type</span>(
+                            <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::PyErr::new_type</span>(
                                 <span class="ident">py</span>,
-                                <span class="macro">concat</span><span class="macro">!</span>(<span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>), <span class="string">&quot;.&quot;</span>, <span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>)),
+                                <span class="macro">concat!</span>(<span class="macro">stringify!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>), <span class="string">&quot;.&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>)),
                                 <span class="prelude-val">Some</span>(<span class="ident">py</span>.<span class="ident">get_type</span>::<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">base</span><span class="op">&gt;</span>()),
                                 <span class="prelude-val">None</span>,
                             )
-                            .<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">ffi</span>::<span class="ident">PyObject</span>,
+                            .<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::ffi::PyObject</span>,
                         )
                     })
                     .<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>
@@ -814,193 +813,193 @@
     };
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_native_exception</span> (
+<span class="macro">macro_rules!</span> <span class="ident">impl_native_exception</span> (
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">legacy_name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">exc_name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">layout</span>:<span class="ident">path</span>) <span class="op">=</span><span class="op">&gt;</span> (
-        <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">PyAny</span>);
+        <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::PyAny</span>);
 
         <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;Exceptions now have a `Py` prefix, e.g. `PyException`, `PyTypeError`&quot;</span>)]</span>
-        <span class="kw">pub</span> <span class="kw">type</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">legacy_name</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">Py</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span><span class="op">&gt;</span>;
+        <span class="kw">pub</span> <span class="kw">type</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">legacy_name</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro-nonterminal">::Py</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span><span class="op">&gt;</span>;
 
-        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro">impl_exception_boilerplate</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>);
-        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro">pyobject_native_type_core</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">layout</span>, <span class="kw-2">*</span>(<span class="ident">ffi</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">exc_name</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">PyTypeObject</span>), <span class="prelude-val">Some</span>(<span class="string">&quot;builtins&quot;</span>));
+        <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro">::impl_exception_boilerplate!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>);
+        <span class="macro-nonterminal">$</span><span class="kw">crate</span><span class="macro">::pyobject_native_type_core!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">layout</span>, <span class="kw-2">*</span>(<span class="ident">ffi</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">exc_name</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::PyTypeObject</span>), <span class="prelude-val">Some</span>(<span class="string">&quot;builtins&quot;</span>));
     );
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">legacy_name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">exc_name</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> (
-        <span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">legacy_name</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">exc_name</span>, <span class="ident">ffi</span>::<span class="ident">PyBaseExceptionObject</span>);
+        <span class="macro">impl_native_exception!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">legacy_name</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">exc_name</span>, <span class="ident">ffi::PyBaseExceptionObject</span>);
     )
 );
 
-<span class="kw">impl</span> <span class="ident">PySizedLayout</span><span class="op">&lt;</span><span class="ident">PyBaseException</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ffi</span>::<span class="ident">PyBaseExceptionObject</span> {}
+<span class="kw">impl</span> <span class="ident">PySizedLayout</span><span class="op">&lt;</span><span class="ident">PyBaseException</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ffi::PyBaseExceptionObject</span> {}
 
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyBaseException</span>, <span class="ident">BaseException</span>, <span class="ident">PyExc_BaseException</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyException</span>, <span class="ident">Exception</span>, <span class="ident">PyExc_Exception</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyBaseException</span>, <span class="ident">BaseException</span>, <span class="ident">PyExc_BaseException</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyException</span>, <span class="ident">Exception</span>, <span class="ident">PyExc_Exception</span>);
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyStopAsyncIteration</span>,
     <span class="ident">StopAsyncIteration</span>,
     <span class="ident">PyExc_StopAsyncIteration</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyStopIteration</span>,
     <span class="ident">StopIteration</span>,
     <span class="ident">PyExc_StopIteration</span>,
-    <span class="ident">ffi</span>::<span class="ident">PyStopIterationObject</span>
+    <span class="ident">ffi::PyStopIterationObject</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyGeneratorExit</span>, <span class="ident">GeneratorExit</span>, <span class="ident">PyExc_GeneratorExit</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyArithmeticError</span>, <span class="ident">ArithmeticError</span>, <span class="ident">PyExc_ArithmeticError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyLookupError</span>, <span class="ident">LookupError</span>, <span class="ident">PyExc_LookupError</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyGeneratorExit</span>, <span class="ident">GeneratorExit</span>, <span class="ident">PyExc_GeneratorExit</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyArithmeticError</span>, <span class="ident">ArithmeticError</span>, <span class="ident">PyExc_ArithmeticError</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyLookupError</span>, <span class="ident">LookupError</span>, <span class="ident">PyExc_LookupError</span>);
 
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyAssertionError</span>, <span class="ident">AssertionError</span>, <span class="ident">PyExc_AssertionError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyAttributeError</span>, <span class="ident">AttributeError</span>, <span class="ident">PyExc_AttributeError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyBufferError</span>, <span class="ident">BufferError</span>, <span class="ident">PyExc_BufferError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyEOFError</span>, <span class="ident">EOFError</span>, <span class="ident">PyExc_EOFError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyAssertionError</span>, <span class="ident">AssertionError</span>, <span class="ident">PyExc_AssertionError</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyAttributeError</span>, <span class="ident">AttributeError</span>, <span class="ident">PyExc_AttributeError</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyBufferError</span>, <span class="ident">BufferError</span>, <span class="ident">PyExc_BufferError</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyEOFError</span>, <span class="ident">EOFError</span>, <span class="ident">PyExc_EOFError</span>);
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyFloatingPointError</span>,
     <span class="ident">FloatingPointError</span>,
     <span class="ident">PyExc_FloatingPointError</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyOSError</span>, <span class="ident">OSError</span>, <span class="ident">PyExc_OSError</span>, <span class="ident">ffi</span>::<span class="ident">PyOSErrorObject</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyImportError</span>, <span class="ident">ImportError</span>, <span class="ident">PyExc_ImportError</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyOSError</span>, <span class="ident">OSError</span>, <span class="ident">PyExc_OSError</span>, <span class="ident">ffi::PyOSErrorObject</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyImportError</span>, <span class="ident">ImportError</span>, <span class="ident">PyExc_ImportError</span>);
 
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyModuleNotFoundError</span>,
     <span class="ident">ModuleNotFoundError</span>,
     <span class="ident">PyExc_ModuleNotFoundError</span>
 );
 
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyIndexError</span>, <span class="ident">IndexError</span>, <span class="ident">PyExc_IndexError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyKeyError</span>, <span class="ident">KeyError</span>, <span class="ident">PyExc_KeyError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyIndexError</span>, <span class="ident">IndexError</span>, <span class="ident">PyExc_IndexError</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyKeyError</span>, <span class="ident">KeyError</span>, <span class="ident">PyExc_KeyError</span>);
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyKeyboardInterrupt</span>,
     <span class="ident">KeyboardInterrupt</span>,
     <span class="ident">PyExc_KeyboardInterrupt</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyMemoryError</span>, <span class="ident">MemoryError</span>, <span class="ident">PyExc_MemoryError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyNameError</span>, <span class="ident">NameError</span>, <span class="ident">PyExc_NameError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyOverflowError</span>, <span class="ident">OverflowError</span>, <span class="ident">PyExc_OverflowError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyRuntimeError</span>, <span class="ident">RuntimeError</span>, <span class="ident">PyExc_RuntimeError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyRecursionError</span>, <span class="ident">RecursionError</span>, <span class="ident">PyExc_RecursionError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyMemoryError</span>, <span class="ident">MemoryError</span>, <span class="ident">PyExc_MemoryError</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyNameError</span>, <span class="ident">NameError</span>, <span class="ident">PyExc_NameError</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyOverflowError</span>, <span class="ident">OverflowError</span>, <span class="ident">PyExc_OverflowError</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyRuntimeError</span>, <span class="ident">RuntimeError</span>, <span class="ident">PyExc_RuntimeError</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyRecursionError</span>, <span class="ident">RecursionError</span>, <span class="ident">PyExc_RecursionError</span>);
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyNotImplementedError</span>,
     <span class="ident">NotImplementedError</span>,
     <span class="ident">PyExc_NotImplementedError</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PySyntaxError</span>,
     <span class="ident">SyntaxError</span>,
     <span class="ident">PyExc_SyntaxError</span>,
-    <span class="ident">ffi</span>::<span class="ident">PySyntaxErrorObject</span>
+    <span class="ident">ffi::PySyntaxErrorObject</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyReferenceError</span>, <span class="ident">ReferenceError</span>, <span class="ident">PyExc_ReferenceError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PySystemError</span>, <span class="ident">SystemError</span>, <span class="ident">PyExc_SystemError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyReferenceError</span>, <span class="ident">ReferenceError</span>, <span class="ident">PyExc_ReferenceError</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PySystemError</span>, <span class="ident">SystemError</span>, <span class="ident">PyExc_SystemError</span>);
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PySystemExit</span>,
     <span class="ident">SystemExit</span>,
     <span class="ident">PyExc_SystemExit</span>,
-    <span class="ident">ffi</span>::<span class="ident">PySystemExitObject</span>
+    <span class="ident">ffi::PySystemExitObject</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyTypeError</span>, <span class="ident">TypeError</span>, <span class="ident">PyExc_TypeError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyTypeError</span>, <span class="ident">TypeError</span>, <span class="ident">PyExc_TypeError</span>);
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyUnboundLocalError</span>,
     <span class="ident">UnboundLocalError</span>,
     <span class="ident">PyExc_UnboundLocalError</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyUnicodeError</span>,
     <span class="ident">UnicodeError</span>,
     <span class="ident">PyExc_UnicodeError</span>,
-    <span class="ident">ffi</span>::<span class="ident">PyUnicodeErrorObject</span>
+    <span class="ident">ffi::PyUnicodeErrorObject</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyUnicodeDecodeError</span>,
     <span class="ident">UnicodeDecodeError</span>,
     <span class="ident">PyExc_UnicodeDecodeError</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyUnicodeEncodeError</span>,
     <span class="ident">UnicodeEncodeError</span>,
     <span class="ident">PyExc_UnicodeEncodeError</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyUnicodeTranslateError</span>,
     <span class="ident">UnicodeTranslateError</span>,
     <span class="ident">PyExc_UnicodeTranslateError</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyValueError</span>, <span class="ident">ValueError</span>, <span class="ident">PyExc_ValueError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyValueError</span>, <span class="ident">ValueError</span>, <span class="ident">PyExc_ValueError</span>);
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyZeroDivisionError</span>,
     <span class="ident">ZeroDivisionError</span>,
     <span class="ident">PyExc_ZeroDivisionError</span>
 );
 
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyBlockingIOError</span>, <span class="ident">BlockingIOError</span>, <span class="ident">PyExc_BlockingIOError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyBrokenPipeError</span>, <span class="ident">BrokenPipeError</span>, <span class="ident">PyExc_BrokenPipeError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyBlockingIOError</span>, <span class="ident">BlockingIOError</span>, <span class="ident">PyExc_BlockingIOError</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyBrokenPipeError</span>, <span class="ident">BrokenPipeError</span>, <span class="ident">PyExc_BrokenPipeError</span>);
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyChildProcessError</span>,
     <span class="ident">ChildProcessError</span>,
     <span class="ident">PyExc_ChildProcessError</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyConnectionError</span>, <span class="ident">ConnectionError</span>, <span class="ident">PyExc_ConnectionError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyConnectionError</span>, <span class="ident">ConnectionError</span>, <span class="ident">PyExc_ConnectionError</span>);
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyConnectionAbortedError</span>,
     <span class="ident">ConnectionAbortedError</span>,
     <span class="ident">PyExc_ConnectionAbortedError</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyConnectionRefusedError</span>,
     <span class="ident">ConnectionRefusedError</span>,
     <span class="ident">PyExc_ConnectionRefusedError</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyConnectionResetError</span>,
     <span class="ident">ConnectionResetError</span>,
     <span class="ident">PyExc_ConnectionResetError</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyFileExistsError</span>, <span class="ident">FileExistsError</span>, <span class="ident">PyExc_FileExistsError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyFileExistsError</span>, <span class="ident">FileExistsError</span>, <span class="ident">PyExc_FileExistsError</span>);
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyFileNotFoundError</span>,
     <span class="ident">FileNotFoundError</span>,
     <span class="ident">PyExc_FileNotFoundError</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyInterruptedError</span>, <span class="ident">InterruptedError</span>, <span class="ident">PyExc_InterruptedError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyInterruptedError</span>, <span class="ident">InterruptedError</span>, <span class="ident">PyExc_InterruptedError</span>);
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyIsADirectoryError</span>,
     <span class="ident">IsADirectoryError</span>,
     <span class="ident">PyExc_IsADirectoryError</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyNotADirectoryError</span>,
     <span class="ident">NotADirectoryError</span>,
     <span class="ident">PyExc_NotADirectoryError</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyPermissionError</span>, <span class="ident">PermissionError</span>, <span class="ident">PyExc_PermissionError</span>);
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyPermissionError</span>, <span class="ident">PermissionError</span>, <span class="ident">PyExc_PermissionError</span>);
+<span class="macro">impl_native_exception!</span>(
     <span class="ident">PyProcessLookupError</span>,
     <span class="ident">ProcessLookupError</span>,
     <span class="ident">PyExc_ProcessLookupError</span>
 );
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyTimeoutError</span>, <span class="ident">TimeoutError</span>, <span class="ident">PyExc_TimeoutError</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyTimeoutError</span>, <span class="ident">TimeoutError</span>, <span class="ident">PyExc_TimeoutError</span>);
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">windows</span>, <span class="ident">PyPy</span>)))]</span>
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyEnvironmentError</span>, <span class="ident">EnvironmentError</span>, <span class="ident">PyExc_EnvironmentError</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyEnvironmentError</span>, <span class="ident">EnvironmentError</span>, <span class="ident">PyExc_EnvironmentError</span>);
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">windows</span>, <span class="ident">PyPy</span>)))]</span>
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyIOError</span>, <span class="ident">IOError</span>, <span class="ident">PyExc_IOError</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyIOError</span>, <span class="ident">IOError</span>, <span class="ident">PyExc_IOError</span>);
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">windows</span>, <span class="ident">not</span>(<span class="ident">PyPy</span>)))]</span>
-<span class="macro">impl_native_exception</span><span class="macro">!</span>(<span class="ident">PyWindowsError</span>, <span class="ident">WindowsError</span>, <span class="ident">PyExc_WindowsError</span>);
+<span class="macro">impl_native_exception!</span>(<span class="ident">PyWindowsError</span>, <span class="ident">WindowsError</span>, <span class="ident">PyExc_WindowsError</span>);
 
 <span class="kw">impl</span> <span class="ident">PyUnicodeDecodeError</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>(
         <span class="ident">py</span>: <span class="ident">Python</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>,
         <span class="ident">encoding</span>: <span class="kw-2">&amp;</span><span class="ident">CStr</span>,
         <span class="ident">input</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-        <span class="ident">range</span>: <span class="ident">ops</span>::<span class="ident">Range</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
+        <span class="ident">range</span>: <span class="ident">ops::Range</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
         <span class="ident">reason</span>: <span class="kw-2">&amp;</span><span class="ident">CStr</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">PyUnicodeDecodeError</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
-            <span class="ident">py</span>.<span class="ident">from_owned_ptr_or_err</span>(<span class="ident">ffi</span>::<span class="ident">PyUnicodeDecodeError_Create</span>(
+            <span class="ident">py</span>.<span class="ident">from_owned_ptr_or_err</span>(<span class="ident">ffi::PyUnicodeDecodeError_Create</span>(
                 <span class="ident">encoding</span>.<span class="ident">as_ptr</span>(),
                 <span class="ident">input</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
-                <span class="ident">input</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">ffi</span>::<span class="ident">Py_ssize_t</span>,
-                <span class="ident">range</span>.<span class="ident">start</span> <span class="kw">as</span> <span class="ident">ffi</span>::<span class="ident">Py_ssize_t</span>,
-                <span class="ident">range</span>.<span class="ident">end</span> <span class="kw">as</span> <span class="ident">ffi</span>::<span class="ident">Py_ssize_t</span>,
+                <span class="ident">input</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">ffi::Py_ssize_t</span>,
+                <span class="ident">range</span>.<span class="ident">start</span> <span class="kw">as</span> <span class="ident">ffi::Py_ssize_t</span>,
+                <span class="ident">range</span>.<span class="ident">end</span> <span class="kw">as</span> <span class="ident">ffi::Py_ssize_t</span>,
                 <span class="ident">reason</span>.<span class="ident">as_ptr</span>(),
             ))
         }
@@ -1009,58 +1008,58 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_utf8</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>(
         <span class="ident">py</span>: <span class="ident">Python</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>,
         <span class="ident">input</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-        <span class="ident">err</span>: <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">Utf8Error</span>,
+        <span class="ident">err</span>: <span class="ident">std::str::Utf8Error</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">PyUnicodeDecodeError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">pos</span> <span class="op">=</span> <span class="ident">err</span>.<span class="ident">valid_up_to</span>();
-        <span class="ident">PyUnicodeDecodeError</span>::<span class="ident">new</span>(
+        <span class="ident">PyUnicodeDecodeError::new</span>(
             <span class="ident">py</span>,
-            <span class="ident">CStr</span>::<span class="ident">from_bytes_with_nul</span>(<span class="string">b&quot;utf-8\0&quot;</span>).<span class="ident">unwrap</span>(),
+            <span class="ident">CStr::from_bytes_with_nul</span>(<span class="string">b&quot;utf-8\0&quot;</span>).<span class="ident">unwrap</span>(),
             <span class="ident">input</span>,
             <span class="ident">pos</span>..(<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>),
-            <span class="ident">CStr</span>::<span class="ident">from_bytes_with_nul</span>(<span class="string">b&quot;invalid utf-8\0&quot;</span>).<span class="ident">unwrap</span>(),
+            <span class="ident">CStr::from_bytes_with_nul</span>(<span class="string">b&quot;invalid utf-8\0&quot;</span>).<span class="ident">unwrap</span>(),
         )
     }
 }
 
 <span class="doccomment">/// Exceptions defined in `asyncio` module</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">asyncio</span> {
-    <span class="macro">import_exception</span><span class="macro">!</span>(<span class="ident">asyncio</span>, <span class="ident">CancelledError</span>);
-    <span class="macro">import_exception</span><span class="macro">!</span>(<span class="ident">asyncio</span>, <span class="ident">InvalidStateError</span>);
-    <span class="macro">import_exception</span><span class="macro">!</span>(<span class="ident">asyncio</span>, <span class="ident">TimeoutError</span>);
-    <span class="macro">import_exception</span><span class="macro">!</span>(<span class="ident">asyncio</span>, <span class="ident">IncompleteReadError</span>);
-    <span class="macro">import_exception</span><span class="macro">!</span>(<span class="ident">asyncio</span>, <span class="ident">LimitOverrunError</span>);
-    <span class="macro">import_exception</span><span class="macro">!</span>(<span class="ident">asyncio</span>, <span class="ident">QueueEmpty</span>);
-    <span class="macro">import_exception</span><span class="macro">!</span>(<span class="ident">asyncio</span>, <span class="ident">QueueFull</span>);
+    <span class="macro">import_exception!</span>(<span class="ident">asyncio</span>, <span class="ident">CancelledError</span>);
+    <span class="macro">import_exception!</span>(<span class="ident">asyncio</span>, <span class="ident">InvalidStateError</span>);
+    <span class="macro">import_exception!</span>(<span class="ident">asyncio</span>, <span class="ident">TimeoutError</span>);
+    <span class="macro">import_exception!</span>(<span class="ident">asyncio</span>, <span class="ident">IncompleteReadError</span>);
+    <span class="macro">import_exception!</span>(<span class="ident">asyncio</span>, <span class="ident">LimitOverrunError</span>);
+    <span class="macro">import_exception!</span>(<span class="ident">asyncio</span>, <span class="ident">QueueEmpty</span>);
+    <span class="macro">import_exception!</span>(<span class="ident">asyncio</span>, <span class="ident">QueueFull</span>);
 }
 
 <span class="doccomment">/// Exceptions defined in `socket` module</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">socket</span> {
-    <span class="macro">import_exception</span><span class="macro">!</span>(<span class="ident">socket</span>, <span class="ident">herror</span>);
-    <span class="macro">import_exception</span><span class="macro">!</span>(<span class="ident">socket</span>, <span class="ident">gaierror</span>);
-    <span class="macro">import_exception</span><span class="macro">!</span>(<span class="ident">socket</span>, <span class="ident">timeout</span>);
+    <span class="macro">import_exception!</span>(<span class="ident">socket</span>, <span class="ident">herror</span>);
+    <span class="macro">import_exception!</span>(<span class="ident">socket</span>, <span class="ident">gaierror</span>);
+    <span class="macro">import_exception!</span>(<span class="ident">socket</span>, <span class="ident">timeout</span>);
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
     <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">PyException</span>, <span class="ident">PyUnicodeDecodeError</span>};
-    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="ident">IntoPyDict</span>, <span class="ident">PyDict</span>};
+    <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::types</span>::{<span class="ident">IntoPyDict</span>, <span class="ident">PyDict</span>};
     <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">PyErr</span>, <span class="ident">Python</span>};
 
-    <span class="macro">import_exception</span><span class="macro">!</span>(<span class="ident">socket</span>, <span class="ident">gaierror</span>);
-    <span class="macro">import_exception</span><span class="macro">!</span>(<span class="ident">email</span>.<span class="ident">errors</span>, <span class="ident">MessageError</span>);
+    <span class="macro">import_exception!</span>(<span class="ident">socket</span>, <span class="ident">gaierror</span>);
+    <span class="macro">import_exception!</span>(<span class="ident">email</span>.<span class="ident">errors</span>, <span class="ident">MessageError</span>);
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_check_exception</span>() {
-        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python</span>::<span class="ident">acquire_gil</span>();
+        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python::acquire_gil</span>();
         <span class="kw">let</span> <span class="ident">py</span> <span class="op">=</span> <span class="ident">gil</span>.<span class="ident">python</span>();
 
-        <span class="kw">let</span> <span class="ident">err</span>: <span class="ident">PyErr</span> <span class="op">=</span> <span class="ident">gaierror</span>::<span class="ident">new_err</span>(());
+        <span class="kw">let</span> <span class="ident">err</span>: <span class="ident">PyErr</span> <span class="op">=</span> <span class="ident">gaierror::new_err</span>(());
         <span class="kw">let</span> <span class="ident">socket</span> <span class="op">=</span> <span class="ident">py</span>
             .<span class="ident">import</span>(<span class="string">&quot;socket&quot;</span>)
             .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">print</span>(<span class="ident">py</span>))
             .<span class="ident">expect</span>(<span class="string">&quot;could not import socket&quot;</span>);
 
-        <span class="kw">let</span> <span class="ident">d</span> <span class="op">=</span> <span class="ident">PyDict</span>::<span class="ident">new</span>(<span class="ident">py</span>);
+        <span class="kw">let</span> <span class="ident">d</span> <span class="op">=</span> <span class="ident">PyDict::new</span>(<span class="ident">py</span>);
         <span class="ident">d</span>.<span class="ident">set_item</span>(<span class="string">&quot;socket&quot;</span>, <span class="ident">socket</span>)
             .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">print</span>(<span class="ident">py</span>))
             .<span class="ident">expect</span>(<span class="string">&quot;could not setitem&quot;</span>);
@@ -1076,16 +1075,16 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_check_exception_nested</span>() {
-        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python</span>::<span class="ident">acquire_gil</span>();
+        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python::acquire_gil</span>();
         <span class="kw">let</span> <span class="ident">py</span> <span class="op">=</span> <span class="ident">gil</span>.<span class="ident">python</span>();
 
-        <span class="kw">let</span> <span class="ident">err</span>: <span class="ident">PyErr</span> <span class="op">=</span> <span class="ident">MessageError</span>::<span class="ident">new_err</span>(());
+        <span class="kw">let</span> <span class="ident">err</span>: <span class="ident">PyErr</span> <span class="op">=</span> <span class="ident">MessageError::new_err</span>(());
         <span class="kw">let</span> <span class="ident">email</span> <span class="op">=</span> <span class="ident">py</span>
             .<span class="ident">import</span>(<span class="string">&quot;email&quot;</span>)
             .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">print</span>(<span class="ident">py</span>))
             .<span class="ident">expect</span>(<span class="string">&quot;could not import email&quot;</span>);
 
-        <span class="kw">let</span> <span class="ident">d</span> <span class="op">=</span> <span class="ident">PyDict</span>::<span class="ident">new</span>(<span class="ident">py</span>);
+        <span class="kw">let</span> <span class="ident">d</span> <span class="op">=</span> <span class="ident">PyDict::new</span>(<span class="ident">py</span>);
         <span class="ident">d</span>.<span class="ident">set_item</span>(<span class="string">&quot;email&quot;</span>, <span class="ident">email</span>)
             .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">print</span>(<span class="ident">py</span>))
             .<span class="ident">expect</span>(<span class="string">&quot;could not setitem&quot;</span>);
@@ -1104,9 +1103,9 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">custom_exception</span>() {
-        <span class="macro">create_exception</span><span class="macro">!</span>(<span class="ident">mymodule</span>, <span class="ident">CustomError</span>, <span class="ident">PyException</span>);
+        <span class="macro">create_exception!</span>(<span class="ident">mymodule</span>, <span class="ident">CustomError</span>, <span class="ident">PyException</span>);
 
-        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python</span>::<span class="ident">acquire_gil</span>();
+        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python::acquire_gil</span>();
         <span class="kw">let</span> <span class="ident">py</span> <span class="op">=</span> <span class="ident">gil</span>.<span class="ident">python</span>();
         <span class="kw">let</span> <span class="ident">error_type</span> <span class="op">=</span> <span class="ident">py</span>.<span class="ident">get_type</span>::<span class="op">&lt;</span><span class="ident">CustomError</span><span class="op">&gt;</span>();
         <span class="kw">let</span> <span class="ident">ctx</span> <span class="op">=</span> [(<span class="string">&quot;CustomError&quot;</span>, <span class="ident">error_type</span>)].<span class="ident">into_py_dict</span>(<span class="ident">py</span>);
@@ -1115,7 +1114,7 @@
             .<span class="ident">unwrap</span>()
             .<span class="ident">extract</span>()
             .<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">type_description</span>, <span class="string">&quot;&lt;class &#39;mymodule.CustomError&#39;&gt;&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">type_description</span>, <span class="string">&quot;&lt;class &#39;mymodule.CustomError&#39;&gt;&quot;</span>);
         <span class="ident">py</span>.<span class="ident">run</span>(
             <span class="string">&quot;assert CustomError(&#39;oops&#39;).args == (&#39;oops&#39;,)&quot;</span>,
             <span class="prelude-val">None</span>,
@@ -1126,29 +1125,29 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">native_exception_debug</span>() {
-        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python</span>::<span class="ident">acquire_gil</span>();
+        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python::acquire_gil</span>();
         <span class="kw">let</span> <span class="ident">py</span> <span class="op">=</span> <span class="ident">gil</span>.<span class="ident">python</span>();
         <span class="kw">let</span> <span class="ident">exc</span> <span class="op">=</span> <span class="ident">py</span>
             .<span class="ident">run</span>(<span class="string">&quot;raise Exception(&#39;banana&#39;)&quot;</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>)
             .<span class="ident">expect_err</span>(<span class="string">&quot;raising should have given us an error&quot;</span>)
             .<span class="ident">into_instance</span>(<span class="ident">py</span>)
             .<span class="ident">into_ref</span>(<span class="ident">py</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">exc</span>),
+        <span class="macro">assert_eq!</span>(
+            <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">exc</span>),
             <span class="ident">exc</span>.<span class="ident">repr</span>().<span class="ident">unwrap</span>().<span class="ident">extract</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>()
         );
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">native_exception_display</span>() {
-        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python</span>::<span class="ident">acquire_gil</span>();
+        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python::acquire_gil</span>();
         <span class="kw">let</span> <span class="ident">py</span> <span class="op">=</span> <span class="ident">gil</span>.<span class="ident">python</span>();
         <span class="kw">let</span> <span class="ident">exc</span> <span class="op">=</span> <span class="ident">py</span>
             .<span class="ident">run</span>(<span class="string">&quot;raise Exception(&#39;banana&#39;)&quot;</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>)
             .<span class="ident">expect_err</span>(<span class="string">&quot;raising should have given us an error&quot;</span>)
             .<span class="ident">into_instance</span>(<span class="ident">py</span>)
             .<span class="ident">into_ref</span>(<span class="ident">py</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
+        <span class="macro">assert_eq!</span>(
             <span class="ident">exc</span>.<span class="ident">to_string</span>(),
             <span class="ident">exc</span>.<span class="ident">str</span>().<span class="ident">unwrap</span>().<span class="ident">extract</span>::<span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>()
         );
@@ -1156,9 +1155,9 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">native_exception_chain</span>() {
-        <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+        <span class="kw">use</span> <span class="ident">std::error::Error</span>;
 
-        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python</span>::<span class="ident">acquire_gil</span>();
+        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python::acquire_gil</span>();
         <span class="kw">let</span> <span class="ident">py</span> <span class="op">=</span> <span class="ident">gil</span>.<span class="ident">python</span>();
         <span class="kw">let</span> <span class="ident">exc</span> <span class="op">=</span> <span class="ident">py</span>
             .<span class="ident">run</span>(
@@ -1171,31 +1170,31 @@
             .<span class="ident">into_ref</span>(<span class="ident">py</span>);
 
         <span class="kw">if</span> <span class="ident">py</span>.<span class="ident">version_info</span>() <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">7</span>) {
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">exc</span>), <span class="string">&quot;Exception(&#39;banana&#39;)&quot;</span>);
+            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">exc</span>), <span class="string">&quot;Exception(&#39;banana&#39;)&quot;</span>);
         } <span class="kw">else</span> {
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">exc</span>), <span class="string">&quot;Exception(&#39;banana&#39;,)&quot;</span>);
+            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">exc</span>), <span class="string">&quot;Exception(&#39;banana&#39;,)&quot;</span>);
         }
 
         <span class="kw">let</span> <span class="ident">source</span> <span class="op">=</span> <span class="ident">exc</span>.<span class="ident">source</span>().<span class="ident">expect</span>(<span class="string">&quot;cause should exist&quot;</span>);
 
         <span class="kw">if</span> <span class="ident">py</span>.<span class="ident">version_info</span>() <span class="op">&gt;</span><span class="op">=</span> (<span class="number">3</span>, <span class="number">7</span>) {
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">source</span>), <span class="string">&quot;TypeError(&#39;peach&#39;)&quot;</span>);
+            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">source</span>), <span class="string">&quot;TypeError(&#39;peach&#39;)&quot;</span>);
         } <span class="kw">else</span> {
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">source</span>), <span class="string">&quot;TypeError(&#39;peach&#39;,)&quot;</span>);
+            <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">source</span>), <span class="string">&quot;TypeError(&#39;peach&#39;,)&quot;</span>);
         }
 
         <span class="kw">let</span> <span class="ident">source_source</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">source</span>();
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">source_source</span>.<span class="ident">is_none</span>(), <span class="string">&quot;source_source should be None&quot;</span>);
+        <span class="macro">assert!</span>(<span class="ident">source_source</span>.<span class="ident">is_none</span>(), <span class="string">&quot;source_source should be None&quot;</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">unicode_decode_error</span>() {
         <span class="kw">let</span> <span class="ident">invalid_utf8</span> <span class="op">=</span> <span class="string">b&quot;fo\xd8o&quot;</span>;
-        <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">invalid_utf8</span>).<span class="ident">expect_err</span>(<span class="string">&quot;should be invalid utf8&quot;</span>);
-        <span class="ident">Python</span>::<span class="ident">with_gil</span>(<span class="op">|</span><span class="ident">py</span><span class="op">|</span> {
-            <span class="kw">let</span> <span class="ident">decode_err</span> <span class="op">=</span> <span class="ident">PyUnicodeDecodeError</span>::<span class="ident">new_utf8</span>(<span class="ident">py</span>, <span class="ident">invalid_utf8</span>, <span class="ident">err</span>).<span class="ident">unwrap</span>();
-            <span class="macro">assert_eq</span><span class="macro">!</span>(
-                <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">decode_err</span>),
+        <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">std::str::from_utf8</span>(<span class="ident">invalid_utf8</span>).<span class="ident">expect_err</span>(<span class="string">&quot;should be invalid utf8&quot;</span>);
+        <span class="ident">Python::with_gil</span>(<span class="op">|</span><span class="ident">py</span><span class="op">|</span> {
+            <span class="kw">let</span> <span class="ident">decode_err</span> <span class="op">=</span> <span class="ident">PyUnicodeDecodeError::new_utf8</span>(<span class="ident">py</span>, <span class="ident">invalid_utf8</span>, <span class="ident">err</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq!</span>(
+                <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">decode_err</span>),
                 <span class="string">&quot;UnicodeDecodeError(&#39;utf-8&#39;, b&#39;fo\\xd8o&#39;, 2, 3, &#39;invalid utf-8&#39;)&quot;</span>
             );
 
@@ -1203,13 +1202,12 @@
             <span class="kw">let</span> <span class="ident">e</span>: <span class="ident">PyErr</span> <span class="op">=</span> <span class="ident">decode_err</span>.<span class="ident">into</span>();
             <span class="ident">e</span>.<span class="ident">restore</span>(<span class="ident">py</span>);
 
-            <span class="macro">assert_eq</span><span class="macro">!</span>(
-                <span class="ident">PyErr</span>::<span class="ident">fetch</span>(<span class="ident">py</span>).<span class="ident">to_string</span>(),
+            <span class="macro">assert_eq!</span>(
+                <span class="ident">PyErr::fetch</span>(<span class="ident">py</span>).<span class="ident">to_string</span>(),
                 <span class="string">&quot;UnicodeDecodeError: \&#39;utf-8\&#39; codec can\&#39;t decode byte 0xd8 in position 2: invalid utf-8&quot;</span>
             );
         });
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pyo3"></div>
-    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pyo3" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>
