@@ -47,7 +47,7 @@ jobs:
     - name: Build
       run: cargo +${{matrix.rust}} build --verbose --features serde
     - name: Run tests
-      run: cargo +${{ matrix.rust}} test --verbose --features serde
+      run: cargo +${{ matrix.rust}} test --lib --verbose --features serde
       
   bin:
 
