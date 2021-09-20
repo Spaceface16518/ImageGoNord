@@ -1,13 +1,13 @@
 use crate::utils::delta;
-use image::{imageops::ColorMap, Pixel, Rgb};
+use image::{imageops::ColorMap, Pixel, Rgb, Rgba};
 use itertools::Itertools;
 use smallvec::SmallVec;
 
+pub(crate) type Entry = [u8; 3];
+
 /// Palette that can be constructed at runtime. Used to load custom or filtered
 /// palettes that can be changed between subsequent conversions.
-///
 /// # Palette strings
-///
 /// A dynamic palette can be created by parsing a *palette string*. A palette
 /// string is just string of hexadecimal numbers separated by newlines.
 /// Representations can be uppercase or lowercase. Each line is parsed
@@ -40,12 +40,12 @@ use smallvec::SmallVec;
 ///
 /// Only works on byte-size subpixel images
 #[derive(Debug, Clone, Hash, PartialEq, Eq)]
-pub struct DynamicPalette<P: Pixel<Subpixel = u8>> {
+pub struct DynamicPalette {
     // 5 because the largest of the Nord palettes has five colors
-    colors: SmallVec<[P; 5]>,
+    colors: SmallVec<[Entry; 16]>,
 }
 
-impl DynamicPalette<Rgb<u8>> {
+impl DynamicPalette {
     pub fn from_palette_str(s: &str) -> Result<Self, std::num::ParseIntError> {
         let colors = s
             .lines()
@@ -59,7 +59,6 @@ impl DynamicPalette<Rgb<u8>> {
             .map(|s| u32::from_str_radix(s.trim(), 16))
             // convert hex code to rgb triple
             .map_ok(hex_to_rgb)
-            .map_ok(|rgb| Rgb(rgb))
             // fail on the first parse error
             .collect::<Result<_, _>>()?;
         Ok(DynamicPalette { colors })
@@ -84,27 +83,31 @@ impl DynamicPalette<Rgb<u8>> {
 ///
 /// Only supports Rgb<u8> pixels at the moment.
 #[derive(Debug, Clone, Hash, PartialEq, Eq)]
-pub struct StaticPalette<P: Pixel<Subpixel = u8>, const N: usize> {
-    colors: [P; N],
+pub struct StaticPalette<const N: usize> {
+    colors: [Entry; N],
 }
 
-impl<const N: usize> StaticPalette<Rgb<u8>, N> {
+impl<const N: usize> StaticPalette<N> {
     pub const fn from_rgb_hex(hex: [u32; N]) -> Self {
-        let mut colors = [Rgb([0; 3]); N];
+        let mut colors = [[0; 3]; N];
 
         let mut i = 0;
         while i < N {
-            colors[i] = Rgb(hex_to_rgb(hex[i]));
+            colors[i] = hex_to_rgb(hex[i]);
             i += 1
         }
         StaticPalette { colors }
     }
+
+    pub const fn from_colors(colors: [Entry; N]) -> Self {
+        StaticPalette { colors }
+    }
 }
 
-impl<P: Pixel<Subpixel = u8>, const N: usize> Into<DynamicPalette<P>> for StaticPalette<P, N> {
+impl<const N: usize> Into<DynamicPalette> for StaticPalette<N> {
     /// Converts a static palette into a dynamic palette by cloning each color
     /// into a new colors vector for the new palette.
-    fn into(self) -> DynamicPalette<P> {
+    fn into(self) -> DynamicPalette {
         let colors = self.colors.as_ref().into();
         DynamicPalette { colors }
     }
@@ -117,17 +120,24 @@ const fn hex_to_rgb(hex: u32) -> [u8; 3] {
     [r as u8, g as u8, b as u8]
 }
 
-impl<P: Pixel<Subpixel = u8>, const N: usize> ColorMap for StaticPalette<P, N> {
-    type Color = P;
+impl<const N: usize> ColorMap for StaticPalette<N> {
+    type Color = Rgba<u8>;
 
     fn index_of(&self, color: &Self::Color) -> usize {
-        let d = |b| move |a| delta(a, b);
-        self.colors.iter().map(d(color)).position_min().unwrap()
+        // calculate the delta between the given color and a color in the palette
+        self.colors
+            .iter()
+            .map(|c: &Entry| (delta(color.channels(), c.as_ref())))
+            .position_min()
+            .unwrap()
     }
 
     fn map_color(&self, color: &mut Self::Color) {
+        // find closest matching color in palette
         let i = self.index_of(color);
-        *color = self.colors[i];
+        let c = self.colors[i];
+        // don't overwrite the alpha channel
+        color.channels_mut()[..3].copy_from_slice(&c)
     }
 
     fn has_lookup(&self) -> bool {
@@ -135,20 +145,27 @@ impl<P: Pixel<Subpixel = u8>, const N: usize> ColorMap for StaticPalette<P, N> {
     }
 
     fn lookup(&self, index: usize) -> Option<Self::Color> {
-        self.colors.get(index).cloned()
+        self.colors.get(index).map(|&entry| Rgb(entry).to_rgba())
     }
 }
-impl<P: Pixel<Subpixel = u8>> ColorMap for DynamicPalette<P> {
-    type Color = P;
+impl ColorMap for DynamicPalette {
+    type Color = Rgba<u8>;
 
     fn index_of(&self, color: &Self::Color) -> usize {
-        let d = |b| move |a| delta(a, b);
-        self.colors.iter().map(d(color)).position_min().unwrap()
+        // calculate the delta between the given color and a color in the palette
+        self.colors
+            .iter()
+            .map(|c: &Entry| dbg!(delta(color.channels(), c.as_ref())))
+            .position_min()
+            .unwrap()
     }
 
     fn map_color(&self, color: &mut Self::Color) {
+        // find closest matching color in palette
         let i = self.index_of(color);
-        *color = self.colors[i];
+        let c = self.colors[i];
+        // don't overwrite the alpha channel
+        color.channels_mut()[..3].copy_from_slice(&c)
     }
 
     fn has_lookup(&self) -> bool {
@@ -156,24 +173,40 @@ impl<P: Pixel<Subpixel = u8>> ColorMap for DynamicPalette<P> {
     }
 
     fn lookup(&self, index: usize) -> Option<Self::Color> {
-        self.colors.get(index).cloned()
+        self.colors.get(index).map(|&entry| Rgb(entry).to_rgba())
     }
 }
 
 pub mod palettes {
     use super::StaticPalette;
-    use image::Rgb;
-    #[cfg_attr(feature = "ffi", no_mangle)]
-    pub static AURORA: StaticPalette<Rgb<u8>, 5> =
+    pub static AURORA: StaticPalette<5> =
         StaticPalette::from_rgb_hex([0xBF616A, 0x08770, 0xBCB8B, 0x3BE8C, 0x48EAD]);
 
-    #[cfg_attr(feature = "ffi", no_mangle)]
-    pub static FROST: StaticPalette<Rgb<u8>, 4> =
+    pub static FROST: StaticPalette<4> =
         StaticPalette::from_rgb_hex([0x8FBCBB, 0x88C0D0, 0x81A1C1, 0x5E81AC]);
-    #[cfg_attr(feature = "ffi", no_mangle)]
-    pub static POLAR_NIGHT: StaticPalette<Rgb<u8>, 4> =
+    pub static POLAR_NIGHT: StaticPalette<4> =
         StaticPalette::from_rgb_hex([0x2E3440, 0x3B4252, 0x434C5E, 0x4C566A]);
-    #[cfg_attr(feature = "ffi", no_mangle)]
-    pub static SNOW_STORM: StaticPalette<Rgb<u8>, 3> =
+    pub static SNOW_STORM: StaticPalette<3> =
         StaticPalette::from_rgb_hex([0xD8DEE9, 0xE5E9F0, 0xECEFF4]);
+
+    // TODO: convert this to regular static once enough const generics functionality
+    // has stablized
+    pub static NORD: StaticPalette<16> = StaticPalette::from_colors([
+        AURORA.colors[0],
+        AURORA.colors[1],
+        AURORA.colors[2],
+        AURORA.colors[3],
+        AURORA.colors[4],
+        FROST.colors[0],
+        FROST.colors[1],
+        FROST.colors[2],
+        FROST.colors[3],
+        POLAR_NIGHT.colors[0],
+        POLAR_NIGHT.colors[1],
+        POLAR_NIGHT.colors[2],
+        POLAR_NIGHT.colors[3],
+        SNOW_STORM.colors[0],
+        SNOW_STORM.colors[1],
+        SNOW_STORM.colors[2],
+    ]);
 }

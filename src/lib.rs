@@ -1,12 +1,12 @@
 pub mod palette;
-mod utils;
-#[cfg(feature = "wasm_bindgen")]
-use wasm_bindgen::prelude::*;
+pub mod utils;
 
+use color_quant::NeuQuant;
 use image::{
-    imageops::{blur, resize, ColorMap},
-    GenericImageView, Rgba, RgbaImage,
+    imageops::{blur, dither, resize, ColorMap, FilterType::Triangle},
+    Rgba, RgbaImage,
 };
+
 pub use palette::palettes::*;
 
 #[cfg(feature = "wee_alloc")]
@@ -17,8 +17,26 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 /// built-in pre-processing operations like resizing and quantization,
 /// processing parameters like transparency tolerance and average kernel, and
 /// post-processing operations like Gaussian blur.
+///
+/// `Options` implements [`std::default::Default`], so you can use struct
+/// builder syntax to easily make an `Options` struct that "overrides" the
+/// default struct.
+///
+/// ```ignore
+/// let options = Options {
+///     resize: [1920, 1080],
+///     blur: 0.4,
+///     ..Default::default()
+/// };
+/// assert_eq!(options, Options {
+///     resize: [1920, 1080],
+///     quantize: 0,
+///     avg: [0, 0],
+///     transparency_tolerance: 0,
+///     blur: 0.4,
+/// })
+/// ```
 #[cfg_attr(feature = "ffi", repr(C))]
-#[cfg_attr(feature = "wasm_bindgen", wasm_bindgen)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 #[derive(Clone, Debug, PartialEq)]
 pub struct Options {
@@ -32,7 +50,7 @@ pub struct Options {
     /// advance and skip resizing during the conversion. A good
     /// example situation in which this would be beneficial is a live conversion
     /// preview.
-    pub resize: [u32; 2],
+    pub resize: u32,
     /// Quantize the image by the given balance. The value must be between 1 and
     /// 30. A value closer to 1 will be slower, but provide better
     /// quantization. The default value of 10 is a good balance between
@@ -47,7 +65,7 @@ pub struct Options {
     ///
     /// Passing any invalid value (like 0) disables quantization, which is the
     /// default behavior
-    pub quantize: u8,
+    pub quantize: i32,
     /// Use the average value of a kernel surrounding each pixel rather than the
     /// pixel value itself.
     pub avg: [u32; 2],
@@ -65,83 +83,92 @@ impl Default for Options {
         Options {
             blur: 0.,
             avg: [0, 0],
-            resize: [0, 0],
-            quantize: 10,
+            resize: 0,
+            quantize: 0,
             transparency_tolerance: 190,
         }
     }
 }
 
 // TODO: make generic over different image types
-pub fn convert<P: ColorMap + Sync>(img: RgbaImage, opt: Options, palette: &P) -> RgbaImage {
-    let img = if opt.resize != [0, 0] {
-        // resize with nearest neigbor filtering
-        resize_img(&img, opt.resize)
+pub fn convert(
+    img: &RgbaImage,
+    opt: Options,
+    palette: &impl ColorMap<Color = Rgba<u8>>,
+) -> RgbaImage {
+    // resize the image to simulate averaging of pixels
+    let (w, h) = img.dimensions(); // save width and height for later
+    let mut img = if opt.resize > 1 {
+        // sample using linear filtering
+        resize(img, w - w / opt.resize, h - h / opt.resize, Triangle)
     } else {
-        img // NOTE: will need to cast this to rgba when img is generic
+        img.clone()
     };
 
-    // 1 <= q <= 10
-    let img = if opt.quantize >= 1 && opt.quantize <= 10 {
-        todo!("neuquant quantization pre-process")
-    } else {
-        img
-    };
+    // dither image using neu-quant quantization
+    if (1..=30).contains(&opt.quantize) {
+        let ref q = NeuQuant::new(opt.quantize, 256, img.as_raw()); // train neural network
+        dither(&mut img, q);
+    }
 
-    let get_pixel_fn = if let [0, 0] = opt.avg {
-        // just get the pixel at the coordinates, nothing fancy
-        |x, y| img.get_pixel(x, y).clone()
-    } else {
-        todo!("get avg around pixel fn")
-    };
+    // re-color the image using the provided palette
+    dither(&mut img, palette);
 
-    let img = replace_pixels(get_pixel_fn, opt.transparency_tolerance, palette);
-
-    // gaussian blur
+    // blur image
     let img = if opt.blur > 0. {
         blur(&img, opt.blur)
     } else {
         img
     };
 
-    img
-}
-
-fn resize_img(img: &RgbaImage, [w, h]: [u32; 2]) -> RgbaImage {
-    resize(img, w, h, image::imageops::FilterType::Nearest)
+    // if we resized earlier, restore original size
+    if opt.resize > 1 {
+        resize(&img, w, h, Triangle)
+    } else {
+        img
+    }
 }
 
 // TODO: need to change the signatures to take the image as a parameter rather
 // than capturing it
 
-#[cfg(not(feature = "rayon"))]
-fn replace_pixels<P: ColorMap>(
-    get_pixel_fn: impl Fn(u32, u32) -> Rgba<u8>,
-    transparency_tolerance: u8,
-    palette: &P,
-) -> RgbaImage {
-    todo!()
-}
-
-#[cfg(feature = "rayon")]
-fn replace_pixels<P: ColorMap + Sync>(
-    get_pixel_fn: impl Fn(u32, u32) -> Rgba<u8>,
-    transparency_tolerance: u8,
-    palette: &P,
-) -> RgbaImage {
-    todo!()
-}
-
-#[cfg(test)]
-mod tests {
-    use super::{resize_img};
-    use image::RgbaImage;
-
-    #[test]
-    fn test_resize_img() {
-        let img = RgbaImage::from_pixel(64, 64, [255; 4].into());
-        let img = resize_img(&img, [32, 32]);
-
-        assert_eq!(img.dimensions(), (32, 32))
-    }
-}
+//fn map_color(pix: &mut Rgba<u8>, palette: &impl ColorMap, quant: &impl
+// ColorMap) {
+////palette.map_color(pix);
+//unimplemented!()
+//}
+//
+//fn get_color(img: &RgbaImage, [x, y]: [u32; 2], avg: [u32; 2]) -> Rgba<u8> {
+//todo!("get color from coordinate and kernel")
+//}
+//
+//fn map_pixel(
+//img: &RgbaImage,
+//coord: [u32; 2],
+//avg: [u32; 2],
+//transparency_tolerance: u8,
+//palette: &impl ColorMap,
+//quant: &impl ColorMap,
+//) -> Rgba<u8> {
+//let pix = get_color(img, coord, avg);
+//if pix[3] > transparency_tolerance {
+//map_color(&mut pix, palette, quant);
+//}
+//pix
+//}
+//
+//#[cfg(not(feature = "rayon"))]
+//fn map_pixels(
+//img: RgbaImage,
+//avg: [u32; 2],
+//transparency_tolerance: u8,
+//palette: &impl ColorMap,
+//quant: &impl ColorMap
+//) -> RgbaImage {
+//RgbaImage::from_fn(img.width(), img.height(), |x, y| {
+//map_pixel(&img, [x, y], avg, transparency_tolerance, palette, quant)
+//})
+//}
+//
+//
+//

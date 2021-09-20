@@ -1,6 +1,6 @@
 [package]
 name = "image-go-nord"
-version = "0.1.0"
+version = "0.0.1-alpha.1"
 authors = ["Amrit Rathie <amrit.rathie@gmail.com>"]
 edition = "2018"
 description = "Convert any image to the Nord colorscheme"
@@ -10,18 +10,29 @@ crate-type = ["lib", "cdylib", "staticlib"]
 
 [dependencies]
 image = "0.23.14"
-itertools = "0.10.0"
+itertools = "0.10.1"
 num-traits = "0.2.14"
 smallvec = "1.6.1"
-pyo3 = { version = "0.13.2", optional = true }
-rayon = { version = "1.5.0", optional = true }
-serde = { version = "1.0.125", optional = true, features = ["derive"] }
-serde_json = { version = "1.0.64", optional = true }
-wasm-bindgen = { version = "0.2.73", optional = true }
+pyo3 = { version = "0.14.5", optional = true }
+rayon = { version = "1.5.1", optional = true }
+serde = { version = "1.0.130", optional = true, features = ["derive"] }
+wasm-bindgen = { version = "0.2.78", optional = true }
 wee_alloc = { version = "0.4.5", optional = true }
-
-[features]
-ffi = []
+color_quant = "1.1.0"
+clap = { version = "3.0.0-beta.4", optional = true }
+color-eyre = { version = "0.5.11", optional = true }
 
 [dev-dependencies]
-ureq = "2.1.0"
+assert_cmd = "2.0.1"
+assert_fs = "1.0.5"
+criterion = "0.3.5"
+ureq = "2.2.0"
+[[bin]]
+
+name = "ign"
+path = "src/main.rs"
+required-features = ["clap", "color-eyre"]
+
+[[bench]]
+name = "ign-benchmark"
+harness = false
