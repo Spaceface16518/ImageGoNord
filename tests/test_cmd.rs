@@ -47,13 +47,8 @@ fn test_same_dir_absolute() {
     Command::cargo_bin("ign")
         .unwrap()
         .current_dir(temp.path())
-        .arg(temp.path().join("tinycross.png").canonicalize().unwrap())
-        .arg(
-            temp.path()
-                .join("tinycross-nord.png")
-                .canonicalize()
-                .unwrap(),
-        )
+        .arg(temp.child("tinycross.png").path())
+        .arg(temp.child("tinycross-nord.png").path())
         .assert()
         .success();
 }
