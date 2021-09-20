@@ -4,6 +4,16 @@ version = "0.0.1-alpha.1"
 authors = ["Amrit Rathie <amrit.rathie@gmail.com>"]
 edition = "2018"
 description = "Convert any image to the Nord colorscheme"
+documentation = "https://spaceface16518.github.io/ImageGoNord"
+homepage = "https://github.com/Spaceface16518/ImageGoNord"
+repository = "https://github.com/Spaceface16518/ImageGoNord"
+license = "MIT"
+license-file = "LICENSE"
+
+categories = ["multimedia::images", "command-line-utilities"]
+keywords = ["nord", "nordtheme", "color", "palette", "image"]
+
+default-run = "ign"
 
 [lib]
 crate-type = ["lib", "cdylib", "staticlib"]
