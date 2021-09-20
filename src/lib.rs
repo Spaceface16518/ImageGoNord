@@ -40,37 +40,21 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 #[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 #[derive(Clone, Debug, PartialEq)]
 pub struct Options {
-    /// Resize image to a new width and height, `[w, h]`, before performing
-    /// other operations. Dimensions must be non-zero; passing a one or more
-    /// zeros will cancel resampling. In other words, pass `[0, 0]` to
-    /// disable resampling. This is the default behavior.
-    ///
-    /// This is an expensive operation, so if it needs to be done repeatedly to
-    /// the same image, it is usually more efficient to resize the image in
-    /// advance and skip resizing during the conversion. A good
-    /// example situation in which this would be beneficial is a live conversion
-    /// preview.
+    /// Resize image by a certain factor before performing other processing. The
+    /// image will be resized using linear filtering back to the original
+    /// dimensions before it is output. This will cause the algorithm to
+    /// consider bigger "pixels" in the image, which will result in a
+    /// lower quality conversion.
+    #[deprecated]
     pub resize: u32,
     /// Quantize the image by the given balance. The value must be between 1 and
     /// 30. A value closer to 1 will be slower, but provide better
     /// quantization. The default value of 10 is a good balance between
     /// speed and quality.
     ///
-    /// While it can technically combined with the average algorithm, it is
-    /// generally an *alternative*, so it should be passed in combination
-    /// with `avg: [0, 0]`. However, this is merely a suggestion—it is
-    /// completely possible to do both, but the results may not be
-    /// aesthetically desirable. If it is passed with a non-zero `avg`,
-    /// quantization will happen before taking the average (obviously).
-    ///
     /// Passing any invalid value (like 0) disables quantization, which is the
     /// default behavior
     pub quantize: i32,
-    /// Use the average value of a kernel surrounding each pixel rather than the
-    /// pixel value itself.
-    pub avg: [u32; 2],
-    /// Filter out pixels below a certain alpha.
-    pub transparency_tolerance: u8,
     /// Perform a Gaussian blur on the output image. This can help smooth
     /// gradients and remove unwanted artifacts.
     ///
@@ -79,18 +63,18 @@ pub struct Options {
 }
 
 impl Default for Options {
+    #[allow(deprecated)]
     fn default() -> Self {
         Options {
             blur: 0.,
-            avg: [0, 0],
             resize: 0,
             quantize: 0,
-            transparency_tolerance: 190,
         }
     }
 }
 
 // TODO: make generic over different image types
+#[allow(deprecated)]
 pub fn convert(
     img: &RgbaImage,
     opt: Options,
@@ -128,47 +112,3 @@ pub fn convert(
         img
     }
 }
-
-// TODO: need to change the signatures to take the image as a parameter rather
-// than capturing it
-
-//fn map_color(pix: &mut Rgba<u8>, palette: &impl ColorMap, quant: &impl
-// ColorMap) {
-////palette.map_color(pix);
-//unimplemented!()
-//}
-//
-//fn get_color(img: &RgbaImage, [x, y]: [u32; 2], avg: [u32; 2]) -> Rgba<u8> {
-//todo!("get color from coordinate and kernel")
-//}
-//
-//fn map_pixel(
-//img: &RgbaImage,
-//coord: [u32; 2],
-//avg: [u32; 2],
-//transparency_tolerance: u8,
-//palette: &impl ColorMap,
-//quant: &impl ColorMap,
-//) -> Rgba<u8> {
-//let pix = get_color(img, coord, avg);
-//if pix[3] > transparency_tolerance {
-//map_color(&mut pix, palette, quant);
-//}
-//pix
-//}
-//
-//#[cfg(not(feature = "rayon"))]
-//fn map_pixels(
-//img: RgbaImage,
-//avg: [u32; 2],
-//transparency_tolerance: u8,
-//palette: &impl ColorMap,
-//quant: &impl ColorMap
-//) -> RgbaImage {
-//RgbaImage::from_fn(img.width(), img.height(), |x, y| {
-//map_pixel(&img, [x, y], avg, transparency_tolerance, palette, quant)
-//})
-//}
-//
-//
-//

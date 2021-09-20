@@ -1,12 +1,7 @@
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion, Throughput};
+use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion};
 use image_go_nord::{convert, Options, AURORA, FROST, NORD, POLAR_NIGHT, SNOW_STORM};
-use std::path::Path;
 
-const IMAGES: &[&str] = &["tinycross.png", "test-profile.png", "cat.png"];
 const DEFAULT_IMAGE: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/images/test-profile.png");
-
-const BLUR_SIGMAS: &[f32] = &[0.0, 0.2, 0.33, 0.66];
-const QUANT_LEVELS: &[i32] = &[0, 30, 10, 1];
 
 /// unrolls a loop to simulate looping over an array of static palettes
 macro_rules! unroll {
@@ -16,25 +11,6 @@ macro_rules! unroll {
                 const PALETTE_NAME: &str = stringify!($palette_name);
                 let ref $palette_var = $palette_name; $body
             };
-        )*
-    };
-}
-
-macro_rules! def_benches {
-    ($(fn $fn_name:ident($img_var_name:ident : &RgbaImage) { $bench_body:expr } )* ) => {
-        $(
-        pub fn $fn_name(c: &mut Criterion) {
-            for image in IMAGES {
-                let ref $img_var_name = image::open(Path::new(env!("CARGO_MANIFEST_DIR")).join("images").join(image)).unwrap();
-                unroll! {
-                    for p in [NORD, AURORA, FROST, POLAR_NIGHT, SNOW_STORM] {
-                        c.bench_function(&format!("{} {} ", stringify!($fn_name), PALETTE_NAME), |b| {
-                            b.iter(|| {$bench_body})
-                        });
-                    }
-                }
-            }
-        }
         )*
     };
 }
