@@ -1,6 +1,6 @@
 [package]
 name = "image-go-nord"
-version = "0.0.1-alpha.1"
+version = "0.0.1-alpha.3"
 authors = ["Amrit Rathie <amrit.rathie@gmail.com>"]
 edition = "2018"
 description = "Convert any image to the Nord colorscheme"
@@ -12,6 +12,8 @@ license-file = "LICENSE"
 
 categories = ["multimedia::images", "command-line-utilities"]
 keywords = ["nord", "nordtheme", "color", "palette", "image"]
+
+exclude = ["images/", ".github/"]
 
 default-run = "ign"
 
