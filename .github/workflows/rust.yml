@@ -1,0 +1,20 @@
+name: CD
+
+on: release
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  crates_io:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: cargo build --verbose --all-features
+    - name: Run tests
+      run: cargo test --verbose --all-features
+    - name: Publish
+      run: cargo publish --verbose
