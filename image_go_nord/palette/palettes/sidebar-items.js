@@ -1,1 +1,1 @@
-initSidebarItems({"static":[["AURORA",""],["FROST",""],["POLAR_NIGHT",""],["SNOW_STORM",""]]});
+initSidebarItems({"static":[["AURORA",""],["FROST",""],["NORD",""],["POLAR_NIGHT",""],["SNOW_STORM",""]]});

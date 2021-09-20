@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/pyo3-0.13.2/src/class/methods.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>methods.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../pyo3/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;pyo3-0.14.5&#x2F;src&#x2F;class&#x2F;methods.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>methods.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../pyo3/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -220,47 +218,10 @@
 <span id="218">218</span>
 <span id="219">219</span>
 <span id="220">220</span>
-<span id="221">221</span>
-<span id="222">222</span>
-<span id="223">223</span>
-<span id="224">224</span>
-<span id="225">225</span>
-<span id="226">226</span>
-<span id="227">227</span>
-<span id="228">228</span>
-<span id="229">229</span>
-<span id="230">230</span>
-<span id="231">231</span>
-<span id="232">232</span>
-<span id="233">233</span>
-<span id="234">234</span>
-<span id="235">235</span>
-<span id="236">236</span>
-<span id="237">237</span>
-<span id="238">238</span>
-<span id="239">239</span>
-<span id="240">240</span>
-<span id="241">241</span>
-<span id="242">242</span>
-<span id="243">243</span>
-<span id="244">244</span>
-<span id="245">245</span>
-<span id="246">246</span>
-<span id="247">247</span>
-<span id="248">248</span>
-<span id="249">249</span>
-<span id="250">250</span>
-<span id="251">251</span>
-<span id="252">252</span>
-<span id="253">253</span>
-<span id="254">254</span>
-<span id="255">255</span>
-<span id="256">256</span>
-<span id="257">257</span>
-<span id="258">258</span>
 </pre><pre class="rust">
 <span class="comment">// Copyright (c) 2017-present PyO3 Project and Contributors</span>
 
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::internal_tricks</span>::{<span class="ident">extract_cstr_or_leak_cstring</span>, <span class="ident">NulByteInString</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ffi</span>, <span class="ident">PyObject</span>, <span class="ident">Python</span>};
 <span class="kw">use</span> <span class="ident">std::ffi::CStr</span>;
 <span class="kw">use</span> <span class="ident">std::fmt</span>;
@@ -270,16 +231,12 @@
 <span class="doccomment">/// It is used by the `#[pymethods]` and `#[pyproto]` annotations.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">PyMethodDefType</span> {
-    <span class="doccomment">/// Represents class `__new__` method</span>
-    <span class="ident">New</span>(<span class="ident">PyMethodDef</span><span class="op">&lt;</span><span class="ident">ffi::newfunc</span><span class="op">&gt;</span>),
-    <span class="doccomment">/// Represents class `__call__` method</span>
-    <span class="ident">Call</span>(<span class="ident">PyMethodDef</span><span class="op">&lt;</span><span class="ident">ffi::PyCFunctionWithKeywords</span><span class="op">&gt;</span>),
     <span class="doccomment">/// Represents class method</span>
-    <span class="ident">Class</span>(<span class="ident">PyMethodDef</span><span class="op">&lt;</span><span class="ident">PyMethodType</span><span class="op">&gt;</span>),
+    <span class="ident">Class</span>(<span class="ident">PyMethodDef</span>),
     <span class="doccomment">/// Represents static method</span>
-    <span class="ident">Static</span>(<span class="ident">PyMethodDef</span><span class="op">&lt;</span><span class="ident">PyMethodType</span><span class="op">&gt;</span>),
+    <span class="ident">Static</span>(<span class="ident">PyMethodDef</span>),
     <span class="doccomment">/// Represents normal method</span>
-    <span class="ident">Method</span>(<span class="ident">PyMethodDef</span><span class="op">&lt;</span><span class="ident">PyMethodType</span><span class="op">&gt;</span>),
+    <span class="ident">Method</span>(<span class="ident">PyMethodDef</span>),
     <span class="doccomment">/// Represents class attribute, used by `#[attribute]`</span>
     <span class="ident">ClassAttribute</span>(<span class="ident">PyClassAttributeDef</span>),
     <span class="doccomment">/// Represents getter descriptor, used by `#[getter]`</span>
@@ -290,137 +247,134 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">PyMethodType</span> {
-    <span class="ident">PyCFunction</span>(<span class="ident">ffi::PyCFunction</span>),
-    <span class="ident">PyCFunctionWithKeywords</span>(<span class="ident">ffi::PyCFunctionWithKeywords</span>),
+    <span class="ident">PyCFunction</span>(<span class="ident">PyCFunction</span>),
+    <span class="ident">PyCFunctionWithKeywords</span>(<span class="ident">PyCFunctionWithKeywords</span>),
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">Py_3_7</span>, <span class="ident">not</span>(<span class="ident">Py_LIMITED_API</span>)))]</span>
+    <span class="ident">PyCFunctionFastWithKeywords</span>(<span class="ident">PyCFunctionFastWithKeywords</span>),
 }
 
+<span class="comment">// These newtype structs serve no purpose other than wrapping which are function pointers - because</span>
+<span class="comment">// function pointers aren&#39;t allowed in const fn, but types wrapping them are!</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyCFunction</span>(<span class="kw">pub</span> <span class="ident">ffi::PyCFunction</span>);
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyCFunctionWithKeywords</span>(<span class="kw">pub</span> <span class="ident">ffi::PyCFunctionWithKeywords</span>);
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">Py_3_7</span>, <span class="ident">not</span>(<span class="ident">Py_LIMITED_API</span>)))]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyCFunctionFastWithKeywords</span>(<span class="kw">pub</span> <span class="ident">ffi::_PyCFunctionFastWithKeywords</span>);
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyGetter</span>(<span class="kw">pub</span> <span class="ident">ffi::getter</span>);
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PySetter</span>(<span class="kw">pub</span> <span class="ident">ffi::setter</span>);
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyClassAttributeFactory</span>(<span class="kw">pub</span> <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span> <span class="kw">fn</span>(<span class="ident">Python</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyObject</span>);
+
+<span class="comment">// TODO: it would be nice to use CStr in these types, but then the constructors can&#39;t be const fn</span>
+<span class="comment">// until `CStr::from_bytes_with_nul_unchecked` is const fn.</span>
+
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyMethodDef</span><span class="op">&lt;</span><span class="ident">MethodT</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">ml_name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">CStr</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">ml_meth</span>: <span class="ident">MethodT</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyMethodDef</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">ml_name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">ml_meth</span>: <span class="ident">PyMethodType</span>,
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">ml_flags</span>: <span class="ident">c_int</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">ml_doc</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">CStr</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">ml_doc</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyClassAttributeDef</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">CStr</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">meth</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span> <span class="kw">fn</span>(<span class="ident">Python</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyObject</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">meth</span>: <span class="ident">PyClassAttributeFactory</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyGetterDef</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">CStr</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">meth</span>: <span class="ident">ffi::getter</span>,
-    <span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">CStr</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">meth</span>: <span class="ident">PyGetter</span>,
+    <span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PySetterDef</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">CStr</span>,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">meth</span>: <span class="ident">ffi::setter</span>,
-    <span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">CStr</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">meth</span>: <span class="ident">PySetter</span>,
+    <span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
 }
 
-<span class="comment">// Safe because ml_meth (the T) cannot be accessed outside of the crate, so only safe-to-sync values</span>
-<span class="comment">// are stored in this structure.</span>
-<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="ident">PyMethodDef</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {}
-
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="ident">ffi::PyMethodDef</span> {}
+<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="ident">PyMethodDef</span> {}
 
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="ident">PyGetterDef</span> {}
 
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="ident">PySetterDef</span> {}
 
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="ident">ffi::PyGetSetDef</span> {}
-
-<span class="kw">fn</span> <span class="ident">get_name</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">CStr</span> {
-    <span class="ident">CStr::from_bytes_with_nul</span>(<span class="ident">name</span>.<span class="ident">as_bytes</span>())
-        .<span class="ident">expect</span>(<span class="string">&quot;Method name must be terminated with NULL byte&quot;</span>)
-}
-
-<span class="kw">fn</span> <span class="ident">get_doc</span>(<span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">CStr</span> {
-    <span class="ident">CStr::from_bytes_with_nul</span>(<span class="ident">doc</span>.<span class="ident">as_bytes</span>()).<span class="ident">expect</span>(<span class="string">&quot;Document must be terminated with NULL byte&quot;</span>)
-}
-
-<span class="kw">impl</span> <span class="ident">PyMethodDef</span><span class="op">&lt;</span><span class="ident">ffi::newfunc</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Define a `__new__` function.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_func</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">newfunc</span>: <span class="ident">ffi::newfunc</span>, <span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">ml_name</span>: <span class="ident">get_name</span>(<span class="ident">name</span>),
-            <span class="ident">ml_meth</span>: <span class="ident">newfunc</span>,
-            <span class="ident">ml_flags</span>: <span class="ident">ffi::METH_VARARGS</span> <span class="op">|</span> <span class="ident">ffi::METH_KEYWORDS</span>,
-            <span class="ident">ml_doc</span>: <span class="ident">get_doc</span>(<span class="ident">doc</span>),
-        }
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">PyMethodDef</span><span class="op">&lt;</span><span class="ident">ffi::PyCFunctionWithKeywords</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Define a `__call__` function.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">call_func</span>(
-        <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
-        <span class="ident">callfunc</span>: <span class="ident">ffi::PyCFunctionWithKeywords</span>,
-        <span class="ident">flags</span>: <span class="ident">c_int</span>,
-        <span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">ml_name</span>: <span class="ident">get_name</span>(<span class="ident">name</span>),
-            <span class="ident">ml_meth</span>: <span class="ident">callfunc</span>,
-            <span class="ident">ml_flags</span>: <span class="ident">flags</span> <span class="op">|</span> <span class="ident">ffi::METH_VARARGS</span> <span class="op">|</span> <span class="ident">ffi::METH_KEYWORDS</span>,
-            <span class="ident">ml_doc</span>: <span class="ident">get_doc</span>(<span class="ident">doc</span>),
-        }
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">PyMethodDef</span><span class="op">&lt;</span><span class="ident">PyMethodType</span><span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">PyMethodDef</span> {
     <span class="doccomment">/// Define a function with no `*args` and `**kwargs`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cfunction</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">cfunction</span>: <span class="ident">ffi::PyCFunction</span>, <span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">noargs</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">cfunction</span>: <span class="ident">PyCFunction</span>, <span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
-            <span class="ident">ml_name</span>: <span class="ident">get_name</span>(<span class="ident">name</span>),
+            <span class="ident">ml_name</span>: <span class="ident">name</span>,
             <span class="ident">ml_meth</span>: <span class="ident">PyMethodType::PyCFunction</span>(<span class="ident">cfunction</span>),
             <span class="ident">ml_flags</span>: <span class="ident">ffi::METH_NOARGS</span>,
-            <span class="ident">ml_doc</span>: <span class="ident">get_doc</span>(<span class="ident">doc</span>),
+            <span class="ident">ml_doc</span>: <span class="ident">doc</span>,
         }
     }
 
     <span class="doccomment">/// Define a function that can take `*args` and `**kwargs`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cfunction_with_keywords</span>(
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">cfunction_with_keywords</span>(
         <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
-        <span class="ident">cfunction</span>: <span class="ident">ffi::PyCFunctionWithKeywords</span>,
-        <span class="ident">flags</span>: <span class="ident">c_int</span>,
+        <span class="ident">cfunction</span>: <span class="ident">PyCFunctionWithKeywords</span>,
         <span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
-            <span class="ident">ml_name</span>: <span class="ident">get_name</span>(<span class="ident">name</span>),
+            <span class="ident">ml_name</span>: <span class="ident">name</span>,
             <span class="ident">ml_meth</span>: <span class="ident">PyMethodType::PyCFunctionWithKeywords</span>(<span class="ident">cfunction</span>),
-            <span class="ident">ml_flags</span>: <span class="ident">flags</span> <span class="op">|</span> <span class="ident">ffi::METH_VARARGS</span> <span class="op">|</span> <span class="ident">ffi::METH_KEYWORDS</span>,
-            <span class="ident">ml_doc</span>: <span class="ident">get_doc</span>(<span class="ident">doc</span>),
+            <span class="ident">ml_flags</span>: <span class="ident">ffi::METH_VARARGS</span> <span class="op">|</span> <span class="ident">ffi::METH_KEYWORDS</span>,
+            <span class="ident">ml_doc</span>: <span class="ident">doc</span>,
         }
     }
 
+    <span class="doccomment">/// Define a function that can take `*args` and `**kwargs`.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">Py_3_7</span>, <span class="ident">not</span>(<span class="ident">Py_LIMITED_API</span>)))]</span>
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">fastcall_cfunction_with_keywords</span>(
+        <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
+        <span class="ident">cfunction</span>: <span class="ident">PyCFunctionFastWithKeywords</span>,
+        <span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span> {
+            <span class="ident">ml_name</span>: <span class="ident">name</span>,
+            <span class="ident">ml_meth</span>: <span class="ident">PyMethodType::PyCFunctionFastWithKeywords</span>(<span class="ident">cfunction</span>),
+            <span class="ident">ml_flags</span>: <span class="ident">ffi::METH_FASTCALL</span> <span class="op">|</span> <span class="ident">ffi::METH_KEYWORDS</span>,
+            <span class="ident">ml_doc</span>: <span class="ident">doc</span>,
+        }
+    }
+
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">flags</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">flags</span>: <span class="ident">c_int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">ml_flags</span> <span class="op">|</span><span class="op">=</span> <span class="ident">flags</span>;
+        <span class="self">self</span>
+    }
+
     <span class="doccomment">/// Convert `PyMethodDef` to Python method definition struct `ffi::PyMethodDef`</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_method_def</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ffi::PyMethodDef</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">as_method_def</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ffi::PyMethodDef</span>, <span class="ident">NulByteInString</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">meth</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">ml_meth</span> {
-            <span class="ident">PyMethodType::PyCFunction</span>(<span class="ident">meth</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">meth</span>,
-            <span class="ident">PyMethodType::PyCFunctionWithKeywords</span>(<span class="ident">meth</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">unsafe</span> { <span class="ident">std::mem::transmute</span>(<span class="ident">meth</span>) },
+            <span class="ident">PyMethodType::PyCFunction</span>(<span class="ident">meth</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">meth</span>.<span class="number">0</span>,
+            <span class="ident">PyMethodType::PyCFunctionWithKeywords</span>(<span class="ident">meth</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">unsafe</span> { <span class="ident">std::mem::transmute</span>(<span class="ident">meth</span>.<span class="number">0</span>) },
+            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">Py_3_7</span>, <span class="ident">not</span>(<span class="ident">Py_LIMITED_API</span>)))]</span>
+            <span class="ident">PyMethodType::PyCFunctionFastWithKeywords</span>(<span class="ident">meth</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">unsafe</span> {
+                <span class="ident">std::mem::transmute</span>(<span class="ident">meth</span>.<span class="number">0</span>)
+            },
         };
 
-        <span class="ident">ffi::PyMethodDef</span> {
-            <span class="ident">ml_name</span>: <span class="self">self</span>.<span class="ident">ml_name</span>.<span class="ident">as_ptr</span>(),
+        <span class="prelude-val">Ok</span>(<span class="ident">ffi::PyMethodDef</span> {
+            <span class="ident">ml_name</span>: <span class="ident">get_name</span>(<span class="self">self</span>.<span class="ident">ml_name</span>)<span class="question-mark">?</span>.<span class="ident">as_ptr</span>(),
             <span class="ident">ml_meth</span>: <span class="prelude-val">Some</span>(<span class="ident">meth</span>),
             <span class="ident">ml_flags</span>: <span class="self">self</span>.<span class="ident">ml_flags</span>,
-            <span class="ident">ml_doc</span>: <span class="self">self</span>.<span class="ident">ml_doc</span>.<span class="ident">as_ptr</span>(),
-        }
+            <span class="ident">ml_doc</span>: <span class="ident">get_doc</span>(<span class="self">self</span>.<span class="ident">ml_doc</span>)<span class="question-mark">?</span>.<span class="ident">as_ptr</span>(),
+        })
     }
 }
 
 <span class="kw">impl</span> <span class="ident">PyClassAttributeDef</span> {
     <span class="doccomment">/// Define a class attribute.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">meth</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span> <span class="kw">fn</span>(<span class="ident">Python</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyObject</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">name</span>: <span class="ident">get_name</span>(<span class="ident">name</span>),
-            <span class="ident">meth</span>,
-        }
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">meth</span>: <span class="ident">PyClassAttributeFactory</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span> { <span class="ident">name</span>, <span class="ident">meth</span> }
     }
 }
 
@@ -436,86 +390,56 @@
 
 <span class="kw">impl</span> <span class="ident">PyGetterDef</span> {
     <span class="doccomment">/// Define a getter.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">getter</span>: <span class="ident">ffi::getter</span>, <span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">getter</span>: <span class="ident">PyGetter</span>, <span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
-            <span class="ident">name</span>: <span class="ident">get_name</span>(<span class="ident">name</span>),
+            <span class="ident">name</span>,
             <span class="ident">meth</span>: <span class="ident">getter</span>,
-            <span class="ident">doc</span>: <span class="ident">get_doc</span>(<span class="ident">doc</span>),
+            <span class="ident">doc</span>,
         }
     }
 
     <span class="doccomment">/// Copy descriptor information to `ffi::PyGetSetDef`</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">dst</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ffi::PyGetSetDef</span>) {
         <span class="kw">if</span> <span class="ident">dst</span>.<span class="ident">name</span>.<span class="ident">is_null</span>() {
-            <span class="ident">dst</span>.<span class="ident">name</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">name</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw">_</span>;
+            <span class="ident">dst</span>.<span class="ident">name</span> <span class="op">=</span> <span class="ident">get_name</span>(<span class="self">self</span>.<span class="ident">name</span>).<span class="ident">unwrap</span>().<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw">_</span>;
         }
         <span class="kw">if</span> <span class="ident">dst</span>.<span class="ident">doc</span>.<span class="ident">is_null</span>() {
-            <span class="ident">dst</span>.<span class="ident">doc</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">doc</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw">_</span>;
+            <span class="ident">dst</span>.<span class="ident">doc</span> <span class="op">=</span> <span class="ident">get_doc</span>(<span class="self">self</span>.<span class="ident">doc</span>).<span class="ident">unwrap</span>().<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw">_</span>;
         }
-        <span class="ident">dst</span>.<span class="ident">get</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">meth</span>);
+        <span class="ident">dst</span>.<span class="ident">get</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">meth</span>.<span class="number">0</span>);
     }
 }
 
 <span class="kw">impl</span> <span class="ident">PySetterDef</span> {
     <span class="doccomment">/// Define a setter.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">setter</span>: <span class="ident">ffi::setter</span>, <span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">setter</span>: <span class="ident">PySetter</span>, <span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
-            <span class="ident">name</span>: <span class="ident">get_name</span>(<span class="ident">name</span>),
+            <span class="ident">name</span>,
             <span class="ident">meth</span>: <span class="ident">setter</span>,
-            <span class="ident">doc</span>: <span class="ident">get_doc</span>(<span class="ident">doc</span>),
+            <span class="ident">doc</span>,
         }
     }
 
     <span class="doccomment">/// Copy descriptor information to `ffi::PyGetSetDef`</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">dst</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ffi::PyGetSetDef</span>) {
         <span class="kw">if</span> <span class="ident">dst</span>.<span class="ident">name</span>.<span class="ident">is_null</span>() {
-            <span class="ident">dst</span>.<span class="ident">name</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">name</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw">_</span>;
+            <span class="ident">dst</span>.<span class="ident">name</span> <span class="op">=</span> <span class="ident">get_name</span>(<span class="self">self</span>.<span class="ident">name</span>).<span class="ident">unwrap</span>().<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw">_</span>;
         }
         <span class="kw">if</span> <span class="ident">dst</span>.<span class="ident">doc</span>.<span class="ident">is_null</span>() {
-            <span class="ident">dst</span>.<span class="ident">doc</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">doc</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw">_</span>;
+            <span class="ident">dst</span>.<span class="ident">doc</span> <span class="op">=</span> <span class="ident">get_doc</span>(<span class="self">self</span>.<span class="ident">doc</span>).<span class="ident">unwrap</span>().<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw">_</span>;
         }
-        <span class="ident">dst</span>.<span class="ident">set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">meth</span>);
+        <span class="ident">dst</span>.<span class="ident">set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">meth</span>.<span class="number">0</span>);
     }
 }
 
-<span class="doccomment">/// Indicates that the type `T` has some Python methods.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">PyMethods</span> {
-    <span class="doccomment">/// Returns all methods that are defined for a class.</span>
-    <span class="kw">fn</span> <span class="ident">py_methods</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">PyMethodDefType</span><span class="op">&gt;</span> {
-        <span class="ident">Vec::new</span>()
-    }
+<span class="kw">fn</span> <span class="ident">get_name</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">CStr</span>, <span class="ident">NulByteInString</span><span class="op">&gt;</span> {
+    <span class="ident">extract_cstr_or_leak_cstring</span>(<span class="ident">name</span>, <span class="string">&quot;Function name cannot contain NUL byte.&quot;</span>)
 }
 
-<span class="doccomment">/// Implementation detail. Only to be used through our proc macro code.</span>
-<span class="doccomment">/// Method storage for `#[pyclass]`.</span>
-<span class="doccomment">/// Allows arbitrary `#[pymethod]/#[pyproto]` blocks to submit their methods,</span>
-<span class="doccomment">/// which are eventually collected by `#[pyclass]`.</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;macros&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">PyMethodsInventory</span>: <span class="ident">inventory::Collect</span> {
-    <span class="doccomment">/// Create a new instance</span>
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">methods</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">PyMethodDefType</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-
-    <span class="doccomment">/// Returns the methods for a single `#[pymethods] impl` block</span>
-    <span class="kw">fn</span> <span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">PyMethodDefType</span>];
-}
-
-<span class="doccomment">/// Implemented for `#[pyclass]` in our proc macro code.</span>
-<span class="doccomment">/// Indicates that the pyclass has its own method storage.</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;macros&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">HasMethodsInventory</span> {
-    <span class="kw">type</span> <span class="ident">Methods</span>: <span class="ident">PyMethodsInventory</span>;
-}
-
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;macros&quot;</span>)]</span>
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">HasMethodsInventory</span><span class="op">&gt;</span> <span class="ident">PyMethods</span> <span class="kw">for</span> <span class="ident">T</span> {
-    <span class="kw">fn</span> <span class="ident">py_methods</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">PyMethodDefType</span><span class="op">&gt;</span> {
-        <span class="ident">inventory::iter</span>::<span class="op">&lt;</span><span class="ident">T::Methods</span><span class="op">&gt;</span>
-            .<span class="ident">into_iter</span>()
-            .<span class="ident">flat_map</span>(<span class="ident">PyMethodsInventory::get</span>)
-            .<span class="ident">collect</span>()
-    }
+<span class="kw">fn</span> <span class="ident">get_doc</span>(<span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">CStr</span>, <span class="ident">NulByteInString</span><span class="op">&gt;</span> {
+    <span class="ident">extract_cstr_or_leak_cstring</span>(<span class="ident">doc</span>, <span class="string">&quot;Document cannot contain NUL byte.&quot;</span>)
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="pyo3" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="pyo3" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
+    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script>
+</body></html>

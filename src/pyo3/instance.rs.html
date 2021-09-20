@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/pyo3-0.13.2/src/instance.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>instance.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../pyo3/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;pyo3-0.14.5&#x2F;src&#x2F;instance.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>instance.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../pyo3/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -669,13 +667,244 @@
 <span id="667">667</span>
 <span id="668">668</span>
 <span id="669">669</span>
+<span id="670">670</span>
+<span id="671">671</span>
+<span id="672">672</span>
+<span id="673">673</span>
+<span id="674">674</span>
+<span id="675">675</span>
+<span id="676">676</span>
+<span id="677">677</span>
+<span id="678">678</span>
+<span id="679">679</span>
+<span id="680">680</span>
+<span id="681">681</span>
+<span id="682">682</span>
+<span id="683">683</span>
+<span id="684">684</span>
+<span id="685">685</span>
+<span id="686">686</span>
+<span id="687">687</span>
+<span id="688">688</span>
+<span id="689">689</span>
+<span id="690">690</span>
+<span id="691">691</span>
+<span id="692">692</span>
+<span id="693">693</span>
+<span id="694">694</span>
+<span id="695">695</span>
+<span id="696">696</span>
+<span id="697">697</span>
+<span id="698">698</span>
+<span id="699">699</span>
+<span id="700">700</span>
+<span id="701">701</span>
+<span id="702">702</span>
+<span id="703">703</span>
+<span id="704">704</span>
+<span id="705">705</span>
+<span id="706">706</span>
+<span id="707">707</span>
+<span id="708">708</span>
+<span id="709">709</span>
+<span id="710">710</span>
+<span id="711">711</span>
+<span id="712">712</span>
+<span id="713">713</span>
+<span id="714">714</span>
+<span id="715">715</span>
+<span id="716">716</span>
+<span id="717">717</span>
+<span id="718">718</span>
+<span id="719">719</span>
+<span id="720">720</span>
+<span id="721">721</span>
+<span id="722">722</span>
+<span id="723">723</span>
+<span id="724">724</span>
+<span id="725">725</span>
+<span id="726">726</span>
+<span id="727">727</span>
+<span id="728">728</span>
+<span id="729">729</span>
+<span id="730">730</span>
+<span id="731">731</span>
+<span id="732">732</span>
+<span id="733">733</span>
+<span id="734">734</span>
+<span id="735">735</span>
+<span id="736">736</span>
+<span id="737">737</span>
+<span id="738">738</span>
+<span id="739">739</span>
+<span id="740">740</span>
+<span id="741">741</span>
+<span id="742">742</span>
+<span id="743">743</span>
+<span id="744">744</span>
+<span id="745">745</span>
+<span id="746">746</span>
+<span id="747">747</span>
+<span id="748">748</span>
+<span id="749">749</span>
+<span id="750">750</span>
+<span id="751">751</span>
+<span id="752">752</span>
+<span id="753">753</span>
+<span id="754">754</span>
+<span id="755">755</span>
+<span id="756">756</span>
+<span id="757">757</span>
+<span id="758">758</span>
+<span id="759">759</span>
+<span id="760">760</span>
+<span id="761">761</span>
+<span id="762">762</span>
+<span id="763">763</span>
+<span id="764">764</span>
+<span id="765">765</span>
+<span id="766">766</span>
+<span id="767">767</span>
+<span id="768">768</span>
+<span id="769">769</span>
+<span id="770">770</span>
+<span id="771">771</span>
+<span id="772">772</span>
+<span id="773">773</span>
+<span id="774">774</span>
+<span id="775">775</span>
+<span id="776">776</span>
+<span id="777">777</span>
+<span id="778">778</span>
+<span id="779">779</span>
+<span id="780">780</span>
+<span id="781">781</span>
+<span id="782">782</span>
+<span id="783">783</span>
+<span id="784">784</span>
+<span id="785">785</span>
+<span id="786">786</span>
+<span id="787">787</span>
+<span id="788">788</span>
+<span id="789">789</span>
+<span id="790">790</span>
+<span id="791">791</span>
+<span id="792">792</span>
+<span id="793">793</span>
+<span id="794">794</span>
+<span id="795">795</span>
+<span id="796">796</span>
+<span id="797">797</span>
+<span id="798">798</span>
+<span id="799">799</span>
+<span id="800">800</span>
+<span id="801">801</span>
+<span id="802">802</span>
+<span id="803">803</span>
+<span id="804">804</span>
+<span id="805">805</span>
+<span id="806">806</span>
+<span id="807">807</span>
+<span id="808">808</span>
+<span id="809">809</span>
+<span id="810">810</span>
+<span id="811">811</span>
+<span id="812">812</span>
+<span id="813">813</span>
+<span id="814">814</span>
+<span id="815">815</span>
+<span id="816">816</span>
+<span id="817">817</span>
+<span id="818">818</span>
+<span id="819">819</span>
+<span id="820">820</span>
+<span id="821">821</span>
+<span id="822">822</span>
+<span id="823">823</span>
+<span id="824">824</span>
+<span id="825">825</span>
+<span id="826">826</span>
+<span id="827">827</span>
+<span id="828">828</span>
+<span id="829">829</span>
+<span id="830">830</span>
+<span id="831">831</span>
+<span id="832">832</span>
+<span id="833">833</span>
+<span id="834">834</span>
+<span id="835">835</span>
+<span id="836">836</span>
+<span id="837">837</span>
+<span id="838">838</span>
+<span id="839">839</span>
+<span id="840">840</span>
+<span id="841">841</span>
+<span id="842">842</span>
+<span id="843">843</span>
+<span id="844">844</span>
+<span id="845">845</span>
+<span id="846">846</span>
+<span id="847">847</span>
+<span id="848">848</span>
+<span id="849">849</span>
+<span id="850">850</span>
+<span id="851">851</span>
+<span id="852">852</span>
+<span id="853">853</span>
+<span id="854">854</span>
+<span id="855">855</span>
+<span id="856">856</span>
+<span id="857">857</span>
+<span id="858">858</span>
+<span id="859">859</span>
+<span id="860">860</span>
+<span id="861">861</span>
+<span id="862">862</span>
+<span id="863">863</span>
+<span id="864">864</span>
+<span id="865">865</span>
+<span id="866">866</span>
+<span id="867">867</span>
+<span id="868">868</span>
+<span id="869">869</span>
+<span id="870">870</span>
+<span id="871">871</span>
+<span id="872">872</span>
+<span id="873">873</span>
+<span id="874">874</span>
+<span id="875">875</span>
+<span id="876">876</span>
+<span id="877">877</span>
+<span id="878">878</span>
+<span id="879">879</span>
+<span id="880">880</span>
+<span id="881">881</span>
+<span id="882">882</span>
+<span id="883">883</span>
+<span id="884">884</span>
+<span id="885">885</span>
+<span id="886">886</span>
+<span id="887">887</span>
+<span id="888">888</span>
+<span id="889">889</span>
+<span id="890">890</span>
+<span id="891">891</span>
+<span id="892">892</span>
+<span id="893">893</span>
+<span id="894">894</span>
+<span id="895">895</span>
+<span id="896">896</span>
+<span id="897">897</span>
+<span id="898">898</span>
+<span id="899">899</span>
+<span id="900">900</span>
+<span id="901">901</span>
 </pre><pre class="rust">
 <span class="comment">// Copyright (c) 2017-present PyO3 Project and Contributors</span>
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::conversion</span>::{<span class="ident">PyTryFrom</span>, <span class="ident">ToBorrowedObject</span>};
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::err</span>::{<span class="ident">PyDowncastError</span>, <span class="ident">PyErr</span>, <span class="ident">PyResult</span>};
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::gil</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::pycell</span>::{<span class="ident">PyBorrowError</span>, <span class="ident">PyBorrowMutError</span>, <span class="ident">PyCell</span>};
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::type_object::PyBorrowFlagLayout</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::types</span>::{<span class="ident">PyDict</span>, <span class="ident">PyTuple</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">ffi</span>, <span class="ident">AsPyPointer</span>, <span class="ident">FromPyObject</span>, <span class="ident">IntoPy</span>, <span class="ident">IntoPyPointer</span>, <span class="ident">PyAny</span>, <span class="ident">PyClass</span>, <span class="ident">PyClassInitializer</span>,
@@ -691,6 +920,7 @@
 <span class="doccomment">/// to the GIL, which is why you can get a token from all references of those</span>
 <span class="doccomment">/// types.</span>
 <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">trait</span> <span class="ident">PyNativeType</span>: <span class="ident">Sized</span> {
+    <span class="doccomment">/// Returns a GIL marker constrained to the lifetime of this type.</span>
     <span class="kw">fn</span> <span class="ident">py</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Python</span> {
         <span class="kw">unsafe</span> { <span class="ident">Python::assume_gil_acquired</span>() }
     }
@@ -705,21 +935,145 @@
     }
 }
 
-<span class="doccomment">/// A Python object of known type T.</span>
+<span class="doccomment">/// A GIL-independent reference to an object allocated on the Python heap.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Accessing this object is thread-safe, since any access to its API requires a `Python&lt;&#39;py&gt;` GIL</span>
-<span class="doccomment">/// token. There are a few different ways to use the Python object contained:</span>
-<span class="doccomment">///  - [`Py::as_ref`](#method.as_ref) to borrow a GIL-bound reference to the contained object.</span>
-<span class="doccomment">///  - [`Py::borrow`](#method.borrow), [`Py::try_borrow`](#method.try_borrow),</span>
-<span class="doccomment">///    [`Py::borrow_mut`](#method.borrow_mut), or [`Py::try_borrow_mut`](#method.try_borrow_mut),</span>
-<span class="doccomment">///    to directly access a `#[pyclass]` value (which has RefCell-like behavior, see</span>
-<span class="doccomment">///    [the `PyCell` guide entry](https://pyo3.rs/master/class.html#pycell-and-interior-mutability)</span>
-<span class="doccomment">///    ).</span>
-<span class="doccomment">///  - Use methods directly on `Py`, such as [`Py::call`](#method.call) and</span>
-<span class="doccomment">///    [`Py::call_method`](#method.call_method).</span>
+<span class="doccomment">/// This type does not auto-dereference to the inner object because you must prove you hold the GIL to access it.</span>
+<span class="doccomment">/// Instead, call one of its methods to access the inner object:</span>
+<span class="doccomment">///  - [`Py::as_ref`], to borrow a GIL-bound reference to the contained object.</span>
+<span class="doccomment">///  - [`Py::borrow`], [`Py::try_borrow`], [`Py::borrow_mut`], or [`Py::try_borrow_mut`],</span>
+<span class="doccomment">/// to get a (mutable) reference to a contained pyclass, using a scheme similar to std&#39;s [`RefCell`].</span>
+<span class="doccomment">/// See the [`PyCell` guide entry](https://pyo3.rs/latest/class.html#pycell-and-interior-mutability)</span>
+<span class="doccomment">/// for more information.</span>
+<span class="doccomment">///  - You can call methods directly on `Py` with [`Py::call`], [`Py::call_method`] and friends.</span>
+<span class="doccomment">/// These require passing in the [`Python&lt;&#39;py&gt;`](crate::Python) token but are otherwise similar to the corresponding</span>
+<span class="doccomment">/// methods on [`PyAny`].</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// See [the guide](https://pyo3.rs/master/types.html) for an explanation</span>
-<span class="doccomment">/// of the different Python object types.</span>
+<span class="doccomment">/// # Example: Storing Python objects in structs</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// As all the native Python objects only appear as references, storing them in structs doesn&#39;t work well.</span>
+<span class="doccomment">/// For example, this won&#39;t compile:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```compile_fail</span>
+<span class="doccomment">/// # use pyo3::prelude::*;</span>
+<span class="doccomment">/// # use pyo3::types::PyDict;</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// #[pyclass]</span>
+<span class="doccomment">/// struct Foo&lt;&#39;py&gt; {</span>
+<span class="doccomment">///     inner: &amp;&#39;py PyDict,</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl Foo {</span>
+<span class="doccomment">///     fn new() -&gt; Foo {</span>
+<span class="doccomment">///         let foo = Python::with_gil(|py| {</span>
+<span class="doccomment">///             // `py` will only last for this scope.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///             // `&amp;PyDict` derives its lifetime from `py` and</span>
+<span class="doccomment">///             // so won&#39;t be able to outlive this closure.</span>
+<span class="doccomment">///             let dict: &amp;PyDict = PyDict::new(py);</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///             // because `Foo` contains `dict` its lifetime</span>
+<span class="doccomment">///             // is now also tied to `py`.</span>
+<span class="doccomment">///             Foo { inner: dict }</span>
+<span class="doccomment">///         });</span>
+<span class="doccomment">///         // Foo is no longer valid.</span>
+<span class="doccomment">///         // Returning it from this function is a 💥 compiler error 💥</span>
+<span class="doccomment">///         foo</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`Py`]`&lt;T&gt;` can be used to get around this by converting `dict` into a GIL-independent reference:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// # use pyo3::prelude::*;</span>
+<span class="doccomment">/// # use pyo3::types::PyDict;</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// #[pyclass]</span>
+<span class="doccomment">/// struct Foo {</span>
+<span class="doccomment">///     inner: Py&lt;PyDict&gt;,</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl Foo {</span>
+<span class="doccomment">///     fn new() -&gt; Foo {</span>
+<span class="doccomment">///         Python::with_gil(|py| {</span>
+<span class="doccomment">///             let dict: Py&lt;PyDict&gt; = PyDict::new(py).into();</span>
+<span class="doccomment">///             Foo { inner: dict }</span>
+<span class="doccomment">///         })</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This can also be done with other pyclasses:</span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// # use pyo3::prelude::*;</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// #[pyclass]</span>
+<span class="doccomment">/// struct Bar {/* fields omitted */}</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// #[pyclass]</span>
+<span class="doccomment">/// struct Foo {</span>
+<span class="doccomment">///     inner: Py&lt;Bar&gt;,</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl Foo {</span>
+<span class="doccomment">///     fn new() -&gt; PyResult&lt;Foo&gt; {</span>
+<span class="doccomment">///         Python::with_gil(|py| {</span>
+<span class="doccomment">///             let bar: Py&lt;Bar&gt; = Py::new(py, Bar {})?;</span>
+<span class="doccomment">///             Ok(Foo { inner: bar })</span>
+<span class="doccomment">///         })</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Example: Shared ownership of Python objects</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// `Py&lt;T&gt;` can be used to share ownership of a Python object, similar to std&#39;s [`Rc`]`&lt;T&gt;`.</span>
+<span class="doccomment">/// As with [`Rc`]`&lt;T&gt;`, cloning it increases its reference count rather than duplicating</span>
+<span class="doccomment">/// the underlying object.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This can be done using either [`Py::clone_ref`] or [`Py`]`&lt;T&gt;`&#39;s [`Clone`] trait implementation.</span>
+<span class="doccomment">/// [`Py::clone_ref`] will be faster if you happen to be already holding the GIL.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// use pyo3::prelude::*;</span>
+<span class="doccomment">/// use pyo3::types::PyDict;</span>
+<span class="doccomment">/// use pyo3::conversion::AsPyPointer;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # fn main() {</span>
+<span class="doccomment">/// Python::with_gil(|py| {</span>
+<span class="doccomment">///     let first: Py&lt;PyDict&gt; = PyDict::new(py).into();</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///     // All of these are valid syntax</span>
+<span class="doccomment">///     let second = Py::clone_ref(&amp;first, py);</span>
+<span class="doccomment">///     let third = first.clone_ref(py);</span>
+<span class="doccomment">///     let fourth = Py::clone(&amp;first);</span>
+<span class="doccomment">///     let fifth = first.clone();</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///     // Disposing of our original `Py&lt;PyDict&gt;` just decrements the reference count.</span>
+<span class="doccomment">///     drop(first);</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///     // They all point to the same object</span>
+<span class="doccomment">///     assert_eq!(second.as_ptr(), third.as_ptr());</span>
+<span class="doccomment">///     assert_eq!(fourth.as_ptr(), fifth.as_ptr());</span>
+<span class="doccomment">///     assert_eq!(second.as_ptr(), fourth.as_ptr());</span>
+<span class="doccomment">/// });</span>
+<span class="doccomment">/// # }</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Preventing reference cycles</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// It is easy to accidentally create reference cycles using [`Py`]`&lt;T&gt;`.</span>
+<span class="doccomment">/// The Python interpreter can break these reference cycles within pyclasses if they</span>
+<span class="doccomment">/// implement the [`PyGCProtocol`](crate::class::gc::PyGCProtocol). If your pyclass</span>
+<span class="doccomment">/// contains other Python objects you should implement this protocol to avoid leaking memory.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # A note on `Send` and `Sync`</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Accessing this object is threadsafe, since any access to its API requires a [`Python&lt;&#39;py&gt;`](crate::Python) token.</span>
+<span class="doccomment">/// As you can only get this by acquiring the GIL, `Py&lt;...&gt;` &quot;implements [`Send`] and [`Sync`].</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`Rc`]: std::rc::Rc</span>
+<span class="doccomment">/// [`RefCell`]: std::cell::RefCell</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">transparent</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Py</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">ffi::PyObject</span><span class="op">&gt;</span>, <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
 
@@ -730,11 +1084,25 @@
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">PyClass</span>,
 {
-    <span class="doccomment">/// Create a new instance `Py&lt;T&gt;` of a `#[pyclass]` on the Python heap.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">py</span>: <span class="ident">Python</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">PyClassInitializer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="ident">Py</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">T::BaseLayout</span>: <span class="ident">PyBorrowFlagLayout</span><span class="op">&lt;</span><span class="ident">T::BaseType</span><span class="op">&gt;</span>,
-    {
+    <span class="doccomment">/// Creates a new instance `Py&lt;T&gt;` of a `#[pyclass]` on the Python heap.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// use pyo3::prelude::*;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// #[pyclass]</span>
+    <span class="doccomment">/// struct Foo {/* fields omitted */}</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # fn main() -&gt; PyResult&lt;()&gt; {</span>
+    <span class="doccomment">/// Python::with_gil(|py| -&gt; PyResult&lt;Py&lt;Foo&gt;&gt; {</span>
+    <span class="doccomment">///     let foo: Py&lt;Foo&gt; = Py::new(py, Foo {})?;</span>
+    <span class="doccomment">///     Ok(foo)</span>
+    <span class="doccomment">/// })?;</span>
+    <span class="doccomment">/// # Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">py</span>: <span class="ident">Python</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">PyClassInitializer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="ident">Py</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">initializer</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">obj</span> <span class="op">=</span> <span class="ident">initializer</span>.<span class="ident">create_cell</span>(<span class="ident">py</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">ob</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Py::from_owned_ptr</span>(<span class="ident">py</span>, <span class="ident">obj</span> <span class="kw">as</span> <span class="kw">_</span>) };
@@ -746,56 +1114,91 @@
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">PyTypeInfo</span>,
 {
-    <span class="doccomment">/// Borrows a GIL-bound reference to the contained `T`. By binding to the GIL lifetime, this</span>
-    <span class="doccomment">/// allows the GIL-bound reference to not require `Python` for any of its methods.</span>
+    <span class="doccomment">/// Borrows a GIL-bound reference to the contained `T`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// By binding to the GIL lifetime, this allows the GIL-bound reference to not require</span>
+    <span class="doccomment">/// [`Python&lt;&#39;py&gt;`](crate::Python) for any of its methods, which makes calling methods</span>
+    <span class="doccomment">/// on it more ergonomic.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// For native types, this reference is `&amp;T`. For pyclasses, this is `&amp;PyCell&lt;T&gt;`.</span>
     <span class="doccomment">///</span>
+    <span class="doccomment">/// Note that the lifetime of the returned reference is the shortest of `&amp;self` and</span>
+    <span class="doccomment">/// [`Python&lt;&#39;py&gt;`](crate::Python).</span>
+    <span class="doccomment">/// Consider using [`Py::into_ref`] instead if this poses a problem.</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// Get access to `&amp;PyList` from `Py&lt;PyList&gt;`:</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// # use pyo3::prelude::*;</span>
     <span class="doccomment">/// # use pyo3::types::PyList;</span>
-    <span class="doccomment">/// # Python::with_gil(|py| {</span>
-    <span class="doccomment">/// let list: Py&lt;PyList&gt; = PyList::empty(py).into();</span>
-    <span class="doccomment">/// let list: &amp;PyList = list.as_ref(py);</span>
-    <span class="doccomment">/// assert_eq!(list.len(), 0);</span>
-    <span class="doccomment">/// # });</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// Python::with_gil(|py| {</span>
+    <span class="doccomment">///     let list: Py&lt;PyList&gt; = PyList::empty(py).into();</span>
+    <span class="doccomment">///     let list: &amp;PyList = list.as_ref(py);</span>
+    <span class="doccomment">///     assert_eq!(list.len(), 0);</span>
+    <span class="doccomment">/// });</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Get access to `&amp;PyCell&lt;MyClass&gt;` from `Py&lt;MyClass&gt;`:</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// # use pyo3::prelude::*;</span>
+    <span class="doccomment">/// #</span>
     <span class="doccomment">/// #[pyclass]</span>
     <span class="doccomment">/// struct MyClass { }</span>
-    <span class="doccomment">/// # Python::with_gil(|py| {</span>
-    <span class="doccomment">/// let my_class: Py&lt;MyClass&gt; = Py::new(py, MyClass { }).unwrap();</span>
-    <span class="doccomment">/// let my_class_cell: &amp;PyCell&lt;MyClass&gt; = my_class.as_ref(py);</span>
-    <span class="doccomment">/// assert!(my_class_cell.try_borrow().is_ok());</span>
-    <span class="doccomment">/// # });</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Python::with_gil(|py| {</span>
+    <span class="doccomment">///     let my_class: Py&lt;MyClass&gt; = Py::new(py, MyClass { }).unwrap();</span>
+    <span class="doccomment">///     let my_class_cell: &amp;PyCell&lt;MyClass&gt; = my_class.as_ref(py);</span>
+    <span class="doccomment">///     assert!(my_class_cell.try_borrow().is_ok());</span>
+    <span class="doccomment">/// });</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_ref</span><span class="op">&lt;</span><span class="lifetime">&#39;py</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;py</span> <span class="self">self</span>, <span class="ident">_py</span>: <span class="ident">Python</span><span class="op">&lt;</span><span class="lifetime">&#39;py</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;py</span> <span class="ident">T::AsRefTarget</span> {
         <span class="kw">let</span> <span class="ident">any</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">PyAny</span>;
         <span class="kw">unsafe</span> { <span class="ident">PyNativeType::unchecked_downcast</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">any</span>) }
     }
 
-    <span class="doccomment">/// Similar to [`as_ref`](#method.as_ref), and also consumes this `Py` and registers the</span>
+    <span class="doccomment">/// Borrows a GIL-bound reference to the contained `T` independently of the lifetime of `T`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This method is similar to [`as_ref`](#method.as_ref) but consumes `self` and registers the</span>
     <span class="doccomment">/// Python object reference in PyO3&#39;s object storage. The reference count for the Python</span>
     <span class="doccomment">/// object will not be decreased until the GIL lifetime ends.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">/// You should prefer using [`as_ref`](#method.as_ref) if you can as it&#39;ll have less overhead.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Useful when returning GIL-bound references from functions. In the snippet below, note that</span>
-    <span class="doccomment">/// the `&#39;py` lifetime of the input GIL lifetime is also given to the returned reference:</span>
-    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`Py::as_ref`]&#39;s lifetime limitation forbids creating a function that references a</span>
+    <span class="doccomment">/// variable created inside the function.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```rust,compile_fail</span>
     <span class="doccomment">/// # use pyo3::prelude::*;</span>
-    <span class="doccomment">/// fn new_py_any&lt;&#39;py&gt;(py: Python&lt;&#39;py&gt;, value: impl IntoPy&lt;PyObject&gt;) -&gt; &amp;&#39;py PyAny {</span>
-    <span class="doccomment">///     let obj: PyObject = value.into_py(py);</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// fn new_py_any&lt;&#39;py&gt;(py: Python&lt;&#39;py&gt;, value: impl IntoPy&lt;Py&lt;PyAny&gt;&gt;) -&gt; &amp;&#39;py PyAny {</span>
+    <span class="doccomment">///     let obj: Py&lt;PyAny&gt; = value.into_py(py);</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///     // .as_ref(py) would not be suitable here, because a reference to `obj` may not be</span>
-    <span class="doccomment">///     // returned from the function.</span>
+    <span class="doccomment">///     // The lifetime of the return value of this function is the shortest</span>
+    <span class="doccomment">///     // of `obj` and `py`. As `obj` is owned by the current function,</span>
+    <span class="doccomment">///     // Rust won&#39;t let the return value escape this function!</span>
+    <span class="doccomment">///     obj.as_ref(py)</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This can be solved by using [`Py::into_ref`] instead, which does not suffer from this issue.</span>
+    <span class="doccomment">/// Note that the lifetime of the [`Python&lt;&#39;py&gt;`](crate::Python) token is transferred to</span>
+    <span class="doccomment">/// the returned reference.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// # use pyo3::prelude::*;</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// fn new_py_any&lt;&#39;py&gt;(py: Python&lt;&#39;py&gt;, value: impl IntoPy&lt;Py&lt;PyAny&gt;&gt;) -&gt; &amp;&#39;py PyAny {</span>
+    <span class="doccomment">///     let obj: Py&lt;PyAny&gt; = value.into_py(py);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///     // This reference&#39;s lifetime is determined by `py`&#39;s lifetime.</span>
+    <span class="doccomment">///     // Because that originates from outside this function,</span>
+    <span class="doccomment">///     // this return value is allowed.</span>
     <span class="doccomment">///     obj.into_ref(py)</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
@@ -808,22 +1211,72 @@
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">PyClass</span>,
 {
-    <span class="doccomment">/// Immutably borrows the value `T`. This borrow lasts untill the returned `PyRef` exists.</span>
+    <span class="doccomment">/// Immutably borrows the value `T`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This borrow lasts while the returned [`PyRef`] exists.</span>
+    <span class="doccomment">/// Multiple immutable borrows can be taken out at the same time.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Equivalent to `self.as_ref(py).borrow()` -</span>
-    <span class="doccomment">/// see [`PyCell::borrow`](../pycell/struct.PyCell.html#method.borrow)</span>
+    <span class="doccomment">/// see [`PyCell::borrow`](crate::pycell::PyCell::borrow).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// # use pyo3::prelude::*;</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// #[pyclass]</span>
+    <span class="doccomment">/// struct Foo {</span>
+    <span class="doccomment">///     inner: u8,</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # fn main() -&gt; PyResult&lt;()&gt; {</span>
+    <span class="doccomment">/// Python::with_gil(|py| -&gt; PyResult&lt;()&gt; {</span>
+    <span class="doccomment">///     let foo: Py&lt;Foo&gt; = Py::new(py, Foo { inner: 73 })?;</span>
+    <span class="doccomment">///     let inner: &amp;u8 = &amp;foo.borrow(py).inner;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///     assert_eq!(*inner, 73);</span>
+    <span class="doccomment">///     Ok(())</span>
+    <span class="doccomment">/// })?;</span>
+    <span class="doccomment">/// # Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Panics</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// Panics if the value is currently mutably borrowed. For a non-panicking variant, use</span>
     <span class="doccomment">/// [`try_borrow`](#method.try_borrow).</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">borrow</span><span class="op">&lt;</span><span class="lifetime">&#39;py</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;py</span> <span class="self">self</span>, <span class="ident">py</span>: <span class="ident">Python</span><span class="op">&lt;</span><span class="lifetime">&#39;py</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyRef</span><span class="op">&lt;</span><span class="lifetime">&#39;py</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">as_ref</span>(<span class="ident">py</span>).<span class="ident">borrow</span>()
     }
 
-    <span class="doccomment">/// Mutably borrows the value `T`. This borrow lasts untill the returned `PyRefMut` exists.</span>
+    <span class="doccomment">/// Mutably borrows the value `T`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This borrow lasts while the returned [`PyRefMut`] exists.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Equivalent to `self.as_ref(py).borrow_mut()` -</span>
-    <span class="doccomment">/// see [`PyCell::borrow_mut`](../pycell/struct.PyCell.html#method.borrow_mut)</span>
+    <span class="doccomment">/// see [`PyCell::borrow_mut`](crate::pycell::PyCell::borrow_mut).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use pyo3::prelude::*;</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// #[pyclass]</span>
+    <span class="doccomment">/// struct Foo {</span>
+    <span class="doccomment">///     inner: u8,</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # fn main() -&gt; PyResult&lt;()&gt; {</span>
+    <span class="doccomment">/// Python::with_gil(|py| -&gt; PyResult&lt;()&gt; {</span>
+    <span class="doccomment">///     let foo: Py&lt;Foo&gt; = Py::new(py, Foo { inner: 73 })?;</span>
+    <span class="doccomment">///     foo.borrow_mut(py).inner = 35;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///     assert_eq!(foo.borrow(py).inner, 35);</span>
+    <span class="doccomment">///     Ok(())</span>
+    <span class="doccomment">/// })?;</span>
+    <span class="doccomment">/// # Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">///  ```</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Panics</span>
     <span class="doccomment">/// Panics if the value is currently mutably borrowed. For a non-panicking variant, use</span>
@@ -832,24 +1285,26 @@
         <span class="self">self</span>.<span class="ident">as_ref</span>(<span class="ident">py</span>).<span class="ident">borrow_mut</span>()
     }
 
-    <span class="doccomment">/// Immutably borrows the value `T`, returning an error if the value is currently</span>
-    <span class="doccomment">/// mutably borrowed. This borrow lasts untill the returned `PyRef` exists.</span>
+    <span class="doccomment">/// Attempts to immutably borrow the value `T`, returning an error if the value is currently mutably borrowed.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The borrow lasts while the returned [`PyRef`] exists.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is the non-panicking variant of [`borrow`](#method.borrow).</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Equivalent to `self.as_ref(py).try_borrow()` -</span>
-    <span class="doccomment">/// see [`PyCell::try_borrow`](../pycell/struct.PyCell.html#method.try_borrow)</span>
+    <span class="doccomment">/// Equivalent to `self.as_ref(py).borrow_mut()` -</span>
+    <span class="doccomment">/// see [`PyCell::try_borrow`](crate::pycell::PyCell::try_borrow).</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_borrow</span><span class="op">&lt;</span><span class="lifetime">&#39;py</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;py</span> <span class="self">self</span>, <span class="ident">py</span>: <span class="ident">Python</span><span class="op">&lt;</span><span class="lifetime">&#39;py</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PyRef</span><span class="op">&lt;</span><span class="lifetime">&#39;py</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">PyBorrowError</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">as_ref</span>(<span class="ident">py</span>).<span class="ident">try_borrow</span>()
     }
 
-    <span class="doccomment">/// Mutably borrows the value `T`, returning an error if the value is currently borrowed.</span>
-    <span class="doccomment">/// This borrow lasts untill the returned `PyRefMut` exists.</span>
+    <span class="doccomment">/// Attempts to mutably borrow the value `T`, returning an error if the value is currently borrowed.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The borrow lasts while the returned [`PyRefMut`] exists.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is the non-panicking variant of [`borrow_mut`](#method.borrow_mut).</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Equivalent to `self.as_ref(py).try_borrow_mut() -</span>
-    <span class="doccomment">/// see [`PyCell::try_borrow_mut`](../pycell/struct.PyCell.html#method.try_borrow_mut)</span>
+    <span class="doccomment">/// Equivalent to `self.as_ref(py).try_borrow_mut()` -</span>
+    <span class="doccomment">/// see [`PyCell::try_borrow_mut`](crate::pycell::PyCell::try_borrow_mut).</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_borrow_mut</span><span class="op">&lt;</span><span class="lifetime">&#39;py</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;py</span> <span class="self">self</span>,
         <span class="ident">py</span>: <span class="ident">Python</span><span class="op">&lt;</span><span class="lifetime">&#39;py</span><span class="op">&gt;</span>,
@@ -865,7 +1320,29 @@
         <span class="kw">unsafe</span> { <span class="ident">ffi::Py_REFCNT</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>()) }
     }
 
-    <span class="doccomment">/// Clones self by calling `Py_INCREF()` on the ptr.</span>
+    <span class="doccomment">/// Makes a clone of `self`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This creates another pointer to the same object, increasing its reference count.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// You should prefer using this method over [`Clone`] if you happen to be holding the GIL already.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// use pyo3::prelude::*;</span>
+    <span class="doccomment">/// use pyo3::types::PyDict;</span>
+    <span class="doccomment">/// use pyo3::conversion::AsPyPointer;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// Python::with_gil(|py| {</span>
+    <span class="doccomment">///     let first: Py&lt;PyDict&gt; = PyDict::new(py).into();</span>
+    <span class="doccomment">///     let second = Py::clone_ref(&amp;first, py);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///     // Both point to the same object</span>
+    <span class="doccomment">///     assert_eq!(first.as_ptr(), second.as_ptr());</span>
+    <span class="doccomment">/// });</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clone_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">py</span>: <span class="ident">Python</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Py</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> { <span class="ident">Py::from_borrowed_ptr</span>(<span class="ident">py</span>, <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ptr</span>()) }
@@ -1030,19 +1507,6 @@
         }
     }
 
-    <span class="doccomment">/// Deprecated alias for [`from_owned_ptr`](#method.from_owned_ptr).</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Safety</span>
-    <span class="doccomment">/// `ptr` must be a pointer to a Python object of type T.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Callers must own the object referred to by `ptr`, as this function</span>
-    <span class="doccomment">/// implicitly takes ownership of that object.</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="attribute">#[<span class="ident">deprecated</span> <span class="op">=</span> <span class="string">&quot;this is a deprecated alias for Py::from_owned_ptr&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_owned_ptr_or_panic</span>(<span class="ident">py</span>: <span class="ident">Python</span>, <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::PyObject</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Py</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Py::from_owned_ptr</span>(<span class="ident">py</span>, <span class="ident">ptr</span>)
-    }
-
     <span class="doccomment">/// Create a `Py&lt;T&gt;` instance by taking ownership of the given FFI pointer.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If `ptr` is null then the current Python exception is fetched as a `PyErr`.</span>
@@ -1065,10 +1529,7 @@
     <span class="doccomment">/// If non-null, `ptr` must be a pointer to a Python object of type T.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_owned_ptr_or_opt</span>(<span class="ident">_py</span>: <span class="ident">Python</span>, <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::PyObject</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="ident">NonNull::new</span>(<span class="ident">ptr</span>) {
-            <span class="prelude-val">Some</span>(<span class="ident">nonnull_ptr</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">Py</span>(<span class="ident">nonnull_ptr</span>, <span class="ident">PhantomData</span>)),
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
-        }
+        <span class="ident">NonNull::new</span>(<span class="ident">ptr</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">nonnull_ptr</span><span class="op">|</span> <span class="ident">Py</span>(<span class="ident">nonnull_ptr</span>, <span class="ident">PhantomData</span>))
     }
 
     <span class="doccomment">/// Create a `Py&lt;T&gt;` instance by creating a new reference from the given FFI pointer.</span>
@@ -1216,6 +1677,9 @@
     }
 }
 
+<span class="doccomment">/// If the GIL is held this increments `self`&#39;s reference count.</span>
+<span class="doccomment">/// Otherwise this registers the [`Py`]`&lt;T&gt;` instance to have its reference count</span>
+<span class="doccomment">/// incremented the next time PyO3 acquires the GIL.</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Py</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">unsafe</span> {
@@ -1266,9 +1730,7 @@
     <span class="ident">T::AsRefTarget</span>: <span class="ident">std::fmt::Display</span>,
 {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std::fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::fmt::Result</span> {
-        <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python::acquire_gil</span>();
-        <span class="kw">let</span> <span class="ident">py</span> <span class="op">=</span> <span class="ident">gil</span>.<span class="ident">python</span>();
-        <span class="ident">std::fmt::Display::fmt</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(<span class="ident">py</span>), <span class="ident">f</span>)
+        <span class="ident">Python::with_gil</span>(<span class="op">|</span><span class="ident">py</span><span class="op">|</span> <span class="ident">std::fmt::Display::fmt</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(<span class="ident">py</span>), <span class="ident">f</span>))
     }
 }
 
@@ -1300,7 +1762,7 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">test</span> {
+<span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Py</span>, <span class="ident">PyObject</span>};
     <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::types::PyDict</span>;
     <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ffi</span>, <span class="ident">AsPyPointer</span>, <span class="ident">Python</span>};
@@ -1340,4 +1802,6 @@
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pyo3" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pyo3" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
+</body></html>

@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/pyo3-0.13.2/src/pycell.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>pycell.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../pyo3/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;pyo3-0.14.5&#x2F;src&#x2F;pycell.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>pycell.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../pyo3/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -766,15 +764,48 @@
 <span id="764">764</span>
 <span id="765">765</span>
 <span id="766">766</span>
+<span id="767">767</span>
+<span id="768">768</span>
+<span id="769">769</span>
+<span id="770">770</span>
+<span id="771">771</span>
+<span id="772">772</span>
+<span id="773">773</span>
+<span id="774">774</span>
+<span id="775">775</span>
+<span id="776">776</span>
+<span id="777">777</span>
+<span id="778">778</span>
+<span id="779">779</span>
+<span id="780">780</span>
+<span id="781">781</span>
+<span id="782">782</span>
+<span id="783">783</span>
+<span id="784">784</span>
+<span id="785">785</span>
+<span id="786">786</span>
+<span id="787">787</span>
+<span id="788">788</span>
+<span id="789">789</span>
+<span id="790">790</span>
+<span id="791">791</span>
+<span id="792">792</span>
+<span id="793">793</span>
 </pre><pre class="rust">
 <span class="doccomment">//! Includes `PyCell` implementation.</span>
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::conversion</span>::{<span class="ident">AsPyPointer</span>, <span class="ident">FromPyPointer</span>, <span class="ident">ToPyObject</span>};
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::exceptions::PyRuntimeError</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::pyclass</span>::{<span class="ident">PyClass</span>, <span class="ident">PyClassThreadChecker</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::pyclass::PyClass</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::pyclass_init::PyClassInitializer</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::pyclass_slots</span>::{<span class="ident">PyClassDict</span>, <span class="ident">PyClassWeakRef</span>};
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::type_object</span>::{<span class="ident">PyBorrowFlagLayout</span>, <span class="ident">PyLayout</span>, <span class="ident">PySizedLayout</span>, <span class="ident">PyTypeInfo</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::type_object</span>::{<span class="ident">PyLayout</span>, <span class="ident">PySizedLayout</span>};
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::types::PyAny</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">class::impl_::PyClassBaseType</span>, <span class="ident">class::impl_::PyClassThreadChecker</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{
+    <span class="ident">conversion</span>::{<span class="ident">AsPyPointer</span>, <span class="ident">FromPyPointer</span>, <span class="ident">ToPyObject</span>},
+    <span class="ident">ffi::PyBaseObject_Type</span>,
+    <span class="ident">type_object::get_tp_free</span>,
+    <span class="ident">PyTypeInfo</span>,
+};
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ffi</span>, <span class="ident">IntoPy</span>, <span class="ident">PyErr</span>, <span class="ident">PyNativeType</span>, <span class="ident">PyObject</span>, <span class="ident">PyResult</span>, <span class="ident">Python</span>};
 <span class="kw">use</span> <span class="ident">std::cell</span>::{<span class="ident">Cell</span>, <span class="ident">UnsafeCell</span>};
 <span class="kw">use</span> <span class="ident">std::fmt</span>;
@@ -785,89 +816,19 @@
 <span class="doccomment">/// This is necessary for sharing BorrowFlag between parents and children.</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyCellBase</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyTypeInfo</span><span class="op">&gt;</span> {
-    <span class="ident">ob_base</span>: <span class="ident">T::Layout</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyCellBase</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="ident">ob_base</span>: <span class="ident">T</span>,
     <span class="ident">borrow_flag</span>: <span class="ident">Cell</span><span class="op">&lt;</span><span class="ident">BorrowFlag</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">PyLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PyCellBase</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">PyTypeInfo</span> <span class="op">+</span> <span class="ident">PyNativeType</span>,
-    <span class="ident">T::Layout</span>: <span class="ident">PySizedLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
-{
-    <span class="kw">const</span> <span class="ident">IS_NATIVE_TYPE</span>: <span class="ident">bool</span> <span class="op">=</span> <span class="bool-val">true</span>;
-}
+<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> <span class="ident">PyLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PyCellBase</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">U</span>: <span class="ident">PySizedLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {}
 
-<span class="comment">// Thes impls ensures `PyCellBase` can be a base type.</span>
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">PySizedLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PyCellBase</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">PyTypeInfo</span> <span class="op">+</span> <span class="ident">PyNativeType</span>,
-    <span class="ident">T::Layout</span>: <span class="ident">PySizedLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
-{
-}
-
-<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">PyBorrowFlagLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PyCellBase</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">PyTypeInfo</span> <span class="op">+</span> <span class="ident">PyNativeType</span>,
-    <span class="ident">T::Layout</span>: <span class="ident">PySizedLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
-{
-}
-
-<span class="doccomment">/// Inner type of `PyCell` without dict slots and reference counter.</span>
-<span class="doccomment">/// This struct has two usages:</span>
-<span class="doccomment">/// 1. As an inner type of `PyRef` and `PyRefMut`.</span>
-<span class="doccomment">/// 2. When `#[pyclass(extends=Base)]` is specified, `PyCellInner&lt;Base&gt;` is used as a base layout.</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyCellInner</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> {
-    <span class="ident">ob_base</span>: <span class="ident">T::BaseLayout</span>,
-    <span class="ident">value</span>: <span class="ident">ManuallyDrop</span><span class="op">&lt;</span><span class="ident">UnsafeCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> <span class="ident">AsPyPointer</span> <span class="kw">for</span> <span class="ident">PyCellInner</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">as_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::PyObject</span> {
-        (<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>
-    }
-}
-
-<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> <span class="ident">PyLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PyCellInner</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">const</span> <span class="ident">IS_NATIVE_TYPE</span>: <span class="ident">bool</span> <span class="op">=</span> <span class="bool-val">false</span>;
-    <span class="kw">fn</span> <span class="ident">get_super</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T::BaseLayout</span><span class="op">&gt;</span> {
-        <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">ob_base</span>)
-    }
-    <span class="kw">fn</span> <span class="ident">py_init</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">T</span>) {
-        <span class="self">self</span>.<span class="ident">value</span> <span class="op">=</span> <span class="ident">ManuallyDrop::new</span>(<span class="ident">UnsafeCell::new</span>(<span class="ident">value</span>));
-    }
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">py_drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">py</span>: <span class="ident">Python</span>) {
-        <span class="ident">ManuallyDrop::drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">value</span>);
-        <span class="self">self</span>.<span class="ident">ob_base</span>.<span class="ident">py_drop</span>(<span class="ident">py</span>);
-    }
-}
-
-<span class="comment">// These impls ensures `PyCellInner` can be a base type.</span>
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> <span class="ident">PySizedLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PyCellInner</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {}
-<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> <span class="ident">PyBorrowFlagLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PyCellInner</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> <span class="ident">PyCellInner</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">get_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">T</span> {
-        <span class="self">self</span>.<span class="ident">value</span>.<span class="ident">get</span>()
-    }
-    <span class="kw">fn</span> <span class="ident">get_borrow_flag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BorrowFlag</span> {
-        <span class="kw">let</span> <span class="ident">base</span> <span class="op">=</span> (<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">ob_base</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">PyCellBase</span><span class="op">&lt;</span><span class="ident">T::BaseNativeType</span><span class="op">&gt;</span>;
-        <span class="kw">unsafe</span> { (<span class="kw-2">*</span><span class="ident">base</span>).<span class="ident">borrow_flag</span>.<span class="ident">get</span>() }
-    }
-    <span class="kw">fn</span> <span class="ident">set_borrow_flag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">flag</span>: <span class="ident">BorrowFlag</span>) {
-        <span class="kw">let</span> <span class="ident">base</span> <span class="op">=</span> (<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">ob_base</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">PyCellBase</span><span class="op">&lt;</span><span class="ident">T::BaseNativeType</span><span class="op">&gt;</span>;
-        <span class="kw">unsafe</span> { (<span class="kw-2">*</span><span class="ident">base</span>).<span class="ident">borrow_flag</span>.<span class="ident">set</span>(<span class="ident">flag</span>) }
-    }
-}
-
-<span class="doccomment">/// `PyCell` is the container type for [`PyClass`](../pyclass/trait.PyClass.html).</span>
+<span class="doccomment">/// `PyCell` is the container type for [`PyClass`](../pyclass/trait.PyClass.html) values.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// From Python side, `PyCell&lt;T&gt;` is the concrete layout of `T: PyClass` in the Python heap,</span>
+<span class="doccomment">/// From the Python side, `PyCell&lt;T&gt;` is the concrete layout of `T: PyClass` in the Python heap,</span>
 <span class="doccomment">/// which means we can convert `*const PyClass&lt;T&gt;` to `*mut ffi::PyObject`.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// From Rust side, `PyCell&lt;T&gt;` is the mutable container of `T`.</span>
+<span class="doccomment">/// From the Rust side, `PyCell&lt;T&gt;` is the mutable container of `T`.</span>
 <span class="doccomment">/// Since `PyCell&lt;T: PyClass&gt;` is always on the Python heap, we don&#39;t have the ownership of it.</span>
 <span class="doccomment">/// Thus, to mutate the data behind `&amp;PyCell&lt;T&gt;` safely, we employ the</span>
 <span class="doccomment">/// [Interior Mutability Pattern](https://doc.rust-lang.org/book/ch15-05-interior-mutability.html)</span>
@@ -879,7 +840,7 @@
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// In most cases, `PyCell` is hidden behind `#[pymethods]`.</span>
-<span class="doccomment">/// However, you can construct `&amp;PyCell` directly to test your pyclass in Rust code.</span>
+<span class="doccomment">/// However, you can construct a `&amp;PyCell` directly to test your pyclass in Rust code.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// # use pyo3::prelude::*;</span>
@@ -889,18 +850,18 @@
 <span class="doccomment">///     name: &amp;&#39;static str,</span>
 <span class="doccomment">///     author: &amp;&#39;static str,</span>
 <span class="doccomment">/// }</span>
-<span class="doccomment">/// let gil = Python::acquire_gil();</span>
-<span class="doccomment">/// let py = gil.python();</span>
 <span class="doccomment">/// let book = Book {</span>
 <span class="doccomment">///     name: &quot;The Man in the High Castle&quot;,</span>
 <span class="doccomment">///     author: &quot;Philip Kindred Dick&quot;,</span>
 <span class="doccomment">/// };</span>
-<span class="doccomment">/// let book_cell = PyCell::new(py, book).unwrap();</span>
-<span class="doccomment">/// // you can expose PyCell to Python snippets</span>
-<span class="doccomment">/// pyo3::py_run!(py, book_cell, &quot;assert book_cell.name[-6:] == &#39;Castle&#39;&quot;);</span>
+<span class="doccomment">/// Python::with_gil(|py| {</span>
+<span class="doccomment">///     let book_cell = PyCell::new(py, book).unwrap();</span>
+<span class="doccomment">///     // `&amp;PyCell` implements `ToPyObject`, so you can use it in a Python snippet</span>
+<span class="doccomment">///     pyo3::py_run!(py, book_cell, &quot;assert book_cell.name[-6:] == &#39;Castle&#39;&quot;);</span>
+<span class="doccomment">/// });</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// You can use `slf: &amp;PyCell&lt;Self&gt;` as an alternative `self` receiver of `#[pymethod]`,</span>
-<span class="doccomment">/// though you rarely need it.</span>
+<span class="doccomment">/// though you&#39;ll rarely need it.</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// # use pyo3::prelude::*;</span>
 <span class="doccomment">/// use std::collections::HashMap;</span>
@@ -922,43 +883,99 @@
 <span class="doccomment">///         Ok(*counter)</span>
 <span class="doccomment">///     }</span>
 <span class="doccomment">/// }</span>
-<span class="doccomment">/// # let gil = Python::acquire_gil();</span>
-<span class="doccomment">/// # let py = gil.python();</span>
-<span class="doccomment">/// # let counter = PyCell::new(py, Counter::default()).unwrap();</span>
-<span class="doccomment">/// # pyo3::py_run!(py, counter, &quot;assert counter.increment(&#39;cat&#39;) == 1&quot;);</span>
+<span class="doccomment">/// # Python::with_gil(|py| {</span>
+<span class="doccomment">/// #     let counter = PyCell::new(py, Counter::default()).unwrap();</span>
+<span class="doccomment">/// #     pyo3::py_run!(py, counter, &quot;assert counter.increment(&#39;cat&#39;) == 1&quot;);</span>
+<span class="doccomment">/// # });</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyCell</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> {
-    <span class="ident">inner</span>: <span class="ident">PyCellInner</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
-    <span class="ident">thread_checker</span>: <span class="ident">T::ThreadChecker</span>,
-    <span class="comment">// DO NOT CHANGE THE ORDER OF THESE FIELDS WITHOUT CHANGING PyCell::dict_offset()</span>
-    <span class="comment">// AND PyCell::weakref_offset()</span>
-    <span class="ident">dict</span>: <span class="ident">T::Dict</span>,
-    <span class="ident">weakref</span>: <span class="ident">T::WeakRef</span>,
+    <span class="ident">ob_base</span>: <span class="op">&lt;</span><span class="ident">T::BaseType</span> <span class="kw">as</span> <span class="ident">PyClassBaseType</span><span class="op">&gt;</span><span class="ident">::LayoutAsBase</span>,
+    <span class="ident">contents</span>: <span class="ident">PyCellContents</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+}
+
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">PyCellContents</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">value</span>: <span class="ident">ManuallyDrop</span><span class="op">&lt;</span><span class="ident">UnsafeCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">thread_checker</span>: <span class="ident">T::ThreadChecker</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">dict</span>: <span class="ident">T::Dict</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">weakref</span>: <span class="ident">T::WeakRef</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> <span class="ident">PyCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Get the offset of the dictionary from the start of the struct in bytes.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">Py_LIMITED_API</span>, <span class="ident">not</span>(<span class="ident">Py_3_9</span>))))]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">dict_offset</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">dict_offset</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ffi::Py_ssize_t</span><span class="op">&gt;</span> {
+        <span class="kw">use</span> <span class="ident">std::convert::TryInto</span>;
         <span class="kw">if</span> <span class="ident">T::Dict::IS_DUMMY</span> {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
-            <span class="prelude-val">Some</span>(
-                <span class="ident">std::mem::size_of</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>()
-                    <span class="op">-</span> <span class="ident">std::mem::size_of</span>::<span class="op">&lt;</span><span class="ident">T::Dict</span><span class="op">&gt;</span>()
-                    <span class="op">-</span> <span class="ident">std::mem::size_of</span>::<span class="op">&lt;</span><span class="ident">T::WeakRef</span><span class="op">&gt;</span>(),
-            )
+            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">addr_of</span>)]</span>
+            <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> {
+                <span class="comment">// With std::ptr::addr_of - can measure offset using uninit memory without UB.</span>
+                <span class="kw">let</span> <span class="ident">cell</span> <span class="op">=</span> <span class="ident">std::mem::MaybeUninit</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span><span class="ident">::uninit</span>();
+                <span class="kw">let</span> <span class="ident">base_ptr</span> <span class="op">=</span> <span class="ident">cell</span>.<span class="ident">as_ptr</span>();
+                <span class="kw">let</span> <span class="ident">dict_ptr</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="macro">std::ptr::addr_of!</span>((<span class="kw-2">*</span><span class="ident">base_ptr</span>).<span class="ident">contents</span>.<span class="ident">dict</span>) };
+                <span class="kw">unsafe</span> { (<span class="ident">dict_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>).<span class="ident">offset_from</span>(<span class="ident">base_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>) }
+            };
+            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">addr_of</span>))]</span>
+            <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> {
+                <span class="comment">// No std::ptr::addr_of - need to take references to PyCell to measure offsets;</span>
+                <span class="comment">// make a zero-initialised &quot;fake&quot; one so that referencing it is not UB.</span>
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cell</span> <span class="op">=</span> <span class="ident">std::mem::MaybeUninit</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span><span class="ident">::uninit</span>();
+                <span class="kw">unsafe</span> {
+                    <span class="ident">std::ptr::write_bytes</span>(<span class="ident">cell</span>.<span class="ident">as_mut_ptr</span>(), <span class="number">0</span>, <span class="number">1</span>);
+                }
+                <span class="kw">let</span> <span class="ident">cell</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">cell</span>.<span class="ident">assume_init</span>() };
+                <span class="kw">let</span> <span class="ident">dict_ptr</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">cell</span>.<span class="ident">contents</span>.<span class="ident">dict</span>;
+                <span class="comment">// offset_from wasn&#39;t stabilised until 1.47, so we also have to work around</span>
+                <span class="comment">// that...</span>
+                <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> (<span class="ident">dict_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">-</span> (<span class="kw-2">&amp;</span><span class="ident">cell</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="ident">usize</span>);
+                <span class="comment">// This isn&#39;t a valid cell, so ensure no Drop code runs etc.</span>
+                <span class="ident">std::mem::forget</span>(<span class="ident">cell</span>);
+                <span class="ident">offset</span>
+            };
+            <span class="comment">// Py_ssize_t may not be equal to isize on all platforms</span>
+            <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::useless_conversion</span>)]</span>
+            <span class="prelude-val">Some</span>(<span class="ident">offset</span>.<span class="ident">try_into</span>().<span class="ident">expect</span>(<span class="string">&quot;offset should fit in Py_ssize_t&quot;</span>))
         }
     }
 
     <span class="doccomment">/// Get the offset of the weakref list from the start of the struct in bytes.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">Py_LIMITED_API</span>, <span class="ident">not</span>(<span class="ident">Py_3_9</span>))))]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">weakref_offset</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">weakref_offset</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ffi::Py_ssize_t</span><span class="op">&gt;</span> {
+        <span class="kw">use</span> <span class="ident">std::convert::TryInto</span>;
         <span class="kw">if</span> <span class="ident">T::WeakRef::IS_DUMMY</span> {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">std::mem::size_of</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>() <span class="op">-</span> <span class="ident">std::mem::size_of</span>::<span class="op">&lt;</span><span class="ident">T::WeakRef</span><span class="op">&gt;</span>())
+            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">addr_of</span>)]</span>
+            <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> {
+                <span class="comment">// With std::ptr::addr_of - can measure offset using uninit memory without UB.</span>
+                <span class="kw">let</span> <span class="ident">cell</span> <span class="op">=</span> <span class="ident">std::mem::MaybeUninit</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span><span class="ident">::uninit</span>();
+                <span class="kw">let</span> <span class="ident">base_ptr</span> <span class="op">=</span> <span class="ident">cell</span>.<span class="ident">as_ptr</span>();
+                <span class="kw">let</span> <span class="ident">weaklist_ptr</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="macro">std::ptr::addr_of!</span>((<span class="kw-2">*</span><span class="ident">base_ptr</span>).<span class="ident">contents</span>.<span class="ident">weakref</span>) };
+                <span class="kw">unsafe</span> { (<span class="ident">weaklist_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>).<span class="ident">offset_from</span>(<span class="ident">base_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>) }
+            };
+            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">addr_of</span>))]</span>
+            <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> {
+                <span class="comment">// No std::ptr::addr_of - need to take references to PyCell to measure offsets;</span>
+                <span class="comment">// make a zero-initialised &quot;fake&quot; one so that referencing it is not UB.</span>
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cell</span> <span class="op">=</span> <span class="ident">std::mem::MaybeUninit</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span><span class="ident">::uninit</span>();
+                <span class="kw">unsafe</span> {
+                    <span class="ident">std::ptr::write_bytes</span>(<span class="ident">cell</span>.<span class="ident">as_mut_ptr</span>(), <span class="number">0</span>, <span class="number">1</span>);
+                }
+                <span class="kw">let</span> <span class="ident">cell</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">cell</span>.<span class="ident">assume_init</span>() };
+                <span class="kw">let</span> <span class="ident">weaklist_ptr</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">cell</span>.<span class="ident">contents</span>.<span class="ident">weakref</span>;
+                <span class="comment">// offset_from wasn&#39;t stabilised until 1.47, so we also have to work around</span>
+                <span class="comment">// that...</span>
+                <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> (<span class="ident">weaklist_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">-</span> (<span class="kw-2">&amp;</span><span class="ident">cell</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="ident">usize</span>);
+                <span class="comment">// This isn&#39;t a valid cell, so ensure no Drop code runs etc.</span>
+                <span class="ident">std::mem::forget</span>(<span class="ident">cell</span>);
+                <span class="ident">offset</span>
+            };
+            <span class="comment">// Py_ssize_t may not be equal to isize on all platforms</span>
+            <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::useless_conversion</span>)]</span>
+            <span class="prelude-val">Some</span>(<span class="ident">offset</span>.<span class="ident">try_into</span>().<span class="ident">expect</span>(<span class="string">&quot;offset should fit in Py_ssize_t&quot;</span>))
         }
     }
 }
@@ -966,15 +983,12 @@
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> <span class="ident">PyNativeType</span> <span class="kw">for</span> <span class="ident">PyCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {}
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> <span class="ident">PyCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Make a new `PyCell` on the Python heap and return the reference to it.</span>
+    <span class="doccomment">/// Makes a new `PyCell` on the Python heap and return the reference to it.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// In cases where the value in the cell does not need to be accessed immediately after</span>
     <span class="doccomment">/// creation, consider [`Py::new`](../instance/struct.Py.html#method.new) as a more efficient</span>
     <span class="doccomment">/// alternative.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">py</span>: <span class="ident">Python</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">PyClassInitializer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="self">Self</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">T::BaseLayout</span>: <span class="ident">PyBorrowFlagLayout</span><span class="op">&lt;</span><span class="ident">T::BaseType</span><span class="op">&gt;</span>,
-    {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">py</span>: <span class="ident">Python</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">PyClassInitializer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">initializer</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into</span>();
             <span class="kw">let</span> <span class="ident">self_</span> <span class="op">=</span> <span class="ident">initializer</span>.<span class="ident">create_cell</span>(<span class="ident">py</span>)<span class="question-mark">?</span>;
@@ -982,7 +996,7 @@
         }
     }
 
-    <span class="doccomment">/// Immutably borrows the value `T`. This borrow lasts untill the returned `PyRef` exists.</span>
+    <span class="doccomment">/// Immutably borrows the value `T`. This borrow lasts as long as the returned `PyRef` exists.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Panics</span>
     <span class="doccomment">///</span>
@@ -992,7 +1006,7 @@
         <span class="self">self</span>.<span class="ident">try_borrow</span>().<span class="ident">expect</span>(<span class="string">&quot;Already mutably borrowed&quot;</span>)
     }
 
-    <span class="doccomment">/// Mutably borrows the value `T`. This borrow lasts untill the returned `PyRefMut` exists.</span>
+    <span class="doccomment">/// Mutably borrows the value `T`. This borrow lasts as long as the returned `PyRefMut` exists.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Panics</span>
     <span class="doccomment">///</span>
@@ -1003,7 +1017,7 @@
     }
 
     <span class="doccomment">/// Immutably borrows the value `T`, returning an error if the value is currently</span>
-    <span class="doccomment">/// mutably borrowed. This borrow lasts untill the returned `PyRef` exists.</span>
+    <span class="doccomment">/// mutably borrowed. This borrow lasts as long as the returned `PyRef` exists.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is the non-panicking variant of [`borrow`](#method.borrow).</span>
     <span class="doccomment">///</span>
@@ -1013,32 +1027,31 @@
     <span class="doccomment">/// # use pyo3::prelude::*;</span>
     <span class="doccomment">/// #[pyclass]</span>
     <span class="doccomment">/// struct Class {}</span>
-    <span class="doccomment">/// let gil = Python::acquire_gil();</span>
-    <span class="doccomment">/// let py = gil.python();</span>
-    <span class="doccomment">/// let c = PyCell::new(py, Class {}).unwrap();</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///     let m = c.borrow_mut();</span>
-    <span class="doccomment">///     assert!(c.try_borrow().is_err());</span>
-    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// Python::with_gil(|py| {</span>
+    <span class="doccomment">///     let c = PyCell::new(py, Class {}).unwrap();</span>
+    <span class="doccomment">///     {</span>
+    <span class="doccomment">///         let m = c.borrow_mut();</span>
+    <span class="doccomment">///         assert!(c.try_borrow().is_err());</span>
+    <span class="doccomment">///     }</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///     let m = c.borrow();</span>
-    <span class="doccomment">///     assert!(c.try_borrow().is_ok());</span>
-    <span class="doccomment">/// }</span>
+    <span class="doccomment">///     {</span>
+    <span class="doccomment">///         let m = c.borrow();</span>
+    <span class="doccomment">///         assert!(c.try_borrow().is_ok());</span>
+    <span class="doccomment">///     }</span>
+    <span class="doccomment">/// });</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_borrow</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PyRef</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">PyBorrowError</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">thread_checker</span>.<span class="ident">ensure</span>();
-        <span class="kw">let</span> <span class="ident">flag</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">get_borrow_flag</span>();
+        <span class="kw">let</span> <span class="ident">flag</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_borrow_flag</span>();
         <span class="kw">if</span> <span class="ident">flag</span> <span class="op">=</span><span class="op">=</span> <span class="ident">BorrowFlag::HAS_MUTABLE_BORROW</span> {
             <span class="prelude-val">Err</span>(<span class="ident">PyBorrowError</span> { <span class="ident">_private</span>: () })
         } <span class="kw">else</span> {
-            <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">set_borrow_flag</span>(<span class="ident">flag</span>.<span class="ident">increment</span>());
-            <span class="prelude-val">Ok</span>(<span class="ident">PyRef</span> { <span class="ident">inner</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span> })
+            <span class="self">self</span>.<span class="ident">set_borrow_flag</span>(<span class="ident">flag</span>.<span class="ident">increment</span>());
+            <span class="prelude-val">Ok</span>(<span class="ident">PyRef</span> { <span class="ident">inner</span>: <span class="self">self</span> })
         }
     }
 
     <span class="doccomment">/// Mutably borrows the value `T`, returning an error if the value is currently borrowed.</span>
-    <span class="doccomment">/// This borrow lasts untill the returned `PyRefMut` exists.</span>
+    <span class="doccomment">/// This borrow lasts as long as the returned `PyRefMut` exists.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is the non-panicking variant of [`borrow_mut`](#method.borrow_mut).</span>
     <span class="doccomment">///</span>
@@ -1048,23 +1061,22 @@
     <span class="doccomment">/// # use pyo3::prelude::*;</span>
     <span class="doccomment">/// #[pyclass]</span>
     <span class="doccomment">/// struct Class {}</span>
-    <span class="doccomment">/// let gil = Python::acquire_gil();</span>
-    <span class="doccomment">/// let py = gil.python();</span>
-    <span class="doccomment">/// let c = PyCell::new(py, Class {}).unwrap();</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///     let m = c.borrow();</span>
-    <span class="doccomment">///     assert!(c.try_borrow_mut().is_err());</span>
-    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// Python::with_gil(|py| {</span>
+    <span class="doccomment">///     let c = PyCell::new(py, Class {}).unwrap();</span>
+    <span class="doccomment">///     {</span>
+    <span class="doccomment">///         let m = c.borrow();</span>
+    <span class="doccomment">///         assert!(c.try_borrow_mut().is_err());</span>
+    <span class="doccomment">///     }</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// assert!(c.try_borrow_mut().is_ok());</span>
+    <span class="doccomment">///     assert!(c.try_borrow_mut().is_ok());</span>
+    <span class="doccomment">/// });</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_borrow_mut</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PyRefMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">PyBorrowMutError</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">thread_checker</span>.<span class="ident">ensure</span>();
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">get_borrow_flag</span>() <span class="op">!</span><span class="op">=</span> <span class="ident">BorrowFlag::UNUSED</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">get_borrow_flag</span>() <span class="op">!</span><span class="op">=</span> <span class="ident">BorrowFlag::UNUSED</span> {
             <span class="prelude-val">Err</span>(<span class="ident">PyBorrowMutError</span> { <span class="ident">_private</span>: () })
         } <span class="kw">else</span> {
-            <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">set_borrow_flag</span>(<span class="ident">BorrowFlag::HAS_MUTABLE_BORROW</span>);
-            <span class="prelude-val">Ok</span>(<span class="ident">PyRefMut</span> { <span class="ident">inner</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span> })
+            <span class="self">self</span>.<span class="ident">set_borrow_flag</span>(<span class="ident">BorrowFlag::HAS_MUTABLE_BORROW</span>);
+            <span class="prelude-val">Ok</span>(<span class="ident">PyRefMut</span> { <span class="ident">inner</span>: <span class="self">self</span> })
         }
     }
 
@@ -1083,30 +1095,29 @@
     <span class="doccomment">/// # use pyo3::prelude::*;</span>
     <span class="doccomment">/// #[pyclass]</span>
     <span class="doccomment">/// struct Class {}</span>
-    <span class="doccomment">/// let gil = Python::acquire_gil();</span>
-    <span class="doccomment">/// let py = gil.python();</span>
-    <span class="doccomment">/// let c = PyCell::new(py, Class {}).unwrap();</span>
+    <span class="doccomment">/// Python::with_gil(|py| {</span>
+    <span class="doccomment">///     let c = PyCell::new(py, Class {}).unwrap();</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///     let m = c.borrow_mut();</span>
-    <span class="doccomment">///     assert!(unsafe { c.try_borrow_unguarded() }.is_err());</span>
-    <span class="doccomment">/// }</span>
+    <span class="doccomment">///     {</span>
+    <span class="doccomment">///         let m = c.borrow_mut();</span>
+    <span class="doccomment">///         assert!(unsafe { c.try_borrow_unguarded() }.is_err());</span>
+    <span class="doccomment">///     }</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///     let m = c.borrow();</span>
-    <span class="doccomment">///     assert!(unsafe { c.try_borrow_unguarded() }.is_ok());</span>
-    <span class="doccomment">/// }</span>
+    <span class="doccomment">///     {</span>
+    <span class="doccomment">///         let m = c.borrow();</span>
+    <span class="doccomment">///         assert!(unsafe { c.try_borrow_unguarded() }.is_ok());</span>
+    <span class="doccomment">///     }</span>
+    <span class="doccomment">/// });</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">try_borrow_unguarded</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">T</span>, <span class="ident">PyBorrowError</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">thread_checker</span>.<span class="ident">ensure</span>();
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">get_borrow_flag</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">BorrowFlag::HAS_MUTABLE_BORROW</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">get_borrow_flag</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">BorrowFlag::HAS_MUTABLE_BORROW</span> {
             <span class="prelude-val">Err</span>(<span class="ident">PyBorrowError</span> { <span class="ident">_private</span>: () })
         } <span class="kw">else</span> {
-            <span class="prelude-val">Ok</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">value</span>.<span class="ident">get</span>())
+            <span class="prelude-val">Ok</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">contents</span>.<span class="ident">value</span>.<span class="ident">get</span>())
         }
     }
 
-    <span class="doccomment">/// Replaces the wrapped value with a new one, returning the old value,</span>
+    <span class="doccomment">/// Replaces the wrapped value with a new one, returning the old value.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Panics</span>
     <span class="doccomment">///</span>
@@ -1137,48 +1148,17 @@
         <span class="ident">std::mem::swap</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">borrow_mut</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="ident">other</span>.<span class="ident">borrow_mut</span>())
     }
 
-    <span class="doccomment">/// Allocates a new PyCell given a type object `subtype`. Used by our `tp_new` implementation.</span>
-    <span class="doccomment">/// Requires `T::BaseLayout: PyBorrowFlagLayout&lt;T::BaseType&gt;` to ensure `self` has a borrow flag.</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">internal_new</span>(
-        <span class="ident">py</span>: <span class="ident">Python</span>,
-        <span class="ident">subtype</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::PyTypeObject</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="kw-2">*</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">T::BaseLayout</span>: <span class="ident">PyBorrowFlagLayout</span><span class="op">&lt;</span><span class="ident">T::BaseType</span><span class="op">&gt;</span>,
-    {
-        <span class="kw">let</span> <span class="ident">base</span> <span class="op">=</span> <span class="ident">T::new</span>(<span class="ident">py</span>, <span class="ident">subtype</span>);
-        <span class="kw">if</span> <span class="ident">base</span>.<span class="ident">is_null</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">PyErr::fetch</span>(<span class="ident">py</span>));
-        }
-        <span class="kw">let</span> <span class="ident">base</span> <span class="op">=</span> <span class="ident">base</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">PyCellBase</span><span class="op">&lt;</span><span class="ident">T::BaseNativeType</span><span class="op">&gt;</span>;
-        (<span class="kw-2">*</span><span class="ident">base</span>).<span class="ident">borrow_flag</span> <span class="op">=</span> <span class="ident">Cell::new</span>(<span class="ident">BorrowFlag::UNUSED</span>);
-        <span class="kw">let</span> <span class="ident">self_</span> <span class="op">=</span> <span class="ident">base</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="self">Self</span>;
-        (<span class="kw-2">*</span><span class="ident">self_</span>).<span class="ident">dict</span> <span class="op">=</span> <span class="ident">T::Dict::new</span>();
-        (<span class="kw-2">*</span><span class="ident">self_</span>).<span class="ident">weakref</span> <span class="op">=</span> <span class="ident">T::WeakRef::new</span>();
-        (<span class="kw-2">*</span><span class="ident">self_</span>).<span class="ident">thread_checker</span> <span class="op">=</span> <span class="ident">T::ThreadChecker::new</span>();
-        <span class="prelude-val">Ok</span>(<span class="ident">self_</span>)
+    <span class="kw">fn</span> <span class="ident">get_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">T</span> {
+        <span class="self">self</span>.<span class="ident">contents</span>.<span class="ident">value</span>.<span class="ident">get</span>()
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> <span class="ident">PyLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PyCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">const</span> <span class="ident">IS_NATIVE_TYPE</span>: <span class="ident">bool</span> <span class="op">=</span> <span class="bool-val">false</span>;
-    <span class="kw">fn</span> <span class="ident">get_super</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T::BaseLayout</span><span class="op">&gt;</span> {
-        <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">ob_base</span>)
-    }
-    <span class="kw">fn</span> <span class="ident">py_init</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">T</span>) {
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">value</span> <span class="op">=</span> <span class="ident">ManuallyDrop::new</span>(<span class="ident">UnsafeCell::new</span>(<span class="ident">value</span>));
-    }
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">py_drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">py</span>: <span class="ident">Python</span>) {
-        <span class="ident">ManuallyDrop::drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">value</span>);
-        <span class="self">self</span>.<span class="ident">dict</span>.<span class="ident">clear_dict</span>(<span class="ident">py</span>);
-        <span class="self">self</span>.<span class="ident">weakref</span>.<span class="ident">clear_weakrefs</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>(), <span class="ident">py</span>);
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">ob_base</span>.<span class="ident">py_drop</span>(<span class="ident">py</span>);
-    }
-}
+<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> <span class="ident">PyLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PyCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {}
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> <span class="ident">PySizedLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PyCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {}
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> <span class="ident">AsPyPointer</span> <span class="kw">for</span> <span class="ident">PyCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">as_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::PyObject</span> {
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_ptr</span>()
+        (<span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>
     }
 }
 
@@ -1224,10 +1204,12 @@
 <span class="doccomment">/// Wraps a borrowed reference to a value in a `PyCell&lt;T&gt;`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See the [`PyCell`](struct.PyCell.html) documentation for more.</span>
-<span class="doccomment">/// # Example</span>
-<span class="doccomment">/// You can use `PyRef` as an alternative of `&amp;self` receiver when</span>
-<span class="doccomment">/// - You need to access the pointer of `PyCell`.</span>
-<span class="doccomment">/// - You want to get super class.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// You can use `PyRef` as an alternative to a `&amp;self` receiver when</span>
+<span class="doccomment">/// - you need to access the pointer of the `PyCell`, or</span>
+<span class="doccomment">/// - you want to get a super class.</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// # use pyo3::prelude::*;</span>
 <span class="doccomment">/// #[pyclass(subclass)]</span>
@@ -1253,18 +1235,18 @@
 <span class="doccomment">///         format!(&quot;{}(base: {}, cnt: {})&quot;, slf.name, basename, refcnt)</span>
 <span class="doccomment">///     }</span>
 <span class="doccomment">/// }</span>
-<span class="doccomment">/// # let gil = Python::acquire_gil();</span>
-<span class="doccomment">/// # let py = gil.python();</span>
-<span class="doccomment">/// # let sub = PyCell::new(py, Child::new()).unwrap();</span>
-<span class="doccomment">/// # pyo3::py_run!(py, sub, &quot;assert sub.format() == &#39;Caterpillar(base: Butterfly, cnt: 3)&#39;&quot;);</span>
+<span class="doccomment">/// # Python::with_gil(|py| {</span>
+<span class="doccomment">/// #     let sub = PyCell::new(py, Child::new()).unwrap();</span>
+<span class="doccomment">/// #     pyo3::py_run!(py, sub, &quot;assert sub.format() == &#39;Caterpillar(base: Butterfly, cnt: 3)&#39;&quot;);</span>
+<span class="doccomment">/// # });</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyRef</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> {
-    <span class="ident">inner</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">PyCellInner</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">inner</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">PyCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> <span class="ident">PyRef</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Returns `Python` token.</span>
-    <span class="doccomment">/// This function is safe since PyRef has the same lifetime as a `GILGuard`.</span>
+    <span class="doccomment">/// Returns a `Python` token.</span>
+    <span class="doccomment">/// This function is safe since `PyRef` has the same lifetime as a `GILGuard`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">py</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Python</span> {
         <span class="kw">unsafe</span> { <span class="ident">Python::assume_gil_acquired</span>() }
     }
@@ -1272,7 +1254,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PyRef</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">PyClass</span> <span class="op">+</span> <span class="ident">PyTypeInfo</span><span class="op">&lt;</span><span class="ident">BaseType</span> <span class="op">=</span> <span class="ident">U</span>, <span class="ident">BaseLayout</span> <span class="op">=</span> <span class="ident">PyCellInner</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&lt;</span><span class="ident">BaseType</span> <span class="op">=</span> <span class="ident">U</span><span class="op">&gt;</span>,
     <span class="ident">U</span>: <span class="ident">PyClass</span>,
 {
     <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">T::BaseType</span> {
@@ -1282,11 +1264,16 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> <span class="ident">PyRef</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">PyClass</span> <span class="op">+</span> <span class="ident">PyTypeInfo</span><span class="op">&lt;</span><span class="ident">BaseType</span> <span class="op">=</span> <span class="ident">U</span>, <span class="ident">BaseLayout</span> <span class="op">=</span> <span class="ident">PyCellInner</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&lt;</span><span class="ident">BaseType</span> <span class="op">=</span> <span class="ident">U</span><span class="op">&gt;</span>,
     <span class="ident">U</span>: <span class="ident">PyClass</span>,
 {
-    <span class="doccomment">/// Get `PyRef&lt;T::BaseType&gt;`.</span>
-    <span class="doccomment">/// You can use this method to get super class of super class.</span>
+    <span class="doccomment">/// Gets a `PyRef&lt;T::BaseType&gt;`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// While `as_ref()` returns a reference of type `&amp;T::BaseType`, this cannot be</span>
+    <span class="doccomment">/// used to get the base of `T::BaseType`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// But with the help of this method, you can get hold of instances of the</span>
+    <span class="doccomment">/// super-superclass when needed.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">/// ```</span>
@@ -1317,10 +1304,10 @@
     <span class="doccomment">///         format!(&quot;{} {} {}&quot;, super_.as_ref().name1, super_.name2, subname)</span>
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
-    <span class="doccomment">/// # let gil = Python::acquire_gil();</span>
-    <span class="doccomment">/// # let py = gil.python();</span>
-    <span class="doccomment">/// # let sub = PyCell::new(py, Sub::new()).unwrap();</span>
-    <span class="doccomment">/// # pyo3::py_run!(py, sub, &quot;assert sub.name() == &#39;base1 base2 sub&#39;&quot;)</span>
+    <span class="doccomment">/// # Python::with_gil(|py| {</span>
+    <span class="doccomment">/// #     let sub = PyCell::new(py, Sub::new()).unwrap();</span>
+    <span class="doccomment">/// #     pyo3::py_run!(py, sub, &quot;assert sub.name() == &#39;base1 base2 sub&#39;&quot;)</span>
+    <span class="doccomment">/// # });</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_super</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyRef</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">U</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">PyRef</span> { <span class="ident">inner</span> } <span class="op">=</span> <span class="self">self</span>;
@@ -1374,14 +1361,14 @@
 
 <span class="doccomment">/// Wraps a mutable borrowed reference to a value in a `PyCell&lt;T&gt;`.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// See the [`PyCell`](struct.PyCell.html) and [`PyRef`](struct.PyRef.html) documentations for more.</span>
+<span class="doccomment">/// See the [`PyCell`](struct.PyCell.html) and [`PyRef`](struct.PyRef.html) documentation for more.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyRefMut</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> {
-    <span class="ident">inner</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">PyCellInner</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">inner</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">PyCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> <span class="ident">PyRefMut</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Returns `Python` token.</span>
-    <span class="doccomment">/// This function is safe since PyRefMut has the same lifetime as a `GILGuard`.</span>
+    <span class="doccomment">/// Returns a `Python` token.</span>
+    <span class="doccomment">/// This function is safe since `PyRefMut` has the same lifetime as a `GILGuard`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">py</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Python</span> {
         <span class="kw">unsafe</span> { <span class="ident">Python::assume_gil_acquired</span>() }
     }
@@ -1389,7 +1376,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PyRefMut</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">PyClass</span> <span class="op">+</span> <span class="ident">PyTypeInfo</span><span class="op">&lt;</span><span class="ident">BaseType</span> <span class="op">=</span> <span class="ident">U</span>, <span class="ident">BaseLayout</span> <span class="op">=</span> <span class="ident">PyCellInner</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&lt;</span><span class="ident">BaseType</span> <span class="op">=</span> <span class="ident">U</span><span class="op">&gt;</span>,
     <span class="ident">U</span>: <span class="ident">PyClass</span>,
 {
     <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">T::BaseType</span> {
@@ -1399,7 +1386,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> <span class="ident">AsMut</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PyRefMut</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">PyClass</span> <span class="op">+</span> <span class="ident">PyTypeInfo</span><span class="op">&lt;</span><span class="ident">BaseType</span> <span class="op">=</span> <span class="ident">U</span>, <span class="ident">BaseLayout</span> <span class="op">=</span> <span class="ident">PyCellInner</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&lt;</span><span class="ident">BaseType</span> <span class="op">=</span> <span class="ident">U</span><span class="op">&gt;</span>,
     <span class="ident">U</span>: <span class="ident">PyClass</span>,
 {
     <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T::BaseType</span> {
@@ -1409,11 +1396,11 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> <span class="ident">PyRefMut</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">PyClass</span> <span class="op">+</span> <span class="ident">PyTypeInfo</span><span class="op">&lt;</span><span class="ident">BaseType</span> <span class="op">=</span> <span class="ident">U</span>, <span class="ident">BaseLayout</span> <span class="op">=</span> <span class="ident">PyCellInner</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&lt;</span><span class="ident">BaseType</span> <span class="op">=</span> <span class="ident">U</span><span class="op">&gt;</span>,
     <span class="ident">U</span>: <span class="ident">PyClass</span>,
 {
-    <span class="doccomment">/// Get `PyRef&lt;T::BaseType&gt;`.</span>
-    <span class="doccomment">/// See  [`PyRef::into_super`](struct.PyRef.html#method.into_super) for more.</span>
+    <span class="doccomment">/// Gets a `PyRef&lt;T::BaseType&gt;`.</span>
+    <span class="doccomment">/// See [`PyRef::into_super`](struct.PyRef.html#method.into_super) for more.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_super</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyRefMut</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span>, <span class="ident">U</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">PyRefMut</span> { <span class="ident">inner</span> } <span class="op">=</span> <span class="self">self</span>;
         <span class="ident">std::mem::forget</span>(<span class="self">self</span>);
@@ -1470,11 +1457,12 @@
     }
 }
 
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>)]</span>
-<span class="kw">struct</span> <span class="ident">BorrowFlag</span>(<span class="ident">usize</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BorrowFlag</span>(<span class="ident">usize</span>);
 
 <span class="kw">impl</span> <span class="ident">BorrowFlag</span> {
-    <span class="kw">const</span> <span class="ident">UNUSED</span>: <span class="ident">BorrowFlag</span> <span class="op">=</span> <span class="ident">BorrowFlag</span>(<span class="number">0</span>);
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">UNUSED</span>: <span class="ident">BorrowFlag</span> <span class="op">=</span> <span class="ident">BorrowFlag</span>(<span class="number">0</span>);
     <span class="kw">const</span> <span class="ident">HAS_MUTABLE_BORROW</span>: <span class="ident">BorrowFlag</span> <span class="op">=</span> <span class="ident">BorrowFlag</span>(<span class="ident">usize::max_value</span>());
     <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">increment</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>(<span class="self">self</span>.<span class="number">0</span> <span class="op">+</span> <span class="number">1</span>)
@@ -1486,7 +1474,7 @@
 
 <span class="doccomment">/// An error returned by [`PyCell::try_borrow`](struct.PyCell.html#method.try_borrow).</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// In Python, you can catch this error by `except RuntimeError`.</span>
+<span class="doccomment">/// In Python, you can catch this error using `except RuntimeError`.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyBorrowError</span> {
     <span class="ident">_private</span>: (),
 }
@@ -1511,7 +1499,7 @@
 
 <span class="doccomment">/// An error returned by [`PyCell::try_borrow_mut`](struct.PyCell.html#method.try_borrow_mut).</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// In Python, you can catch this error by `except RuntimeError`.</span>
+<span class="doccomment">/// In Python, you can catch this error using `except RuntimeError`.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyBorrowMutError</span> {
     <span class="ident">_private</span>: (),
 }
@@ -1533,5 +1521,71 @@
         <span class="ident">PyRuntimeError::new_err</span>(<span class="ident">other</span>.<span class="ident">to_string</span>())
     }
 }
+
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">PyCellLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>: <span class="ident">PyLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">get_borrow_flag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BorrowFlag</span>;
+    <span class="kw">fn</span> <span class="ident">set_borrow_flag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">flag</span>: <span class="ident">BorrowFlag</span>);
+    <span class="doccomment">/// Implementation of tp_dealloc.</span>
+    <span class="doccomment">/// # Safety</span>
+    <span class="doccomment">/// - slf must be a valid pointer to an instance of a T or a subclass.</span>
+    <span class="doccomment">/// - slf must not be used after this call (as it will be freed).</span>
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">tp_dealloc</span>(<span class="ident">slf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::PyObject</span>, <span class="ident">py</span>: <span class="ident">Python</span>);
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> <span class="ident">PyCellLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PyCellBase</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">U</span>: <span class="ident">PySizedLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">T</span>: <span class="ident">PyTypeInfo</span>,
+{
+    <span class="kw">fn</span> <span class="ident">get_borrow_flag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BorrowFlag</span> {
+        <span class="self">self</span>.<span class="ident">borrow_flag</span>.<span class="ident">get</span>()
+    }
+    <span class="kw">fn</span> <span class="ident">set_borrow_flag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">flag</span>: <span class="ident">BorrowFlag</span>) {
+        <span class="self">self</span>.<span class="ident">borrow_flag</span>.<span class="ident">set</span>(<span class="ident">flag</span>)
+    }
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">tp_dealloc</span>(<span class="ident">slf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::PyObject</span>, <span class="ident">py</span>: <span class="ident">Python</span>) {
+        <span class="comment">// For `#[pyclass]` types which inherit from PyAny, we can just call tp_free</span>
+        <span class="kw">if</span> <span class="ident">T::type_object_raw</span>(<span class="ident">py</span>) <span class="op">=</span><span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">PyBaseObject_Type</span> {
+            <span class="kw">return</span> <span class="ident">get_tp_free</span>(<span class="ident">ffi::Py_TYPE</span>(<span class="ident">slf</span>))(<span class="ident">slf</span> <span class="kw">as</span> <span class="kw">_</span>);
+        }
+
+        <span class="comment">// More complex native types (e.g. `extends=PyDict`) require calling the base&#39;s dealloc.</span>
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">Py_LIMITED_API</span>))]</span>
+        {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">dealloc</span>) <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">T::type_object_raw</span>(<span class="ident">py</span>)).<span class="ident">tp_dealloc</span> {
+                <span class="ident">dealloc</span>(<span class="ident">slf</span> <span class="kw">as</span> <span class="kw">_</span>);
+            } <span class="kw">else</span> {
+                <span class="ident">get_tp_free</span>(<span class="ident">ffi::Py_TYPE</span>(<span class="ident">slf</span>))(<span class="ident">slf</span> <span class="kw">as</span> <span class="kw">_</span>);
+            }
+        }
+
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">Py_LIMITED_API</span>)]</span>
+        <span class="macro">unreachable!</span>(<span class="string">&quot;subclassing native types is not possible with the `abi3` feature&quot;</span>);
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PyClass</span><span class="op">&gt;</span> <span class="ident">PyCellLayout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PyCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="op">&lt;</span><span class="ident">T::BaseType</span> <span class="kw">as</span> <span class="ident">PyClassBaseType</span><span class="op">&gt;</span><span class="ident">::LayoutAsBase</span>: <span class="ident">PyCellLayout</span><span class="op">&lt;</span><span class="ident">T::BaseType</span><span class="op">&gt;</span>,
+{
+    <span class="kw">fn</span> <span class="ident">get_borrow_flag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BorrowFlag</span> {
+        <span class="self">self</span>.<span class="ident">contents</span>.<span class="ident">thread_checker</span>.<span class="ident">ensure</span>();
+        <span class="self">self</span>.<span class="ident">ob_base</span>.<span class="ident">get_borrow_flag</span>()
+    }
+    <span class="kw">fn</span> <span class="ident">set_borrow_flag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">flag</span>: <span class="ident">BorrowFlag</span>) {
+        <span class="self">self</span>.<span class="ident">ob_base</span>.<span class="ident">set_borrow_flag</span>(<span class="ident">flag</span>)
+    }
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">tp_dealloc</span>(<span class="ident">slf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::PyObject</span>, <span class="ident">py</span>: <span class="ident">Python</span>) {
+        <span class="comment">// Safety: Python only calls tp_dealloc when no references to the object remain.</span>
+        <span class="kw">let</span> <span class="ident">cell</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span>(<span class="ident">slf</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">PyCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
+        <span class="ident">ManuallyDrop::drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cell</span>.<span class="ident">contents</span>.<span class="ident">value</span>);
+        <span class="ident">cell</span>.<span class="ident">contents</span>.<span class="ident">dict</span>.<span class="ident">clear_dict</span>(<span class="ident">py</span>);
+        <span class="ident">cell</span>.<span class="ident">contents</span>.<span class="ident">weakref</span>.<span class="ident">clear_weakrefs</span>(<span class="ident">slf</span>, <span class="ident">py</span>);
+        <span class="op">&lt;</span><span class="ident">T::BaseType</span> <span class="kw">as</span> <span class="ident">PyClassBaseType</span><span class="op">&gt;</span><span class="ident">::LayoutAsBase::tp_dealloc</span>(<span class="ident">slf</span>, <span class="ident">py</span>)
+    }
+}
 </pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pyo3" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pyo3" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
+</body></html>

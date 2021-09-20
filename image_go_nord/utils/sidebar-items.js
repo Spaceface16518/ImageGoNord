@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["delta","Euclidian distance squared between colors"]]});

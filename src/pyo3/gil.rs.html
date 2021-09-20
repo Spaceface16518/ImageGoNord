@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/pyo3-0.13.2/src/gil.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>gil.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../pyo3/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;pyo3-0.14.5&#x2F;src&#x2F;gil.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>gil.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../pyo3/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -821,34 +819,44 @@
 <span id="819">819</span>
 <span id="820">820</span>
 <span id="821">821</span>
+<span id="822">822</span>
+<span id="823">823</span>
+<span id="824">824</span>
+<span id="825">825</span>
+<span id="826">826</span>
+<span id="827">827</span>
 </pre><pre class="rust">
 <span class="comment">// Copyright (c) 2017-present PyO3 Project and Contributors</span>
 
-<span class="doccomment">//! Interaction with python&#39;s global interpreter lock</span>
+<span class="doccomment">//! Interaction with Python&#39;s global interpreter lock</span>
 
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ffi</span>, <span class="ident">internal_tricks::Unsendable</span>, <span class="ident">Python</span>};
 <span class="kw">use</span> <span class="ident">parking_lot</span>::{<span class="ident">const_mutex</span>, <span class="ident">Mutex</span>, <span class="ident">Once</span>};
 <span class="kw">use</span> <span class="ident">std::cell</span>::{<span class="ident">Cell</span>, <span class="ident">RefCell</span>};
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">mem::ManuallyDrop</span>, <span class="ident">ptr::NonNull</span>};
+<span class="kw">use</span> <span class="ident">std</span>::{
+    <span class="ident">mem</span>::{<span class="self">self</span>, <span class="ident">ManuallyDrop</span>},
+    <span class="ident">ptr::NonNull</span>,
+    <span class="ident">sync::atomic</span>,
+};
 
 <span class="kw">static</span> <span class="ident">START</span>: <span class="ident">Once</span> <span class="op">=</span> <span class="ident">Once::new</span>();
 
 <span class="macro">thread_local!</span> {
-    <span class="doccomment">/// This is a internal counter in pyo3 monitoring whether this thread has the GIL.</span>
+    <span class="doccomment">/// This is an internal counter in pyo3 monitoring whether this thread has the GIL.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// It will be incremented whenever a GILGuard or GILPool is created, and decremented whenever</span>
     <span class="doccomment">/// they are dropped.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// As a result, if this thread has the GIL, GIL_COUNT is greater than zero.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// pub(crate) because it is manipulated temporarily by Python::allow_threads</span>
+    <span class="doccomment">/// pub(crate) because it is manipulated temporarily by `Python::allow_threads`.</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">static</span> <span class="ident">GIL_COUNT</span>: <span class="ident">Cell</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Cell::new</span>(<span class="number">0</span>);
 
-    <span class="doccomment">/// Temporally hold objects that will be released when the GILPool drops.</span>
+    <span class="doccomment">/// Temporarily hold objects that will be released when the GILPool drops.</span>
     <span class="kw">static</span> <span class="ident">OWNED_OBJECTS</span>: <span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">ffi::PyObject</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">RefCell::new</span>(<span class="ident">Vec::with_capacity</span>(<span class="number">256</span>));
 }
 
-<span class="doccomment">/// Check whether the GIL is acquired.</span>
+<span class="doccomment">/// Checks whether the GIL is acquired.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Note: This uses pyo3&#39;s internal count rather than PyGILState_Check for two reasons:</span>
 <span class="doccomment">///  1) for performance</span>
@@ -860,29 +868,24 @@
 
 <span class="doccomment">/// Prepares the use of Python in a free-threaded context.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// If the Python interpreter is not already initialized, this function</span>
-<span class="doccomment">/// will initialize it with disabled signal handling</span>
-<span class="doccomment">/// (Python will not raise the `KeyboardInterrupt` exception).</span>
-<span class="doccomment">/// Python signal handling depends on the notion of a &#39;main thread&#39;, which must be</span>
-<span class="doccomment">/// the thread that initializes the Python interpreter.</span>
+<span class="doccomment">/// If the Python interpreter is not already initialized, this function will initialize it with</span>
+<span class="doccomment">/// signal handling disabled (Python will not raise the `KeyboardInterrupt` exception). Python</span>
+<span class="doccomment">/// signal handling depends on the notion of a &#39;main thread&#39;, which must be the thread that</span>
+<span class="doccomment">/// initializes the Python interpreter.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// If both the Python interpreter and Python threading are already initialized,</span>
-<span class="doccomment">/// this function has no effect.</span>
+<span class="doccomment">/// If both the Python interpreter and Python threading are already initialized, this function has</span>
+<span class="doccomment">/// no effect.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// # Availability</span>
-<span class="doccomment">/// This function is only available when linking against Python distributions that contain a</span>
-<span class="doccomment">/// shared library.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// This function is not available on PyPy.</span>
+<span class="doccomment">/// This function is unavailable under PyPy because PyPy cannot be embedded in Rust (or any other</span>
+<span class="doccomment">/// software). Support for this is tracked on the</span>
+<span class="doccomment">/// [PyPy issue tracker](https://foss.heptapod.net/pypy/pypy/-/issues/3286).</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Panics</span>
-<span class="doccomment">/// - If the Python interpreter is initialized but Python threading is not,</span>
-<span class="doccomment">///   a panic occurs.</span>
-<span class="doccomment">///   It is not possible to safely access the Python runtime unless the main</span>
-<span class="doccomment">///   thread (the thread which originally initialized Python) also initializes</span>
-<span class="doccomment">///   threading.</span>
+<span class="doccomment">/// - If the Python interpreter is initialized but Python threading is not, a panic occurs.</span>
+<span class="doccomment">///   It is not possible to safely access the Python runtime unless the main thread (the thread</span>
+<span class="doccomment">///   which originally initialized Python) also initializes threading.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// # Example</span>
+<span class="doccomment">/// # Examples</span>
 <span class="doccomment">/// ```rust</span>
 <span class="doccomment">/// use pyo3::prelude::*;</span>
 <span class="doccomment">///</span>
@@ -894,8 +897,9 @@
 <span class="doccomment">///     });</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">Py_SHARED</span>, <span class="ident">not</span>(<span class="ident">PyPy</span>)))]</span>
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::clippy::collapsible_if</span>)]</span> <span class="comment">// for if cfg!</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">PyPy</span>))]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">PyPy</span>))))]</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::collapsible_if</span>)]</span> <span class="comment">// for if cfg!</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">prepare_freethreaded_python</span>() {
     <span class="comment">// Protect against race conditions when Python is not yet initialized and multiple threads</span>
     <span class="comment">// concurrently call &#39;prepare_freethreaded_python()&#39;. Note that we do not protect against</span>
@@ -933,12 +937,6 @@
 <span class="doccomment">/// single process, it is not safe to call this function more than once. (Many such modules will not</span>
 <span class="doccomment">/// initialize correctly on the second run.)</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// # Availability</span>
-<span class="doccomment">/// This function is only available when linking against Python distributions that contain a shared</span>
-<span class="doccomment">/// library.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// This function is not available on PyPy.</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// # Panics</span>
 <span class="doccomment">/// - If the Python interpreter is already initalized before calling this function.</span>
 <span class="doccomment">///</span>
@@ -948,7 +946,7 @@
 <span class="doccomment">/// - No Python APIs can be used after this function has finished executing.</span>
 <span class="doccomment">/// - The return value of the closure must not contain any Python value, _including_ `PyResult`.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// # Example</span>
+<span class="doccomment">/// # Examples</span>
 <span class="doccomment">/// ```rust</span>
 <span class="doccomment">/// use pyo3::prelude::*;</span>
 <span class="doccomment">///</span>
@@ -961,8 +959,9 @@
 <span class="doccomment">///     }</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">Py_SHARED</span>, <span class="ident">not</span>(<span class="ident">PyPy</span>)))]</span>
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::clippy::collapsible_if</span>)]</span> <span class="comment">// for if cfg!</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">PyPy</span>))]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">PyPy</span>))))]</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::collapsible_if</span>)]</span> <span class="comment">// for if cfg!</span>
 <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">with_embedded_python_interpreter</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>
 <span class="kw">where</span>
     <span class="ident">F</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span> <span class="ident">FnOnce</span>(<span class="ident">Python</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>,
@@ -1002,10 +1001,13 @@
     <span class="ident">result</span>
 }
 
-<span class="doccomment">/// RAII type that represents the Global Interpreter Lock acquisition. To get hold of a value of</span>
-<span class="doccomment">/// this type, see [`Python::acquire_gil`](struct.Python.html#method.acquire_gil).</span>
+<span class="doccomment">/// RAII type that represents the Global Interpreter Lock acquisition.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// # Example</span>
+<span class="doccomment">/// Users are strongly encouraged to use [`Python::with_gil`](struct.Python.html#method.with_gil)</span>
+<span class="doccomment">/// instead of directly constructing this type.</span>
+<span class="doccomment">/// See [`Python::acquire_gil`](struct.Python.html#method.acquire_gil) for more.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Examples</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// use pyo3::Python;</span>
 <span class="doccomment">///</span>
@@ -1014,6 +1016,7 @@
 <span class="doccomment">///     let py = gil_guard.python();</span>
 <span class="doccomment">/// } // GIL is released when gil_guard is dropped</span>
 <span class="doccomment">/// ```</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::upper_case_acronyms</span>)]</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GILGuard</span> {
     <span class="ident">gstate</span>: <span class="ident">ffi::PyGILState_STATE</span>,
@@ -1039,32 +1042,9 @@
         <span class="comment">//    auto-initialize so this avoids breaking existing builds.</span>
         <span class="comment">//  - Otherwise, just check the GIL is initialized.</span>
         <span class="macro">cfg_if::cfg_if!</span> {
-            <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;auto-initialize&quot;</span>, <span class="ident">Py_SHARED</span>, <span class="ident">not</span>(<span class="ident">PyPy</span>)))]</span> {
+            <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;auto-initialize&quot;</span>, <span class="ident">not</span>(<span class="ident">PyPy</span>)))]</span> {
                 <span class="ident">prepare_freethreaded_python</span>();
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;auto-initialize&quot;</span>, <span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;extension-module&quot;</span>), <span class="ident">not</span>(<span class="ident">Py_SHARED</span>), <span class="ident">not</span>(<span class="ident">__pyo3_ci</span>)))]</span> {
-                <span class="macro">compile_error!</span>(<span class="macro">concat!</span>(
-                    <span class="string">&quot;The `auto-initialize` feature is not supported when linking Python &quot;</span>,
-                    <span class="string">&quot;statically instead of with a shared library.\n\n&quot;</span>,
-                    <span class="string">&quot;Please disable the `auto-initialize` feature, for example by entering the following &quot;</span>,
-                    <span class="string">&quot;in your cargo.toml:\n\n&quot;</span>,
-                    <span class="string">&quot;    pyo3 = { version = \&quot;&quot;</span>,
-                    <span class="macro">env!</span>(<span class="string">&quot;CARGO_PKG_VERSION&quot;</span>),
-                    <span class="string">&quot;\&quot;, default-features = false }\n\n&quot;</span>,
-                    <span class="string">&quot;Alternatively, compile PyO3 using a Python distribution which contains a shared &quot;</span>,
-                    <span class="string">&quot;libary.&quot;</span>
-                ));
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;auto-initialize&quot;</span>, <span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;extension-module&quot;</span>), <span class="ident">PyPy</span>, <span class="ident">not</span>(<span class="ident">__pyo3_ci</span>)))]</span> {
-                <span class="macro">compile_error!</span>(<span class="macro">concat!</span>(
-                    <span class="string">&quot;The `auto-initialize` feature is not supported by PyPy.\n\n&quot;</span>,
-                    <span class="string">&quot;Please disable the `auto-initialize` feature, for example by entering the following &quot;</span>,
-                    <span class="string">&quot;in your cargo.toml:\n\n&quot;</span>,
-                    <span class="string">&quot;    pyo3 = { version = \&quot;&quot;</span>,
-                    <span class="macro">env!</span>(<span class="string">&quot;CARGO_PKG_VERSION&quot;</span>),
-                    <span class="string">&quot;\&quot;, default-features = false }\n\n&quot;</span>,
-                ));
             } <span class="kw">else</span> {
-                <span class="comment">// extension module feature enabled and PyPy or static linking</span>
-                <span class="comment">// OR auto-initialize feature not enabled</span>
                 <span class="ident">START</span>.<span class="ident">call_once_force</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="kw">unsafe</span> {
                     <span class="comment">// Use call_once_force because if there is a panic because the interpreter is</span>
                     <span class="comment">// not initialized, it&#39;s fine for the user to initialize the interpreter and</span>
@@ -1072,17 +1052,32 @@
                     <span class="macro">assert_ne!</span>(
                         <span class="ident">ffi::Py_IsInitialized</span>(),
                         <span class="number">0</span>,
-                        <span class="string">&quot;The Python interpreter is not initalized and the `auto-initialize` feature is not enabled.&quot;</span>
+                        <span class="string">&quot;The Python interpreter is not initalized and the `auto-initialize` \
+                         feature is not enabled.\n\n\
+                         Consider calling `pyo3::prepare_freethreaded_python()` before attempting \
+                         to use Python APIs.&quot;</span>
                     );
                     <span class="macro">assert_ne!</span>(
                         <span class="ident">ffi::PyEval_ThreadsInitialized</span>(),
                         <span class="number">0</span>,
-                        <span class="string">&quot;Python threading is not initalized and the `auto-initialize` feature is not enabled.&quot;</span>
+                        <span class="string">&quot;Python threading is not initalized and the `auto-initialize` feature is \
+                         not enabled.\n\n\
+                         Consider calling `pyo3::prepare_freethreaded_python()` before attempting \
+                         to use Python APIs.&quot;</span>
                     );
                 });
             }
         }
 
+        <span class="self">Self</span><span class="ident">::acquire_unchecked</span>()
+    }
+
+    <span class="doccomment">/// Acquires the `GILGuard` without performing any state checking.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This can be called in &quot;unsafe&quot; contexts where the normal interpreter state</span>
+    <span class="doccomment">/// checking performed by `GILGuard::acquire` may fail. This includes calling</span>
+    <span class="doccomment">/// as part of multi-phase interpreter initialization.</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">acquire_unchecked</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">GILGuard</span> {
         <span class="kw">let</span> <span class="ident">gstate</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi::PyGILState_Ensure</span>() }; <span class="comment">// acquire GIL</span>
 
         <span class="comment">// If there&#39;s already a GILPool, we should not create another or this could lead to</span>
@@ -1134,50 +1129,51 @@
     }
 }
 
+<span class="comment">// Vector of PyObject(</span>
+<span class="kw">type</span> <span class="ident">PyObjVec</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">ffi::PyObject</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+
 <span class="doccomment">/// Thread-safe storage for objects which were inc_ref / dec_ref while the GIL was not held.</span>
 <span class="kw">struct</span> <span class="ident">ReferencePool</span> {
-    <span class="ident">pointers_to_incref</span>: <span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">ffi::PyObject</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">pointers_to_decref</span>: <span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">ffi::PyObject</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">dirty</span>: <span class="ident">atomic::AtomicBool</span>,
+    <span class="comment">// .0 is INCREFs, .1 is DECREFs</span>
+    <span class="ident">pointer_ops</span>: <span class="ident">Mutex</span><span class="op">&lt;</span>(<span class="ident">PyObjVec</span>, <span class="ident">PyObjVec</span>)<span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">ReferencePool</span> {
     <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
-            <span class="ident">pointers_to_incref</span>: <span class="ident">const_mutex</span>(<span class="ident">Vec::new</span>()),
-            <span class="ident">pointers_to_decref</span>: <span class="ident">const_mutex</span>(<span class="ident">Vec::new</span>()),
+            <span class="ident">dirty</span>: <span class="ident">atomic::AtomicBool::new</span>(<span class="bool-val">false</span>),
+            <span class="ident">pointer_ops</span>: <span class="ident">const_mutex</span>((<span class="ident">Vec::new</span>(), <span class="ident">Vec::new</span>())),
         }
     }
 
     <span class="kw">fn</span> <span class="ident">register_incref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">obj</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">ffi::PyObject</span><span class="op">&gt;</span>) {
-        <span class="self">self</span>.<span class="ident">pointers_to_incref</span>.<span class="ident">lock</span>().<span class="ident">push</span>(<span class="ident">obj</span>)
+        <span class="self">self</span>.<span class="ident">pointer_ops</span>.<span class="ident">lock</span>().<span class="number">0</span>.<span class="ident">push</span>(<span class="ident">obj</span>);
+        <span class="self">self</span>.<span class="ident">dirty</span>.<span class="ident">store</span>(<span class="bool-val">true</span>, <span class="ident">atomic::Ordering::Release</span>);
     }
 
     <span class="kw">fn</span> <span class="ident">register_decref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">obj</span>: <span class="ident">NonNull</span><span class="op">&lt;</span><span class="ident">ffi::PyObject</span><span class="op">&gt;</span>) {
-        <span class="self">self</span>.<span class="ident">pointers_to_decref</span>.<span class="ident">lock</span>().<span class="ident">push</span>(<span class="ident">obj</span>)
+        <span class="self">self</span>.<span class="ident">pointer_ops</span>.<span class="ident">lock</span>().<span class="number">1</span>.<span class="ident">push</span>(<span class="ident">obj</span>);
+        <span class="self">self</span>.<span class="ident">dirty</span>.<span class="ident">store</span>(<span class="bool-val">true</span>, <span class="ident">atomic::Ordering::Release</span>);
     }
 
     <span class="kw">fn</span> <span class="ident">update_counts</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">_py</span>: <span class="ident">Python</span>) {
-        <span class="macro">macro_rules!</span> <span class="ident">swap_vec_with_lock</span> {
-            <span class="comment">// Get vec from one of ReferencePool&#39;s mutexes via lock, swap vec if needed, unlock.</span>
-            (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">cell</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> {{
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">locked</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">cell</span>.<span class="ident">lock</span>();
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
-                <span class="kw">if</span> <span class="op">!</span><span class="ident">locked</span>.<span class="ident">is_empty</span>() {
-                    <span class="ident">std::mem::swap</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="ident">locked</span>);
-                }
-                <span class="ident">drop</span>(<span class="ident">locked</span>);
-                <span class="ident">out</span>
-            }};
+        <span class="kw">let</span> <span class="ident">prev</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">dirty</span>.<span class="ident">swap</span>(<span class="bool-val">false</span>, <span class="ident">atomic::Ordering::Acquire</span>);
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">prev</span> {
+            <span class="kw">return</span>;
         }
 
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ops</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">pointer_ops</span>.<span class="ident">lock</span>();
+        <span class="kw">let</span> (<span class="ident">increfs</span>, <span class="ident">decrefs</span>) <span class="op">=</span> <span class="ident">mem::take</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="ident">ops</span>);
+        <span class="ident">drop</span>(<span class="ident">ops</span>);
         <span class="comment">// Always increase reference counts first - as otherwise objects which have a</span>
         <span class="comment">// nonzero total reference count might be incorrectly dropped by Python during</span>
         <span class="comment">// this update.</span>
-        <span class="kw">for</span> <span class="ident">ptr</span> <span class="kw">in</span> <span class="macro">swap_vec_with_lock!</span>(<span class="self">self</span>.<span class="ident">pointers_to_incref</span>) {
+        <span class="kw">for</span> <span class="ident">ptr</span> <span class="kw">in</span> <span class="ident">increfs</span> {
             <span class="kw">unsafe</span> { <span class="ident">ffi::Py_INCREF</span>(<span class="ident">ptr</span>.<span class="ident">as_ptr</span>()) };
         }
 
-        <span class="kw">for</span> <span class="ident">ptr</span> <span class="kw">in</span> <span class="macro">swap_vec_with_lock!</span>(<span class="self">self</span>.<span class="ident">pointers_to_decref</span>) {
+        <span class="kw">for</span> <span class="ident">ptr</span> <span class="kw">in</span> <span class="ident">decrefs</span> {
             <span class="kw">unsafe</span> { <span class="ident">ffi::Py_DECREF</span>(<span class="ident">ptr</span>.<span class="ident">as_ptr</span>()) };
         }
     }
@@ -1188,6 +1184,7 @@
 <span class="kw">static</span> <span class="ident">POOL</span>: <span class="ident">ReferencePool</span> <span class="op">=</span> <span class="ident">ReferencePool::new</span>();
 
 <span class="doccomment">/// A RAII pool which PyO3 uses to store owned Python references.</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::upper_case_acronyms</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GILPool</span> {
     <span class="doccomment">/// Initial length of owned objects and anys.</span>
     <span class="doccomment">/// `Option` is used since TSL can be broken when `new` is called from `atexit`.</span>
@@ -1196,7 +1193,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">GILPool</span> {
-    <span class="doccomment">/// Create a new `GILPool`. This function should only ever be called with the GIL.</span>
+    <span class="doccomment">/// Creates a new `GILPool`. This function should only ever be called with the GIL held.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// It is recommended not to use this API directly, but instead to use `Python::new_pool`, as</span>
     <span class="doccomment">/// that guarantees the GIL is held.</span>
@@ -1243,8 +1240,8 @@
     }
 }
 
-<span class="doccomment">/// Register a Python object pointer inside the release pool, to have reference count increased</span>
-<span class="doccomment">/// next time the GIL is acquired in pyo3.</span>
+<span class="doccomment">/// Registers a Python object pointer inside the release pool, to have its reference count increased</span>
+<span class="doccomment">/// the next time the GIL is acquired in pyo3.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// If the GIL is held, the reference count will be increased immediately instead of being queued</span>
 <span class="doccomment">/// for later.</span>
@@ -1259,8 +1256,8 @@
     }
 }
 
-<span class="doccomment">/// Register a Python object pointer inside the release pool, to have reference count decreased</span>
-<span class="doccomment">/// next time the GIL is acquired in pyo3.</span>
+<span class="doccomment">/// Registers a Python object pointer inside the release pool, to have its reference count decreased</span>
+<span class="doccomment">/// the next time the GIL is acquired in pyo3.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// If the GIL is held, the reference count will be decreased immediately instead of being queued</span>
 <span class="doccomment">/// for later.</span>
@@ -1275,7 +1272,7 @@
     }
 }
 
-<span class="doccomment">/// Register an owned object inside the GILPool.</span>
+<span class="doccomment">/// Registers an owned object inside the GILPool, to be released when the GILPool drops.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Safety</span>
 <span class="doccomment">/// The object must be an owned Python reference.</span>
@@ -1285,14 +1282,14 @@
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">OWNED_OBJECTS</span>.<span class="ident">try_with</span>(<span class="op">|</span><span class="ident">holder</span><span class="op">|</span> <span class="ident">holder</span>.<span class="ident">borrow_mut</span>().<span class="ident">push</span>(<span class="ident">obj</span>));
 }
 
-<span class="doccomment">/// Increment pyo3&#39;s internal GIL count - to be called whenever GILPool or GILGuard is created.</span>
+<span class="doccomment">/// Increments pyo3&#39;s internal GIL count - to be called whenever GILPool or GILGuard is created.</span>
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
 <span class="kw">fn</span> <span class="ident">increment_gil_count</span>() {
     <span class="comment">// Ignores the error in case this function called from `atexit`.</span>
     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">GIL_COUNT</span>.<span class="ident">try_with</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span>.<span class="ident">set</span>(<span class="ident">c</span>.<span class="ident">get</span>() <span class="op">+</span> <span class="number">1</span>));
 }
 
-<span class="doccomment">/// Decrement pyo3&#39;s internal GIL count - to be called whenever GILPool or GILGuard is dropped.</span>
+<span class="doccomment">/// Decrements pyo3&#39;s internal GIL count - to be called whenever GILPool or GILGuard is dropped.</span>
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
 <span class="kw">fn</span> <span class="ident">decrement_gil_count</span>() {
     <span class="comment">// Ignores the error in case this function called from `atexit`.</span>
@@ -1306,7 +1303,7 @@
     });
 }
 
-<span class="doccomment">/// Ensure the GIL is held, used in the implementation of Python::with_gil</span>
+<span class="doccomment">/// Ensures the GIL is held, used in the implementation of `Python::with_gil`.</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">ensure_gil</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">EnsureGIL</span> {
     <span class="kw">if</span> <span class="ident">gil_is_acquired</span>() {
         <span class="ident">EnsureGIL</span>(<span class="prelude-val">None</span>)
@@ -1315,7 +1312,20 @@
     }
 }
 
+<span class="doccomment">/// Ensures the GIL is held, without interpreter state checking.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This bypasses interpreter state checking that would normally be performed</span>
+<span class="doccomment">/// before acquiring the GIL.</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">ensure_gil_unchecked</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">EnsureGIL</span> {
+    <span class="kw">if</span> <span class="ident">gil_is_acquired</span>() {
+        <span class="ident">EnsureGIL</span>(<span class="prelude-val">None</span>)
+    } <span class="kw">else</span> {
+        <span class="ident">EnsureGIL</span>(<span class="prelude-val">Some</span>(<span class="ident">GILGuard::acquire_unchecked</span>()))
+    }
+}
+
 <span class="doccomment">/// Struct used internally which avoids acquiring the GIL where it&#39;s not necessary.</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::upper_case_acronyms</span>)]</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">EnsureGIL</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">GILGuard</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span> <span class="ident">EnsureGIL</span> {
@@ -1335,7 +1345,7 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">test</span> {
+<span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">gil_is_acquired</span>, <span class="ident">GILPool</span>, <span class="ident">GIL_COUNT</span>, <span class="ident">OWNED_OBJECTS</span>, <span class="ident">POOL</span>};
     <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">ffi</span>, <span class="ident">gil</span>, <span class="ident">AsPyPointer</span>, <span class="ident">IntoPyPointer</span>, <span class="ident">PyObject</span>, <span class="ident">Python</span>, <span class="ident">ToPyObject</span>};
     <span class="kw">use</span> <span class="ident">std::ptr::NonNull</span>;
@@ -1598,15 +1608,15 @@
 
         <span class="comment">// The pointer should appear once in the incref pool, and once in the</span>
         <span class="comment">// decref pool (for the clone being created and also dropped)</span>
-        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">POOL</span>.<span class="ident">pointers_to_incref</span>.<span class="ident">lock</span>(), <span class="kw-2">&amp;</span><span class="macro">vec!</span>[<span class="ident">ptr</span>]);
-        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">POOL</span>.<span class="ident">pointers_to_decref</span>.<span class="ident">lock</span>(), <span class="kw-2">&amp;</span><span class="macro">vec!</span>[<span class="ident">ptr</span>]);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">POOL</span>.<span class="ident">pointer_ops</span>.<span class="ident">lock</span>().<span class="number">0</span>, <span class="kw-2">&amp;</span><span class="macro">vec!</span>[<span class="ident">ptr</span>]);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">POOL</span>.<span class="ident">pointer_ops</span>.<span class="ident">lock</span>().<span class="number">1</span>, <span class="kw-2">&amp;</span><span class="macro">vec!</span>[<span class="ident">ptr</span>]);
 
         <span class="comment">// Re-acquring GIL will clear these pending changes</span>
         <span class="ident">drop</span>(<span class="ident">gil</span>);
         <span class="kw">let</span> <span class="ident">gil</span> <span class="op">=</span> <span class="ident">Python::acquire_gil</span>();
 
-        <span class="macro">assert!</span>(<span class="ident">POOL</span>.<span class="ident">pointers_to_incref</span>.<span class="ident">lock</span>().<span class="ident">is_empty</span>());
-        <span class="macro">assert!</span>(<span class="ident">POOL</span>.<span class="ident">pointers_to_decref</span>.<span class="ident">lock</span>().<span class="ident">is_empty</span>());
+        <span class="macro">assert!</span>(<span class="ident">POOL</span>.<span class="ident">pointer_ops</span>.<span class="ident">lock</span>().<span class="number">0</span>.<span class="ident">is_empty</span>());
+        <span class="macro">assert!</span>(<span class="ident">POOL</span>.<span class="ident">pointer_ops</span>.<span class="ident">lock</span>().<span class="number">1</span>.<span class="ident">is_empty</span>());
 
         <span class="comment">// Overall count is still unchanged</span>
         <span class="macro">assert_eq!</span>(<span class="ident">count</span>, <span class="ident">obj</span>.<span class="ident">get_refcnt</span>(<span class="ident">gil</span>.<span class="ident">python</span>()));
@@ -1644,4 +1654,6 @@
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pyo3" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pyo3" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
+</body></html>

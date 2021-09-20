@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["PyList_GET_ITEM","Macro, trading safety for speed"],["PyList_GET_SIZE",""],["PyList_SET_ITEM","Macro, only to be used to fill in brand new lists"]],"struct":[["PyListObject",""]]});

@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/pyo3-0.13.2/src/types/string.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>string.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../pyo3/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;pyo3-0.14.5&#x2F;src&#x2F;types&#x2F;string.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>string.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../pyo3/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -308,17 +306,423 @@
 <span id="306">306</span>
 <span id="307">307</span>
 <span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
 </pre><pre class="rust">
 <span class="comment">// Copyright (c) 2017-present PyO3 Project and Contributors</span>
 
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">Py_LIMITED_API</span>, <span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;big&quot;</span>)))]</span>
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::exceptions::PyUnicodeDecodeError</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::types::PyBytes</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">ffi</span>, <span class="ident">AsPyPointer</span>, <span class="ident">FromPyObject</span>, <span class="ident">IntoPy</span>, <span class="ident">PyAny</span>, <span class="ident">PyErr</span>, <span class="ident">PyNativeType</span>, <span class="ident">PyObject</span>, <span class="ident">PyResult</span>,
-    <span class="ident">PyTryFrom</span>, <span class="ident">Python</span>, <span class="ident">ToPyObject</span>,
+    <span class="ident">ffi</span>, <span class="ident">AsPyPointer</span>, <span class="ident">FromPyObject</span>, <span class="ident">IntoPy</span>, <span class="ident">PyAny</span>, <span class="ident">PyNativeType</span>, <span class="ident">PyObject</span>, <span class="ident">PyResult</span>, <span class="ident">PyTryFrom</span>,
+    <span class="ident">Python</span>, <span class="ident">ToPyObject</span>,
 };
 <span class="kw">use</span> <span class="ident">std::borrow::Cow</span>;
 <span class="kw">use</span> <span class="ident">std::os::raw::c_char</span>;
 <span class="kw">use</span> <span class="ident">std::str</span>;
+
+<span class="doccomment">/// Represents raw data backing a Python `str`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Python internally stores strings in various representations. This enumeration</span>
+<span class="doccomment">/// represents those variations.</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">Py_LIMITED_API</span>, <span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;big&quot;</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">Py_LIMITED_API</span>, <span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;big&quot;</span>)))))]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">PyStringData</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// UCS1 representation.</span>
+    <span class="ident">Ucs1</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]),
+
+    <span class="doccomment">/// UCS2 representation.</span>
+    <span class="ident">Ucs2</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u16</span>]),
+
+    <span class="doccomment">/// UCS4 representation.</span>
+    <span class="ident">Ucs4</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u32</span>]),
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">Py_LIMITED_API</span>, <span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;big&quot;</span>)))]</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">PyStringData</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Obtain the raw bytes backing this instance as a [u8] slice.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="self">Self</span><span class="ident">::Ucs1</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">s</span>,
+            <span class="self">Self</span><span class="ident">::Ucs2</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">unsafe</span> {
+                <span class="ident">std::slice::from_raw_parts</span>(
+                    <span class="ident">s</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>,
+                    <span class="ident">s</span>.<span class="ident">len</span>() <span class="op">*</span> <span class="self">self</span>.<span class="ident">value_width_bytes</span>(),
+                )
+            },
+            <span class="self">Self</span><span class="ident">::Ucs4</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">unsafe</span> {
+                <span class="ident">std::slice::from_raw_parts</span>(
+                    <span class="ident">s</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>,
+                    <span class="ident">s</span>.<span class="ident">len</span>() <span class="op">*</span> <span class="self">self</span>.<span class="ident">value_width_bytes</span>(),
+                )
+            },
+        }
+    }
+
+    <span class="doccomment">/// Size in bytes of each value/item in the underlying slice.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">value_width_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="self">Self</span><span class="ident">::Ucs1</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="number">1</span>,
+            <span class="self">Self</span><span class="ident">::Ucs2</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="number">2</span>,
+            <span class="self">Self</span><span class="ident">::Ucs4</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="number">4</span>,
+        }
+    }
+
+    <span class="doccomment">/// Convert the raw data to a Rust string.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// For UCS-1 / UTF-8, returns a borrow into the original slice. For UCS-2 and UCS-4,</span>
+    <span class="doccomment">/// returns an owned string.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns [PyUnicodeDecodeError] if the string data isn&#39;t valid in its purported</span>
+    <span class="doccomment">/// storage format. This should only occur for strings that were created via Python</span>
+    <span class="doccomment">/// C APIs that skip input validation (like `PyUnicode_FromKindAndData`) and should</span>
+    <span class="doccomment">/// never occur for strings that were created from Python code.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_string</span>(<span class="self">self</span>, <span class="ident">py</span>: <span class="ident">Python</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="kw">use</span> <span class="ident">std::ffi::CStr</span>;
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="self">Self</span><span class="ident">::Ucs1</span>(<span class="ident">data</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">str::from_utf8</span>(<span class="ident">data</span>) {
+                <span class="prelude-val">Ok</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Cow::Borrowed</span>(<span class="ident">s</span>)),
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="kw">crate</span><span class="ident">::PyErr::from_instance</span>(<span class="ident">PyUnicodeDecodeError::new_utf8</span>(
+                    <span class="ident">py</span>, <span class="ident">data</span>, <span class="ident">e</span>,
+                )<span class="question-mark">?</span>)),
+            },
+            <span class="self">Self</span><span class="ident">::Ucs2</span>(<span class="ident">data</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">String::from_utf16</span>(<span class="ident">data</span>) {
+                <span class="prelude-val">Ok</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Cow::Owned</span>(<span class="ident">s</span>)),
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">e</span>.<span class="ident">to_string</span>().<span class="ident">as_bytes</span>().<span class="ident">to_vec</span>();
+                    <span class="ident">message</span>.<span class="ident">push</span>(<span class="number">0</span>);
+
+                    <span class="prelude-val">Err</span>(<span class="kw">crate</span><span class="ident">::PyErr::from_instance</span>(<span class="ident">PyUnicodeDecodeError::new</span>(
+                        <span class="ident">py</span>,
+                        <span class="ident">CStr::from_bytes_with_nul</span>(<span class="string">b&quot;utf-16\0&quot;</span>).<span class="ident">unwrap</span>(),
+                        <span class="self">self</span>.<span class="ident">as_bytes</span>(),
+                        <span class="number">0</span>..<span class="self">self</span>.<span class="ident">as_bytes</span>().<span class="ident">len</span>(),
+                        <span class="ident">CStr::from_bytes_with_nul</span>(<span class="kw-2">&amp;</span><span class="ident">message</span>).<span class="ident">unwrap</span>(),
+                    )<span class="question-mark">?</span>))
+                }
+            },
+            <span class="self">Self</span><span class="ident">::Ucs4</span>(<span class="ident">data</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">data</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">c</span><span class="op">|</span> <span class="ident">std::char::from_u32</span>(<span class="ident">c</span>)).<span class="ident">collect</span>() {
+                <span class="prelude-val">Some</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Cow::Owned</span>(<span class="ident">s</span>)),
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="kw">crate</span><span class="ident">::PyErr::from_instance</span>(<span class="ident">PyUnicodeDecodeError::new</span>(
+                    <span class="ident">py</span>,
+                    <span class="ident">CStr::from_bytes_with_nul</span>(<span class="string">b&quot;utf-32\0&quot;</span>).<span class="ident">unwrap</span>(),
+                    <span class="self">self</span>.<span class="ident">as_bytes</span>(),
+                    <span class="number">0</span>..<span class="self">self</span>.<span class="ident">as_bytes</span>().<span class="ident">len</span>(),
+                    <span class="ident">CStr::from_bytes_with_nul</span>(<span class="string">b&quot;error converting utf-32\0&quot;</span>).<span class="ident">unwrap</span>(),
+                )<span class="question-mark">?</span>)),
+            },
+        }
+    }
+
+    <span class="doccomment">/// Convert the raw data to a Rust string, possibly with data loss.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Invalid code points will be replaced with `U+FFFD REPLACEMENT CHARACTER`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns a borrow into original data, when possible, or owned data otherwise.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The return value of this function should only disagree with [Self::to_string]</span>
+    <span class="doccomment">/// when that method would error.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_string_lossy</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">str</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="self">Self</span><span class="ident">::Ucs1</span>(<span class="ident">data</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">String::from_utf8_lossy</span>(<span class="ident">data</span>),
+            <span class="self">Self</span><span class="ident">::Ucs2</span>(<span class="ident">data</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Cow::Owned</span>(<span class="ident">String::from_utf16_lossy</span>(<span class="ident">data</span>)),
+            <span class="self">Self</span><span class="ident">::Ucs4</span>(<span class="ident">data</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Cow::Owned</span>(
+                <span class="ident">data</span>.<span class="ident">iter</span>()
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">c</span><span class="op">|</span> <span class="ident">std::char::from_u32</span>(<span class="ident">c</span>).<span class="ident">unwrap_or</span>(<span class="string">&#39;\u{FFFD}&#39;</span>))
+                    .<span class="ident">collect</span>(),
+            ),
+        }
+    }
+}
 
 <span class="doccomment">/// Represents a Python `string` (a Unicode string object).</span>
 <span class="doccomment">///</span>
@@ -326,7 +730,7 @@
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">transparent</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PyString</span>(<span class="ident">PyAny</span>);
 
-<span class="macro">pyobject_native_var_type!</span>(<span class="ident">PyString</span>, <span class="ident">ffi::PyUnicode_Type</span>, <span class="ident">ffi::PyUnicode_Check</span>);
+<span class="macro">pyobject_native_type_core!</span>(<span class="ident">PyString</span>, <span class="ident">ffi::PyUnicode_Type</span>, #<span class="ident">checkfunction</span><span class="op">=</span><span class="ident">ffi::PyUnicode_Check</span>);
 
 <span class="kw">impl</span> <span class="ident">PyString</span> {
     <span class="doccomment">/// Creates a new Python string object.</span>
@@ -338,6 +742,9 @@
         <span class="kw">unsafe</span> { <span class="ident">py</span>.<span class="ident">from_owned_ptr</span>(<span class="ident">ffi::PyUnicode_FromStringAndSize</span>(<span class="ident">ptr</span>, <span class="ident">len</span>)) }
     }
 
+    <span class="doccomment">/// Attempts to create a Python string from a Python [bytes-like object].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [bytes-like object]: (https://docs.python.org/3/glossary.html#term-bytes-like-object).</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_object</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">PyAny</span>, <span class="ident">encoding</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">errors</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">PyString</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">src</span>.<span class="ident">py</span>()
@@ -357,12 +764,12 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">utf8_slice</span> <span class="op">=</span> {
             <span class="macro">cfg_if::cfg_if!</span> {
-                <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">not</span>(<span class="ident">Py_LIMITED_API</span>), <span class="ident">Py_3_10</span>))]</span> {
-                    <span class="comment">// PyUnicode_AsUTF8AndSize only available on limited API from Python 3.10 and up.</span>
+                <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">Py_LIMITED_API</span>))]</span> {
+                    <span class="comment">// PyUnicode_AsUTF8AndSize only available on limited API.</span>
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">size</span>: <span class="ident">ffi::Py_ssize_t</span> <span class="op">=</span> <span class="number">0</span>;
                     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi::PyUnicode_AsUTF8AndSize</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">size</span>) };
                     <span class="kw">if</span> <span class="ident">data</span>.<span class="ident">is_null</span>() {
-                        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">PyErr::fetch</span>(<span class="self">self</span>.<span class="ident">py</span>()));
+                        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="kw">crate</span><span class="ident">::PyErr::fetch</span>(<span class="self">self</span>.<span class="ident">py</span>()));
                     } <span class="kw">else</span> {
                         <span class="kw">unsafe</span> { <span class="ident">std::slice::from_raw_parts</span>(<span class="ident">data</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>, <span class="ident">size</span> <span class="kw">as</span> <span class="ident">usize</span>) }
                     }
@@ -397,23 +804,59 @@
             }
         }
     }
-}
 
-<span class="doccomment">/// Convenience for calling Python APIs with a temporary string</span>
-<span class="doccomment">/// object created from a given Rust string.</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">with_tmp_string</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="ident">py</span>: <span class="ident">Python</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::PyObject</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
-{
-    <span class="kw">unsafe</span> {
-        <span class="kw">let</span> <span class="ident">s_obj</span> <span class="op">=</span>
-            <span class="ident">ffi::PyUnicode_FromStringAndSize</span>(<span class="ident">s</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span>, <span class="ident">s</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">ffi::Py_ssize_t</span>);
-        <span class="kw">if</span> <span class="ident">s_obj</span>.<span class="ident">is_null</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">PyErr::fetch</span>(<span class="ident">py</span>));
+    <span class="doccomment">/// Obtains the raw data backing the Python string.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If the Python string object was created through legacy APIs, its internal storage format</span>
+    <span class="doccomment">/// will be canonicalized before data is returned.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Safety</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This function implementation relies on manually decoding a C bitfield. In practice, this</span>
+    <span class="doccomment">/// works well on common little-endian architectures such as x86_64, where the bitfield has a</span>
+    <span class="doccomment">/// common representation (even if it is not part of the C spec). The PyO3 CI tests this API on</span>
+    <span class="doccomment">/// x86_64 platforms.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// By using this API, you accept responsibility for testing that PyStringData behaves as</span>
+    <span class="doccomment">/// expected on the targets where you plan to distribute your software.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// For example, it is known not to work on big-endian platforms.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">Py_LIMITED_API</span>, <span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;big&quot;</span>)))]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">Py_LIMITED_API</span>, <span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;big&quot;</span>)))))]</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">data</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyResult</span><span class="op">&lt;</span><span class="ident">PyStringData</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_ptr</span>();
+
+        <span class="kw">if</span> <span class="macro">cfg!</span>(<span class="ident">not</span>(<span class="ident">Py_3_12</span>)) {
+            <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
+            <span class="kw">let</span> <span class="ident">ready</span> <span class="op">=</span> <span class="ident">ffi::PyUnicode_READY</span>(<span class="ident">ptr</span>);
+            <span class="kw">if</span> <span class="ident">ready</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
+                <span class="comment">// Exception was created on failure.</span>
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="kw">crate</span><span class="ident">::PyErr::fetch</span>(<span class="self">self</span>.<span class="ident">py</span>()));
+            }
         }
-        <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">f</span>(<span class="ident">s_obj</span>);
-        <span class="ident">ffi::Py_DECREF</span>(<span class="ident">s_obj</span>);
-        <span class="ident">ret</span>
+
+        <span class="comment">// The string should be in its canonical form after calling `PyUnicode_READY()`.</span>
+        <span class="comment">// And non-canonical form not possible after Python 3.12. So it should be safe</span>
+        <span class="comment">// to call these APIs.</span>
+        <span class="kw">let</span> <span class="ident">length</span> <span class="op">=</span> <span class="ident">ffi::PyUnicode_GET_LENGTH</span>(<span class="ident">ptr</span>) <span class="kw">as</span> <span class="ident">usize</span>;
+        <span class="kw">let</span> <span class="ident">raw_data</span> <span class="op">=</span> <span class="ident">ffi::PyUnicode_DATA</span>(<span class="ident">ptr</span>);
+        <span class="kw">let</span> <span class="ident">kind</span> <span class="op">=</span> <span class="ident">ffi::PyUnicode_KIND</span>(<span class="ident">ptr</span>);
+
+        <span class="kw">match</span> <span class="ident">kind</span> {
+            <span class="ident">ffi::PyUnicode_1BYTE_KIND</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">PyStringData::Ucs1</span>(<span class="ident">std::slice::from_raw_parts</span>(
+                <span class="ident">raw_data</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>,
+                <span class="ident">length</span>,
+            ))),
+            <span class="ident">ffi::PyUnicode_2BYTE_KIND</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">PyStringData::Ucs2</span>(<span class="ident">std::slice::from_raw_parts</span>(
+                <span class="ident">raw_data</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u16</span>,
+                <span class="ident">length</span>,
+            ))),
+            <span class="ident">ffi::PyUnicode_4BYTE_KIND</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">PyStringData::Ucs4</span>(<span class="ident">std::slice::from_raw_parts</span>(
+                <span class="ident">raw_data</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u32</span>,
+                <span class="ident">length</span>,
+            ))),
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable!</span>(),
+        }
     }
 }
 
@@ -439,6 +882,13 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">to_object</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">py</span>: <span class="ident">Python</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyObject</span> {
         <span class="ident">PyString::new</span>(<span class="ident">py</span>, <span class="self">self</span>).<span class="ident">into</span>()
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">IntoPy</span><span class="op">&lt;</span><span class="ident">PyObject</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">into_py</span>(<span class="self">self</span>, <span class="ident">py</span>: <span class="ident">Python</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PyObject</span> {
+        <span class="self">self</span>.<span class="ident">to_object</span>(<span class="ident">py</span>)
     }
 }
 
@@ -510,10 +960,14 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">test</span> {
-    <span class="kw">use</span> <span class="kw">super</span><span class="ident">::PyString</span>;
+<span class="kw">mod</span> <span class="ident">tests</span> {
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">Py_LIMITED_API</span>, <span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;big&quot;</span>)))]</span>
+    <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::type_object::PyTypeObject</span>;
     <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::Python</span>;
     <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">FromPyObject</span>, <span class="ident">PyObject</span>, <span class="ident">PyTryFrom</span>, <span class="ident">ToPyObject</span>};
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">Py_LIMITED_API</span>, <span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;big&quot;</span>)))]</span>
+    <span class="kw">use</span> <span class="ident">std::borrow::Cow</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_non_bmp</span>() {
@@ -616,6 +1070,128 @@
             <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">s</span>), <span class="string">&quot;Hello\n&quot;</span>);
         })
     }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">Py_LIMITED_API</span>, <span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;big&quot;</span>)))]</span>
+    <span class="kw">fn</span> <span class="ident">test_string_data_ucs1</span>() {
+        <span class="ident">Python::with_gil</span>(<span class="op">|</span><span class="ident">py</span><span class="op">|</span> {
+            <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">PyString::new</span>(<span class="ident">py</span>, <span class="string">&quot;hello, world&quot;</span>);
+            <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">s</span>.<span class="ident">data</span>().<span class="ident">unwrap</span>() };
+
+            <span class="macro">assert_eq!</span>(<span class="ident">data</span>, <span class="ident">PyStringData::Ucs1</span>(<span class="string">b&quot;hello, world&quot;</span>));
+            <span class="macro">assert_eq!</span>(<span class="ident">data</span>.<span class="ident">to_string</span>(<span class="ident">py</span>).<span class="ident">unwrap</span>(), <span class="ident">Cow::Borrowed</span>(<span class="string">&quot;hello, world&quot;</span>));
+            <span class="macro">assert_eq!</span>(<span class="ident">data</span>.<span class="ident">to_string_lossy</span>(), <span class="ident">Cow::Borrowed</span>(<span class="string">&quot;hello, world&quot;</span>));
+        })
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">Py_LIMITED_API</span>, <span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;big&quot;</span>)))]</span>
+    <span class="kw">fn</span> <span class="ident">test_string_data_ucs1_invalid</span>() {
+        <span class="ident">Python::with_gil</span>(<span class="op">|</span><span class="ident">py</span><span class="op">|</span> {
+            <span class="comment">// 0xfe is not allowed in UTF-8.</span>
+            <span class="kw">let</span> <span class="ident">buffer</span> <span class="op">=</span> <span class="string">b&quot;f\xfe\0&quot;</span>;
+            <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+                <span class="kw">crate</span><span class="ident">::ffi::PyUnicode_FromKindAndData</span>(
+                    <span class="kw">crate</span><span class="ident">::ffi::PyUnicode_1BYTE_KIND</span> <span class="kw">as</span> <span class="kw">_</span>,
+                    <span class="ident">buffer</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span>,
+                    <span class="number">2</span>,
+                )
+            };
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">ptr</span>.<span class="ident">is_null</span>());
+            <span class="kw">let</span> <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">PyString</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">py</span>.<span class="ident">from_owned_ptr</span>(<span class="ident">ptr</span>) };
+            <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">s</span>.<span class="ident">data</span>().<span class="ident">unwrap</span>() };
+            <span class="macro">assert_eq!</span>(<span class="ident">data</span>, <span class="ident">PyStringData::Ucs1</span>(<span class="string">b&quot;f\xfe&quot;</span>));
+            <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">to_string</span>(<span class="ident">py</span>).<span class="ident">unwrap_err</span>();
+            <span class="macro">assert_eq!</span>(<span class="ident">err</span>.<span class="ident">ptype</span>(<span class="ident">py</span>), <span class="ident">PyUnicodeDecodeError::type_object</span>(<span class="ident">py</span>));
+            <span class="macro">assert!</span>(<span class="ident">err</span>
+                .<span class="ident">to_string</span>()
+                .<span class="ident">contains</span>(<span class="string">&quot;&#39;utf-8&#39; codec can&#39;t decode byte 0xfe in position 1&quot;</span>));
+            <span class="macro">assert_eq!</span>(<span class="ident">data</span>.<span class="ident">to_string_lossy</span>(), <span class="ident">Cow::Borrowed</span>(<span class="string">&quot;f�&quot;</span>));
+        });
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">Py_LIMITED_API</span>, <span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;big&quot;</span>)))]</span>
+    <span class="kw">fn</span> <span class="ident">test_string_data_ucs2</span>() {
+        <span class="ident">Python::with_gil</span>(<span class="op">|</span><span class="ident">py</span><span class="op">|</span> {
+            <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">py</span>.<span class="ident">eval</span>(<span class="string">&quot;&#39;foo\\ud800&#39;&quot;</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">py_string</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">cast_as</span>::<span class="op">&lt;</span><span class="ident">PyString</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">py_string</span>.<span class="ident">data</span>().<span class="ident">unwrap</span>() };
+
+            <span class="macro">assert_eq!</span>(<span class="ident">data</span>, <span class="ident">PyStringData::Ucs2</span>(<span class="kw-2">&amp;</span>[<span class="number">102</span>, <span class="number">111</span>, <span class="number">111</span>, <span class="number">0xd800</span>]));
+            <span class="macro">assert_eq!</span>(
+                <span class="ident">data</span>.<span class="ident">to_string_lossy</span>(),
+                <span class="ident">Cow::Owned</span>::<span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>(<span class="string">&quot;foo�&quot;</span>.<span class="ident">to_string</span>())
+            );
+        })
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">Py_LIMITED_API</span>, <span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;big&quot;</span>)))]</span>
+    <span class="kw">fn</span> <span class="ident">test_string_data_ucs2_invalid</span>() {
+        <span class="ident">Python::with_gil</span>(<span class="op">|</span><span class="ident">py</span><span class="op">|</span> {
+            <span class="comment">// U+FF22 (valid) &amp; U+d800 (never valid)</span>
+            <span class="kw">let</span> <span class="ident">buffer</span> <span class="op">=</span> <span class="string">b&quot;\x22\xff\x00\xd8\x00\x00&quot;</span>;
+            <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+                <span class="kw">crate</span><span class="ident">::ffi::PyUnicode_FromKindAndData</span>(
+                    <span class="kw">crate</span><span class="ident">::ffi::PyUnicode_2BYTE_KIND</span> <span class="kw">as</span> <span class="kw">_</span>,
+                    <span class="ident">buffer</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span>,
+                    <span class="number">2</span>,
+                )
+            };
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">ptr</span>.<span class="ident">is_null</span>());
+            <span class="kw">let</span> <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">PyString</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">py</span>.<span class="ident">from_owned_ptr</span>(<span class="ident">ptr</span>) };
+            <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">s</span>.<span class="ident">data</span>().<span class="ident">unwrap</span>() };
+            <span class="macro">assert_eq!</span>(<span class="ident">data</span>, <span class="ident">PyStringData::Ucs2</span>(<span class="kw-2">&amp;</span>[<span class="number">0xff22</span>, <span class="number">0xd800</span>]));
+            <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">to_string</span>(<span class="ident">py</span>).<span class="ident">unwrap_err</span>();
+            <span class="macro">assert_eq!</span>(<span class="ident">err</span>.<span class="ident">ptype</span>(<span class="ident">py</span>), <span class="ident">PyUnicodeDecodeError::type_object</span>(<span class="ident">py</span>));
+            <span class="macro">assert!</span>(<span class="ident">err</span>
+                .<span class="ident">to_string</span>()
+                .<span class="ident">contains</span>(<span class="string">&quot;&#39;utf-16&#39; codec can&#39;t decode bytes in position 0-3&quot;</span>));
+            <span class="macro">assert_eq!</span>(<span class="ident">data</span>.<span class="ident">to_string_lossy</span>(), <span class="ident">Cow::Owned</span>::<span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>(<span class="string">&quot;Ｂ�&quot;</span>.<span class="ident">into</span>()));
+        });
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">Py_LIMITED_API</span>, <span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;big&quot;</span>)))]</span>
+    <span class="kw">fn</span> <span class="ident">test_string_data_ucs4</span>() {
+        <span class="ident">Python::with_gil</span>(<span class="op">|</span><span class="ident">py</span><span class="op">|</span> {
+            <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="string">&quot;哈哈🐈&quot;</span>;
+            <span class="kw">let</span> <span class="ident">py_string</span> <span class="op">=</span> <span class="ident">PyString::new</span>(<span class="ident">py</span>, <span class="ident">s</span>);
+            <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">py_string</span>.<span class="ident">data</span>().<span class="ident">unwrap</span>() };
+
+            <span class="macro">assert_eq!</span>(<span class="ident">data</span>, <span class="ident">PyStringData::Ucs4</span>(<span class="kw-2">&amp;</span>[<span class="number">21704</span>, <span class="number">21704</span>, <span class="number">128008</span>]));
+            <span class="macro">assert_eq!</span>(<span class="ident">data</span>.<span class="ident">to_string_lossy</span>(), <span class="ident">Cow::Owned</span>::<span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>(<span class="ident">s</span>.<span class="ident">to_string</span>()));
+        })
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">Py_LIMITED_API</span>, <span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;big&quot;</span>)))]</span>
+    <span class="kw">fn</span> <span class="ident">test_string_data_ucs4_invalid</span>() {
+        <span class="ident">Python::with_gil</span>(<span class="op">|</span><span class="ident">py</span><span class="op">|</span> {
+            <span class="comment">// U+20000 (valid) &amp; U+d800 (never valid)</span>
+            <span class="kw">let</span> <span class="ident">buffer</span> <span class="op">=</span> <span class="string">b&quot;\x00\x00\x02\x00\x00\xd8\x00\x00\x00\x00\x00\x00&quot;</span>;
+            <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+                <span class="kw">crate</span><span class="ident">::ffi::PyUnicode_FromKindAndData</span>(
+                    <span class="kw">crate</span><span class="ident">::ffi::PyUnicode_4BYTE_KIND</span> <span class="kw">as</span> <span class="kw">_</span>,
+                    <span class="ident">buffer</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span>,
+                    <span class="number">2</span>,
+                )
+            };
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">ptr</span>.<span class="ident">is_null</span>());
+            <span class="kw">let</span> <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">PyString</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">py</span>.<span class="ident">from_owned_ptr</span>(<span class="ident">ptr</span>) };
+            <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">s</span>.<span class="ident">data</span>().<span class="ident">unwrap</span>() };
+            <span class="macro">assert_eq!</span>(<span class="ident">data</span>, <span class="ident">PyStringData::Ucs4</span>(<span class="kw-2">&amp;</span>[<span class="number">0x20000</span>, <span class="number">0xd800</span>]));
+            <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">to_string</span>(<span class="ident">py</span>).<span class="ident">unwrap_err</span>();
+            <span class="macro">assert_eq!</span>(<span class="ident">err</span>.<span class="ident">ptype</span>(<span class="ident">py</span>), <span class="ident">PyUnicodeDecodeError::type_object</span>(<span class="ident">py</span>));
+            <span class="macro">assert!</span>(<span class="ident">err</span>
+                .<span class="ident">to_string</span>()
+                .<span class="ident">contains</span>(<span class="string">&quot;&#39;utf-32&#39; codec can&#39;t decode bytes in position 0-7&quot;</span>));
+            <span class="macro">assert_eq!</span>(<span class="ident">data</span>.<span class="ident">to_string_lossy</span>(), <span class="ident">Cow::Owned</span>::<span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>(<span class="string">&quot;𠀀�&quot;</span>.<span class="ident">into</span>()));
+        });
+    }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="pyo3" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="pyo3" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
+    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script>
+</body></html>
