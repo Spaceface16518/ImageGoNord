@@ -39,7 +39,6 @@ jobs:
           ~/.cargo/registry
           ~/.cargo/git
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-       https://github.com/rust-lang/rust/issues/84252
     - name: Cache Build Artifacts
       uses: actions/cache@v2
       with:
